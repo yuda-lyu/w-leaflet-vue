@@ -3,8 +3,8 @@
 
         <div style="padding:20px;">
             <div style="font-size:1.5rem;">contourSet.legendNumDig</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-{filename}.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-{filename}.html" target="_blank" class="item-link">code</a>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetLegendNumDig.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetLegendNumDig.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div style="display:flex; padding-bottom:20px;">

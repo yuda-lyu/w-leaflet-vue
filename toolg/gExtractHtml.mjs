@@ -156,6 +156,9 @@ function extractApp(fn) {
     //取代example與code
     hh = w.replace(hh, '{filename}', casename)
 
+    // //複寫回去, 因開發階段懶得手動改全部, 故得用程式改
+    // fs.writeFileSync(fdSrc + fn, hh, 'utf8')
+
     //parseVueCode
     let { tmp, mounted, data, computed, methods, action } = parseVueCode(hh)
 
