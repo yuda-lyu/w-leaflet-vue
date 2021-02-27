@@ -1,0 +1,83 @@
+<template>
+    <div>
+
+        <div style="padding:20px;">
+            <div style="font-size:1.5rem;">size</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-{filename}.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-{filename}.html" target="_blank" class="item-link">code</a>
+        </div>
+
+        <div style="display:flex; padding-bottom:20px;">
+
+            <div style="padding:0px 20px;">
+                <div>
+                    <button style="margin:0px 3px 3px 0px;" @click="w='800px';h='500px;'">800x500</button>
+                    <button style="margin:0px 3px 3px 0px;" @click="w='600px';h='400px;'">600x400</button>
+                </div>
+                <WLeafletVue
+                    :style="'width:'+w+'; height:'+h+';'"
+                    :opt="opt"
+                ></WLeafletVue>
+            </div>
+
+            <div style="width:600px; padding:0px 20px 0px 0px; position:relative;">
+
+                <div class="option-label">
+                    opt example
+                </div>
+
+                <div style="border:1px solid #ddd;">
+                    <div style="padding-left:5px; overflow-y:auto; height:500px;">
+                        <div id="optjson" style="font-size:10pt;"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+import WLeafletVue from './components/WLeafletVue.vue'
+import jv from 'w-jsonview-tree'
+
+export default {
+    components: {
+        WLeafletVue,
+    },
+    data: function() {
+        return {
+            'w': '800px',
+            'h': '500px',
+            'opt': {
+            },
+            'action': [
+            ],
+        }
+    },
+    mounted: function() {
+        let vo = this
+        vo.showOptJson()
+    },
+    watch: {
+        opt: {
+            handler: function() {
+                let vo = this
+                vo.showOptJson()
+            },
+            deep: true,
+        },
+    },
+    methods: {
+        showOptJson: function() {
+            let vo = this
+            jv(vo.opt, document.querySelector('#optjson'), { expanded: true })
+        },
+    },
+}
+</script>
+
+<style>
+</style>
