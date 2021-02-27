@@ -21,6 +21,9 @@ let h = `
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>example for {{casename}}</title>
 
+    <!-- @babel/polyfill -->
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@babel/polyfill/dist/polyfill.min.js"></script>
+
     <!-- vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js"></script>
 
