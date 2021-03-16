@@ -47,7 +47,7 @@
                         :items.sync="items"
                         :keyValue="'visible'"
                         :keyTitle="'name'"
-                        @update:items="updataItems"
+                        @update:items="updateItems"
                     ></Checkboxs>
                 </div>
             </l-control>
@@ -250,88 +250,92 @@ import Checkboxs from './Checkboxs.vue'
 import { getCentroidMultiPolygon } from '../js/gis.mjs'
 
 
-let defBaseMaps = [
-    {
-        name: 'Mapbox',
-        //api.mapbox.com/v4/mapbox.satellite
-        //api.mapbox.com/v4/mapbox.mapbox-streets-v8
-        //api.mapbox.com/v4/mapbox.terrain-rgb
-        //api.mapbox.com/v4/mapbox.mapbox-traffic-v1
-        url: '//api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2VtaXNwaGVyZSIsImEiOiJja2s1anBrZzMwN3NkMndsOGt6MHo5ajI5In0._vUKnQ57n7UcWsWgOPIEgQ',
-        visible: true,
-    },
-    {
-        name: 'OpenStreetMap',
-        // url: '//{s}.tile.osm.org/{z}/{x}/{y}.png', //同樣位址
-        url: '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        visible: false,
-    },
-    {
-        name: 'OpenTopoMap',
-        url: '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-        visible: false,
-    },
-    {
-        name: 'GoogleStreets',
-        url: '//www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}',
-        visible: false,
-    },
-    {
-        name: 'GoogleSatellite',
-        url: '//www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}',
-        visible: false,
-    },
-    {
-        name: 'GoogleHybrid',
-        url: '//www.google.cn/maps/vt?lyrs=s,h@189&gl=cn&x={x}&y={y}&z={z}',
-        visible: false,
-    },
-    // {
-    //     name: 'googleStreets',
-    //     url: 'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
-    //     visible: false,
-    // },
-    // {
-    //     name: 'googleHybrid',
-    //     url: 'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
-    //     visible: false,
-    // },
-    // {
-    //     name: 'googleSat',
-    //     url: 'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-    //     visible: false,
-    // },
-    // {
-    //     name: 'googleTerrain',
-    //     url: 'http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
-    //     visible: false,
-    // },
-    {
-        name: 'TGOS福衛二號影像',
-        url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=F2IMAGE_W-png-{z}-{x}-{y}',
-        visible: false,
-    },
-    {
-        name: 'TGOS福衛二號混合圖',
-        url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=ROADMAP_W-png-{z}-{x}-{y}',
-        visible: false,
-    },
-    {
-        name: 'TGOS電子地圖',
-        url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=TGOSMAP_W-png-{z}-{x}-{y}',
-        visible: false,
-    },
-    {
-        name: 'TGOS地形暈渲圖',
-        url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=HILLSHADE_W-png-{z}-{x}-{y}',
-        visible: false,
-    },
-    {
-        name: 'TGOS地形暈渲混合圖',
-        url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=HILLSHADEMIX_W-png-{z}-{x}-{y}',
-        visible: false,
-    },
-]
+function getDefBaseMaps() {
+    //用函數產生數據, 避免跨組件污染
+    let defBaseMaps = [
+        {
+            name: 'Mapbox',
+            //api.mapbox.com/v4/mapbox.satellite
+            //api.mapbox.com/v4/mapbox.mapbox-streets-v8
+            //api.mapbox.com/v4/mapbox.terrain-rgb
+            //api.mapbox.com/v4/mapbox.mapbox-traffic-v1
+            url: '//api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2VtaXNwaGVyZSIsImEiOiJja2s1anBrZzMwN3NkMndsOGt6MHo5ajI5In0._vUKnQ57n7UcWsWgOPIEgQ',
+            visible: true,
+        },
+        {
+            name: 'OpenStreetMap',
+            // url: '//{s}.tile.osm.org/{z}/{x}/{y}.png', //同樣位址
+            url: '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            visible: false,
+        },
+        {
+            name: 'OpenTopoMap',
+            url: '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+            visible: false,
+        },
+        {
+            name: 'GoogleStreets',
+            url: '//www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}',
+            visible: false,
+        },
+        {
+            name: 'GoogleSatellite',
+            url: '//www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}',
+            visible: false,
+        },
+        {
+            name: 'GoogleHybrid',
+            url: '//www.google.cn/maps/vt?lyrs=s,h@189&gl=cn&x={x}&y={y}&z={z}',
+            visible: false,
+        },
+        // {
+        //     name: 'googleStreets',
+        //     url: 'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+        //     visible: false,
+        // },
+        // {
+        //     name: 'googleHybrid',
+        //     url: 'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
+        //     visible: false,
+        // },
+        // {
+        //     name: 'googleSat',
+        //     url: 'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+        //     visible: false,
+        // },
+        // {
+        //     name: 'googleTerrain',
+        //     url: 'http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
+        //     visible: false,
+        // },
+        {
+            name: 'TGOS福衛二號影像',
+            url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=F2IMAGE_W-png-{z}-{x}-{y}',
+            visible: false,
+        },
+        {
+            name: 'TGOS福衛二號混合圖',
+            url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=ROADMAP_W-png-{z}-{x}-{y}',
+            visible: false,
+        },
+        {
+            name: 'TGOS電子地圖',
+            url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=TGOSMAP_W-png-{z}-{x}-{y}',
+            visible: false,
+        },
+        {
+            name: 'TGOS地形暈渲圖',
+            url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=HILLSHADE_W-png-{z}-{x}-{y}',
+            visible: false,
+        },
+        {
+            name: 'TGOS地形暈渲混合圖',
+            url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=HILLSHADEMIX_W-png-{z}-{x}-{y}',
+            visible: false,
+        },
+    ]
+    return defBaseMaps
+}
 
 
 /**
@@ -475,6 +479,11 @@ export default {
             immediate: true,
             deep: true,
         }
+
+        each(['pointSets', 'defPointSetsClick', 'defPointSetsPopup', 'defPointSetsTooltip'], (v) => {
+            let wat = vo.$watch(`opt.${v}`, vo.changePointSetsDebounce, wo)
+            vo.wats.push(wat)
+        })
 
         each(['pointSets', 'defPointSetsClick', 'defPointSetsPopup', 'defPointSetsTooltip'], (v) => {
             let wat = vo.$watch(`opt.${v}`, vo.changePointSetsDebounce, wo)
@@ -632,12 +641,19 @@ export default {
                 zoom = 7
             }
             zoom = Math.min(Math.max(zoom, 1), 18) //介於1~18
-            vo.zoom = zoom
 
-            // //setZoom, 不會有像修改center的問題, 故不使用setZoom
-            // if (mapObject) {
-            //     mapObject.setZoom(zoom)
-            // }
+            //check
+            if (!isEqual(vo.zoom, zoom)) {
+
+                //update
+                vo.zoom = zoom
+
+                // //setZoom, 不會有像修改center的問題, 故不使用setZoom
+                // if (mapObject) {
+                //     mapObject.setZoom(zoom)
+                // }
+
+            }
 
             //center
             let center = get(vo, 'opt.center', null)
@@ -646,11 +662,18 @@ export default {
                 center = [23.5, 121.1]
             }
             center = cloneDeep(center) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然更新center時就會觸發外部opt記憶體變更而被watch到, 進而導致無限觸發事件
-            vo.center = center
 
-            //panTo, 因為由外部更改center座標過近時, vue-leaflet會無法移動地圖, 故得呼叫原始leaflet事件panTo強制移動地圖至center
-            if (mapObject) {
-                mapObject.panTo(center)
+            //check
+            if (!isEqual(vo.center, center)) {
+
+                //update
+                vo.center = center
+
+                //panTo, 因為由外部更改center座標過近時, vue-leaflet會無法移動地圖, 故得呼叫原始leaflet事件panTo強制移動地圖至center
+                if (mapObject) {
+                    mapObject.panTo(center)
+                }
+
             }
 
             //default showLoc
@@ -675,14 +698,21 @@ export default {
                 ...defPanelBaseMaps,
                 ...panelBaseMaps,
             }
-
-            //baseMaps
             if (size(get(panelBaseMaps, 'baseMaps', [])) === 0) {
-                panelBaseMaps.baseMaps = defBaseMaps
+                panelBaseMaps.baseMaps = getDefBaseMaps() //default baseMaps
             }
+            panelBaseMaps = cloneDeep(panelBaseMaps) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然更新baseMaps時就會觸發外部opt記憶體變更而被watch到, 進而導致無限觸發事件
 
-            //save, 需於最後儲存至vo.panelBaseMaps, 否則對陣列baseMaps的修改會無法觸發資料連動
-            vo.panelBaseMaps = panelBaseMaps
+            //check
+            if (!isEqual(vo.panelBaseMapsTemp, panelBaseMaps)) { //判斷純外部給資料是否有變更, baseMaps會因切換底圖而有變更, 故若外部設定數據有變更才重新複寫
+
+                //update
+                vo.panelBaseMaps = panelBaseMaps
+
+                //update panelBaseMapsTemp
+                vo.panelBaseMapsTemp = cloneDeep(panelBaseMaps)
+
+            }
 
             //defPanelZoom
             let defPanelZoom = {
@@ -1234,8 +1264,8 @@ export default {
 
         },
 
-        updataItems: function() {
-            // console.log('methods updataItems')
+        updateItems: function() {
+            // console.log('methods updateItems')
 
             let vo = this
 
