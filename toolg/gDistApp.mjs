@@ -5,11 +5,7 @@ let opt = {
     title: `w-leaflet-vue`,
     head: `
 
-    <!-- @babel/polyfill -->
-    <script nomodule src="https://cdn.jsdelivr.net/npm/@babel/polyfill/dist/polyfill.min.js"></script>
-
-    <!-- vue -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js"></script>
+    <!-- rollupVueToHtml已自動添加@babel/polyfill與vue -->
 
     <!-- leaflet -->
     <script _src="https://cdn.jsdelivr.net/npm/leaflet/dist/leaflet.min.js"></script>

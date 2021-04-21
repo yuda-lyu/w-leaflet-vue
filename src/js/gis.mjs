@@ -105,7 +105,7 @@ function toMultiPolygon(v) {
 
 function getCentroidMultiPolygon(pgs) {
     if (!isearr(pgs)) {
-        return [null, null]
+        return null
     }
     let r = centroid(multiPolygon(toMultiPolygon(pgs)))
     let pt = r.geometry.coordinates

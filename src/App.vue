@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div>
 
 
         <template v-if="!isNarrow">
@@ -252,7 +252,6 @@ import AppLGDMaxWidth from './AppLGDMaxWidth.vue'
 
 
 export default {
-    name: 'app',
     components: {
         AppBSCSize,
         AppBSCCenter,

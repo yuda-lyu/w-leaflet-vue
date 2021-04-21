@@ -1,149 +1,137 @@
 import fs from 'fs'
-import prettyhtml from '@starptech/prettyhtml'
 import _ from 'lodash'
 import w from 'wsemi'
 import getFiles from 'w-package-tools/src/getFiles.mjs'
 import cleanFolder from 'w-package-tools/src/cleanFolder.mjs'
 import parseVueCode from 'w-package-tools/src/parseVueCode.mjs'
+import extractHtml from 'w-package-tools/src/extractHtml.mjs'
 
 
 let fdSrc = './src/'
 let fdTestHtml = './test-html/'
-//let fdTestSrc = './test-action/'
+let fdTestSrc = './test-action/'
 
 
-let h = `
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>example for {{casename}}</title>
+// function writeHtml({ fn, casename, tmp, mounted, data, computed, methods, action }) {
 
-    <!-- @babel/polyfill -->
-    <script nomodule src="https://cdn.jsdelivr.net/npm/@babel/polyfill/dist/polyfill.min.js"></script>
+//     //c
+//     let c = h
 
-    <!-- vue -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js"></script>
+//     //replace casename
+//     c = c.replace('{{casename}}', casename)
 
-    <!-- leaflet -->
-    <script _src="https://cdn.jsdelivr.net/npm/leaflet/dist/leaflet.min.js"></script>
+//     //replace tmp
+//     c = c.replace('{{tmp}}', tmp)
 
-    <!-- vue2-leaflet -->
-    <script _src="https://cdn.jsdelivr.net/npm/vue2-leaflet/dist/vue2-leaflet.min.js"></script>
+//     //replace data
+//     c = c.replace('{{data}}', data)
 
-    <!-- w-leaflet-vue -->
-    <script src="../dist/w-leaflet-vue.umd.js"></script>
+//     //replace mounted
+//     c = c.replace('{{mounted}}', mounted)
 
-    <!-- data -->
-    <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.12/res/data/dataRain.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.12/res/data/dataRainClip.js"></script>
-    <script>
-        //save in window
-        window.dataRain=dataRain
-        window.dataRainClip=dataRainClip
-    </script>
+//     //prettyhtml
+//     //replace computed
+//     c = c.replace('{{computed}}', computed)
 
-    <!-- w-jsonview-tree -->
-    <script src="https://cdn.jsdelivr.net/npm/w-jsonview-tree/dist/w-jsonview-tree.umd.js"></script>
-    <script>
-        let jv=window['w-jsonview-tree']
-    </script>
+//     //replace methods
+//     c = c.replace('{{methods}}', methods)
 
-    <style>
-        .item-link {
-            display: inline-block;
-            margin: 10px 10px 5px 0px;
-            padding: 5px 10px;
-            font-size: 0.8rem;
-            color: #fff;
-            background-color: #443a65;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .option-label {
-            position:absolute;
-            left:10px;
-            top:-33px;
-            padding:4px 20px 7px 20px;
-            border-left:1px solid #ddd;
-            border-top:1px solid #ddd;
-            border-right:1px solid #ddd;
-            border-bottom:1px solid #f6f6f6;
-            border-top-left-radius:15px;
-            border-top-right-radius:15px;
-            background:#f6f6f6;
-        }
-    </style>
+//     //prettyhtml
+//     c = prettyhtml(c, {
+//         tabWidth: 4,
+//     })
+//     c = c.contents //取contents
+//     //console.log('prettyhtml', c)
 
-</head>
-<body style="font-family:'Microsoft JhengHei','Avenir','Helvetica'; padding:0px 30px; margin:0px;">
+//     //write
+//     // console.log(c)
+//     fs.writeFileSync(fn, c, 'utf8')
 
-    <div id="app">
+//     // //write action
+//     // fs.writeFileSync(fdTestSrc + `${v.fn}.action.json`, v.action, 'utf8')
 
-        {{tmp}}
-
-    </div>
-
-    <script>
-
-        //install w-leaflet-vue
-        Vue.component('w-leaflet-vue', window['w-leaflet-vue'])
-
-        //initialize
-        new Vue({
-            el: '#app',
-            data: {{data}},
-            mounted: {{mounted}},
-            computed: {{computed}},
-            methods: {{methods}},
-        })
-
-    </script>
-
-</body>
-</html>
-`
+// }
 
 
-function writeHtml({ fn, casename, tmp, mounted, data, computed, methods, action }) {
+function writeHtml(v) {
 
-    //c
-    let c = h
+    function getAppTmp() {
+        return v.tmp
+    }
 
-    //replace casename
-    c = c.replace('{{casename}}', casename)
+    function procHtml(h) {
 
-    //replace tmp
-    c = c.replace('{{tmp}}', tmp)
+        //change cmp name
+        h = w.replace(h, 'WLeafletVue', 'w-leaflet-vue')
 
-    //replace data
-    c = c.replace('{{data}}', data)
+        return h
+    }
 
-    //replace mounted
-    c = c.replace('{{mounted}}', mounted)
+    //opt
+    let opt = {
+        title: v.casename,
+        head: `
+    
+        <!-- extractHtml已自動添加@babel/polyfill與vue -->
+    
+        <!-- leaflet -->
+        <script _src="https://cdn.jsdelivr.net/npm/leaflet/dist/leaflet.min.js"></script>
+    
+        <!-- vue2-leaflet -->
+        <script _src="https://cdn.jsdelivr.net/npm/vue2-leaflet/dist/vue2-leaflet.min.js"></script>
+    
+        <!-- w-leaflet-vue -->
+        <script src="../dist/w-leaflet-vue.umd.js"></script>
+    
+        <!-- data -->
+        <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.12/res/data/dataRain.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.12/res/data/dataRainClip.js"></script>
+        <script>
+            //save in window
+            window.dataRain=dataRain
+            window.dataRainClip=dataRainClip
+        </script>
+    
+        <!-- w-jsonview-tree -->
+        <script src="https://cdn.jsdelivr.net/npm/w-jsonview-tree/dist/w-jsonview-tree.umd.js"></script>
+        <script>
+            let jv=window['w-jsonview-tree']
+        </script>
+    
+        <style>
+            .option-label {
+                position:absolute;
+                left:10px;
+                top:-33px;
+                padding:4px 20px 7px 20px;
+                border-left:1px solid #ddd;
+                border-top:1px solid #ddd;
+                border-right:1px solid #ddd;
+                border-bottom:1px solid #f6f6f6;
+                border-top-left-radius:15px;
+                border-top-right-radius:15px;
+                background:#f6f6f6;
+            }
+        </style>
+    
+        `,
+        appTag: `div`,
+        appStyle: `padding:0px 30px;`,
+        appTmp: getAppTmp(),
+        installVue: `Vue.component('w-leaflet-vue', window['w-leaflet-vue'])`,
+        newVue: ``,
+        data: v.data,
+        mounted: v.mounted,
+        computed: v.computed,
+        methods: v.methods,
+        action: v.action,
+        procHtml,
+        fpHtml: `${fdTestHtml}${v.fn}.html`,
+        fpAction: `${fdTestSrc}${v.fn}.action.json`,
+    }
 
-    //prettyhtml
-    //replace computed
-    c = c.replace('{{computed}}', computed)
-
-    //replace methods
-    c = c.replace('{{methods}}', methods)
-
-    //prettyhtml
-    c = prettyhtml(c, {
-        tabWidth: 4,
-    })
-    c = c.contents //取contents
-    //console.log('prettyhtml', c)
-
-    //write
-    // console.log(c)
-    fs.writeFileSync(fn, c, 'utf8')
-
-    // //write action
-    // fs.writeFileSync(fdTestSrc + `${v.fn}.action.json`, v.action, 'utf8')
+    //extractHtml
+    extractHtml(opt)
 
 }
 
@@ -156,8 +144,8 @@ function extractApp(fn) {
     //read
     let hh = fs.readFileSync(fdSrc + fn, 'utf8')
 
-    //取代example與code
-    hh = w.replace(hh, '{filename}', casename)
+    // //取代example與code
+    // hh = w.replace(hh, '{filename}', casename)
 
     // //複寫回去, 因開發階段懶得手動改全部, 故得用程式改
     // fs.writeFileSync(fdSrc + fn, hh, 'utf8')
@@ -165,12 +153,9 @@ function extractApp(fn) {
     //parseVueCode
     let { tmp, mounted, data, computed, methods, action } = parseVueCode(hh)
 
-    //tmp, change cmp name
-    tmp = w.replace(tmp, 'WLeafletVue', 'w-leaflet-vue')
-
     //writeHtml
     writeHtml({
-        fn: fdTestHtml + `ex-${casename}.html`,
+        fn: `ex-${casename}`,
         casename,
         tmp,
         mounted,

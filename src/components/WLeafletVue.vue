@@ -1448,6 +1448,11 @@ export default {
             //getCentroidMultiPolygon
             let centerlatLng = getCentroidMultiPolygon(msg.latLngs)
 
+            //check
+            if (size(centerlatLng) !== 2) {
+                return
+            }
+
             //h
             let h = obj.funSetTooltip(msg)
 
