@@ -12,47 +12,6 @@ let fdTestHtml = './test-html/'
 let fdTestSrc = './test-action/'
 
 
-// function writeHtml({ fn, casename, tmp, mounted, data, computed, methods, action }) {
-
-//     //c
-//     let c = h
-
-//     //replace casename
-//     c = c.replace('{{casename}}', casename)
-
-//     //replace tmp
-//     c = c.replace('{{tmp}}', tmp)
-
-//     //replace data
-//     c = c.replace('{{data}}', data)
-
-//     //replace mounted
-//     c = c.replace('{{mounted}}', mounted)
-
-//     //prettyhtml
-//     //replace computed
-//     c = c.replace('{{computed}}', computed)
-
-//     //replace methods
-//     c = c.replace('{{methods}}', methods)
-
-//     //prettyhtml
-//     c = prettyhtml(c, {
-//         tabWidth: 4,
-//     })
-//     c = c.contents //取contents
-//     //console.log('prettyhtml', c)
-
-//     //write
-//     // console.log(c)
-//     fs.writeFileSync(fn, c, 'utf8')
-
-//     // //write action
-//     // fs.writeFileSync(fdTestSrc + `${v.fn}.action.json`, v.action, 'utf8')
-
-// }
-
-
 function writeHtml(v) {
 
     function getAppTmp() {
@@ -69,15 +28,15 @@ function writeHtml(v) {
 
     //opt
     let opt = {
-        title: v.casename,
+        title: `example for ${v.casename}`,
         head: `
     
         <!-- extractHtml已自動添加@babel/polyfill與vue -->
     
-        <!-- leaflet -->
+        <!-- leaflet已包入 -->
         <script _src="https://cdn.jsdelivr.net/npm/leaflet/dist/leaflet.min.js"></script>
     
-        <!-- vue2-leaflet -->
+        <!-- vue2-leaflet已包入 -->
         <script _src="https://cdn.jsdelivr.net/npm/vue2-leaflet/dist/vue2-leaflet.min.js"></script>
     
         <!-- w-leaflet-vue -->

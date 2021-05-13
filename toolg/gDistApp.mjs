@@ -7,10 +7,10 @@ let opt = {
 
     <!-- rollupVueToHtml已自動添加@babel/polyfill與vue -->
 
-    <!-- leaflet -->
+    <!-- leaflet已包入 -->
     <script _src="https://cdn.jsdelivr.net/npm/leaflet/dist/leaflet.min.js"></script>
 
-    <!-- vue2-leaflet -->
+    <!-- vue2-leaflet已包入 -->
     <script _src="https://cdn.jsdelivr.net/npm/vue2-leaflet/dist/vue2-leaflet.min.js"></script>
 
     <!-- data -->
