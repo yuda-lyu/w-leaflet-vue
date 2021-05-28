@@ -8,7 +8,7 @@ import filter from 'lodash/filter'
 import size from 'lodash/size'
 import cloneDeep from 'lodash/cloneDeep'
 import cdbl from 'wsemi/src/cdbl.mjs'
-import tinycolor from 'wsemi/src/tinycolor.mjs'
+import oc from 'wsemi/src/color.mjs'
 import isernot from 'wsemi/src/isernot.mjs'
 import isearr from 'wsemi/src/isearr.mjs'
 import iser from 'wsemi/src/iser.mjs'
@@ -153,14 +153,10 @@ function interpColor(gradient) {
     //gs
     let gs = []
     each(gradient, (v, k) => {
-        gs.push([cdbl(k), tinycolor(v).toRgb(), v])
+        gs.push([cdbl(k), oc.toRgb(v), v])
     })
     gs = sortBy(gs, 0)
     // console.log('gs', gs)
-
-    function mixColor(c0, c1, r0, r1, key, r) {
-        return (c0[key] * (r1 - r) + c1[key] * (r - r0)) / (r1 - r0)
-    }
 
     function getColor(r) {
         let color = null
@@ -170,11 +166,9 @@ function interpColor(gradient) {
             let r1 = gs[i][0]
             let c1 = gs[i][1]
             if (r0 <= r && r1 >= r) {
-                let cr = mixColor(c0, c1, r0, r1, 'r', r)
-                let cg = mixColor(c0, c1, r0, r1, 'g', r)
-                let cb = mixColor(c0, c1, r0, r1, 'b', r)
-                let ca = mixColor(c0, c1, r0, r1, 'a', r)
-                color = tinycolor({ r: cr, g: cg, b: cb, a: ca }).toRgbString()
+                let w0 = (r1 - r) / (r1 - r0)
+                let w1 = (r - r0) / (r1 - r0)
+                color = oc.mix(c0, w0, c1, w1, 'toRgbString')
                 break
             }
         }
@@ -186,7 +180,7 @@ function interpColor(gradient) {
 
 
 function rgba2rgb(c) {
-    return tinycolor(c).setAlpha(1).toRgbString()
+    return oc.toRgbString(c)
 }
 
 
