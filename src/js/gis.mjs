@@ -12,7 +12,8 @@ import oc from 'wsemi/src/color.mjs'
 import isernot from 'wsemi/src/isernot.mjs'
 import isearr from 'wsemi/src/isearr.mjs'
 import iser from 'wsemi/src/iser.mjs'
-import tricontour from 'd3-tricontour/src/tricontour.js' //rollup打包會出現[Circular dependency], 照es標準需支援, 此訊息可忽略
+// import tricontour from 'd3-tricontour/src/tricontour.js' //rollup打包會出現[Circular dependency], 打包app會失敗
+import {tricontour} from 'd3-tricontour' //使用新版d3-tricontour引用
 //以下turf引用方式rollup無法編譯[Could not resolve]
 // import turf from '@turf/turf'
 // import turf from '@turf/turf/dist/js/index.js'
