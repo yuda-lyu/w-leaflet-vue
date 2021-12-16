@@ -1,6 +1,6 @@
 {
   "name": "w-leaflet-vue",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "yuda-lyu(semisphere)",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,19 +11,19 @@
   },
   "main": "dist/w-leaflet-vue.umd.js",
   "dependencies": {
-    "@turf/turf": "^6.3.0",
-    "d3-tricontour": "^0.1.0",
+    "@turf/turf": "^6.5.0",
+    "d3-tricontour": "^1.0.2",
     "leaflet": "^1.7.1",
     "lodash": "^4.17.21",
-    "vue2-leaflet": "^2.7.0",
+    "vue2-leaflet": "^2.7.1",
     "wsemi": "^1.6.34"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.12",
-    "@vue/cli-plugin-eslint": "^4.5.12",
-    "@vue/cli-service": "^4.5.12",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
     "vue": "^2.6.12",
-    "w-jsonview-tree": "^1.0.24",
+    "w-jsonview-tree": "^1.0.25",
     "w-package-tools": "^1.0.59"
   },
   "eslintConfig": {
