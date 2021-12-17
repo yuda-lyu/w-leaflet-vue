@@ -1,6 +1,6 @@
 {
   "name": "w-leaflet-vue",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "yuda-lyu(semisphere)",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -16,9 +16,19 @@
     "leaflet": "^1.7.1",
     "lodash": "^4.17.21",
     "vue2-leaflet": "^2.7.1",
-    "wsemi": "^1.6.34"
+    "w-gis": "^1.0.7",
+    "wsemi": "^1.6.35"
   },
   "devDependencies": {
+    "eslint": "^7.26.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^4.1.0",
+    "eslint-plugin-vue": "^7.9.0",
     "@vue/cli-plugin-babel": "^4.5.13",
     "@vue/cli-plugin-eslint": "^4.5.13",
     "@vue/cli-service": "^4.5.13",

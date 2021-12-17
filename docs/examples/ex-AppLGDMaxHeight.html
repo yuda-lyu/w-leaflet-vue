@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppPIMShow</title>
+    <title>example for AppLGDMaxHeight</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -73,14 +73,14 @@
 >
     <div id="app" style="padding:0px 30px;">
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">panelItems.show</div>
+            <div style="font-size:1.5rem;">panelLegends.maxHeight</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPIMShow.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppLGDMaxWidth.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPIMShow.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppLGDMaxWidth.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -91,12 +91,12 @@
                 <div>
                     <button
                         style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelItems.show=true"
-                    >show(default)</button>
+                        @click="opt.panelLegends.maxHeight=null"
+                    >null(default)</button>
                     <button
                         style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelItems.show=false"
-                    >hide</button>
+                        @click="opt.panelLegends.maxHeight=150"
+                    >150</button>
                 </div>
                 <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
             </div>
@@ -128,43 +128,42 @@
     data: function() {
       return {
         opt: {
-          panelItems: {
-            show: true
+          center: [24.084, 121.068],
+          zoom: 8,
+          panelLegends: {
+            maxHeight: 300
           },
-          pointSets: [
+          contourSets: [
             {
-              title: "pointSet A",
-              msg: "msg from pointSet A",
+              title: "contourSet (for long title)",
+              msg: "msg from contourSet A",
               points: [
-                {
-                  title: "point A-1",
-                  msg: "msg from data A-1",
-                  latLng: [24.2, 121.27]
-                },
-                {
-                  title: "point A-2",
-                  msg: "msg from data A-2",
-                  latLng: [23.9, 120.97]
-                }
+                [24.325, 120.786, 0],
+                [23.944, 120.968, 10],
+                [24.884, 121.234, 20],
+                [24.579, 121.345, 80],
+                [24.664, 121.761, 40],
+                [23.803, 121.397, 30],
+                [23.727, 120.772, 0],
+                [23.539, 120.975, 0],
+                [23.612, 121.434, 0],
+                [23.193, 120.355, 22],
+                [23.456, 120.89, 42],
+                [23.28, 120.551, 25],
+                [23.162, 121.247, 5]
               ],
               visible: true
             },
             {
-              title: "pointSet B",
-              msg: "msg from pointSet B",
+              title: "contourSet B (for long title)",
+              msg: "msg from contourSet B",
               points: [
-                {
-                  title: "point B-1",
-                  msg: "msg from data B-1",
-                  latLng: [23.3, 120.57]
-                },
-                {
-                  title: "point B-2",
-                  msg: "msg from data B-2",
-                  latLng: [23.0, 120.87]
-                }
+                [22.607, 120.416, 0],
+                [22.967, 120.663, 15],
+                [22.592, 120.922, 20],
+                [22.717, 120.644, 45]
               ],
-              visible: false
+              visible: true
             }
           ]
         },

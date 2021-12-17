@@ -170,11 +170,17 @@
 
         <AppPIMPosition v-if="showSubCmp==='panelItems.position'"></AppPIMPosition>
 
+        <AppPIMMaxWidth v-if="showSubCmp==='panelItems.maxWidth'"></AppPIMMaxWidth>
+
+        <AppPIMMaxHeight v-if="showSubCmp==='panelItems.maxHeight'"></AppPIMMaxHeight>
+
         <AppLGDShow v-if="showSubCmp==='panelLegends.show'"></AppLGDShow>
 
         <AppLGDPosition v-if="showSubCmp==='panelLegends.position'"></AppLGDPosition>
 
         <AppLGDMaxWidth v-if="showSubCmp==='panelLegends.maxWidth'"></AppLGDMaxWidth>
+
+        <AppLGDMaxHeight v-if="showSubCmp==='panelLegends.maxHeight'"></AppLGDMaxHeight>
 
     </div>
 </template>
@@ -246,9 +252,12 @@ import AppCTRContourSetTooltip from './AppCTRContourSetTooltip.vue'
 import AppCTRContourSetLargeSet from './AppCTRContourSetLargeSet.vue'
 import AppPIMShow from './AppPIMShow.vue'
 import AppPIMPosition from './AppPIMPosition.vue'
+import AppPIMMaxWidth from './AppPIMMaxWidth.vue'
+import AppPIMMaxHeight from './AppPIMMaxHeight.vue'
 import AppLGDShow from './AppLGDShow.vue'
 import AppLGDPosition from './AppLGDPosition.vue'
 import AppLGDMaxWidth from './AppLGDMaxWidth.vue'
+import AppLGDMaxHeight from './AppLGDMaxHeight.vue'
 
 
 export default {
@@ -318,9 +327,12 @@ export default {
         AppCTRContourSetLargeSet,
         AppPIMShow,
         AppPIMPosition,
+        AppPIMMaxWidth,
+        AppPIMMaxHeight,
         AppLGDShow,
         AppLGDPosition,
         AppLGDMaxWidth,
+        AppLGDMaxHeight,
     },
     data: function() {
         return {
@@ -354,11 +366,14 @@ export default {
                 panelItems: [
                     'panelItems.show',
                     'panelItems.position',
+                    'panelItems.maxWidth',
+                    'panelItems.maxHeight',
                 ],
                 panelLegends: [
                     'panelLegends.show',
                     'panelLegends.position',
                     'panelLegends.maxWidth',
+                    'panelLegends.maxHeight',
                 ],
                 point: [
                     'pointSets',

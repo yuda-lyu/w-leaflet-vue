@@ -15,8 +15,9 @@
 
 <script>
 import map from 'lodash/map'
+import oc from 'wsemi/src/color.mjs'
 import { LPolygon } from 'vue2-leaflet'
-import { interpColor, rgba2rgb, calcContours } from '../js/gis.mjs'
+import wg from 'w-gis/src/WGis.mjs'
 
 
 export default {
@@ -44,12 +45,12 @@ export default {
             type: Object,
             default: () => {
                 return {
-                    0: 'rgba(255, 255, 255, 0.5)',
-                    0.2: 'rgba(254, 178, 76, 0.5)',
-                    0.4: 'rgba(252, 78, 42, 0.5)',
-                    0.6: 'rgba(220, 58, 38, 0.5)',
-                    0.8: 'rgba(200, 40, 23, 0.5)',
-                    1: 'rgba(180, 30, 60, 0.5)',
+                    0: 'rgb(255, 255, 255)',
+                    0.2: 'rgb(254, 178, 76)',
+                    0.4: 'rgb(252, 78, 42)',
+                    0.6: 'rgb(220, 58, 38)',
+                    0.8: 'rgb(200, 40, 23)',
+                    1: 'rgb(180, 30, 60)',
                 }
             },
         },
@@ -70,7 +71,7 @@ export default {
             let vo = this
 
             //fun
-            let fun = interpColor(vo.gradient)
+            let fun = oc.interp(vo.gradient)
 
             return fun
         },
@@ -89,15 +90,15 @@ export default {
                 clipInner: vo.polygonsClipInner,
                 clipOuter: vo.polygonClipOuter,
             }
-            let polygonSets = calcContours(points, opt)
+            let polygonSets = wg.calcContours(points, opt)
             // console.log('polygonSets',  cloneDeep(polygonSets))
 
             //add style and event
             polygonSets = map(polygonSets, (polygonSet, k) => {
 
-                //color, colorLegend
+                //color
                 let color = vo.getColor(k, polygonSets.length - 1)
-                let colorLegend = rgba2rgb(color)
+                // console.log('color', color)
 
                 //lineColor
                 let lineColor = color
@@ -141,7 +142,7 @@ export default {
 
                 return {
                     ...polygonSet,
-                    colorLegend, //給外部legend使用無透明度顏色
+                    color,
                     style, //需給予, 才能通過v-bind給予初始樣式
                     mouseenter: (ev) => {
                         // console.log('mouseenter', ev)

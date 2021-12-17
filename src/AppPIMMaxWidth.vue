@@ -2,17 +2,17 @@
     <div>
 
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">panelLegends.maxWidth</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppLGDMaxWidth.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppLGDMaxWidth.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">panelItems.maxWidth</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPIMMaxWidth.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPIMMaxWidth.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div style="display:flex; padding-bottom:20px;">
 
             <div style="padding:0px 20px;">
                 <div>
-                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelLegends.maxWidth=null">null(default)</button>
-                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelLegends.maxWidth=150">150</button>
+                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.maxWidth=null">null(default)</button>
+                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.maxWidth=100">100</button>
                 </div>
                 <WLeafletVue
                     style="width:800px; height:500px;"
@@ -50,29 +50,44 @@ export default {
     data: function() {
         return {
             'opt': {
-                center: [24.084, 121.068],
-                zoom: 8,
-                panelLegends: {
+                panelItems: {
+                    position: 'topleft',
                     maxWidth: null,
                 },
-                contourSets: [
+                pointSets: [
                     {
-                        title: 'contourSet (for long title)',
-                        msg: 'msg from contourSet A',
+                        title: 'pointSet A',
+                        msg: 'msg from pointSet A',
                         points: [
-                            [24.325, 120.786, 0], [23.944, 120.968, 10], [24.884, 121.234, 20], [24.579, 121.345, 80], [24.664, 121.761, 40], [23.803, 121.397, 30],
-                            [23.727, 120.772, 0], [23.539, 120.975, 0], [23.612, 121.434, 0],
-                            [23.193, 120.355, 22], [23.456, 120.890, 42], [23.280, 120.551, 25], [23.162, 121.247, 5],
+                            {
+                                title: 'point A-1',
+                                msg: 'msg from data A-1',
+                                latLng: [24.20, 121.27],
+                            },
+                            {
+                                title: 'point A-2',
+                                msg: 'msg from data A-2',
+                                latLng: [23.90, 120.97],
+                            },
                         ],
                         visible: true,
                     },
                     {
-                        title: 'contourSet B (for long title)',
-                        msg: 'msg from contourSet B',
+                        title: 'pointSet B',
+                        msg: 'msg from pointSet B',
                         points: [
-                            [22.607, 120.416, 0], [22.967, 120.663, 15], [22.592, 120.922, 20], [22.717, 120.644, 45],
+                            {
+                                title: 'point B-1',
+                                msg: 'msg from data B-1',
+                                latLng: [23.30, 120.57],
+                            },
+                            {
+                                title: 'point B-2',
+                                msg: 'msg from data B-2',
+                                latLng: [23.00, 120.87],
+                            },
                         ],
-                        visible: true,
+                        visible: false,
                     },
                 ],
             },

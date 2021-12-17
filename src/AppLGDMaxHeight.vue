@@ -2,7 +2,7 @@
     <div>
 
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">panelLegends.maxWidth</div>
+            <div style="font-size:1.5rem;">panelLegends.maxHeight</div>
             <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppLGDMaxWidth.html" target="_blank" class="item-link">example</a>
             <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppLGDMaxWidth.html" target="_blank" class="item-link">code</a>
         </div>
@@ -11,8 +11,8 @@
 
             <div style="padding:0px 20px;">
                 <div>
-                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelLegends.maxWidth=null">null(default)</button>
-                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelLegends.maxWidth=150">150</button>
+                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelLegends.maxHeight=null">null(default)</button>
+                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelLegends.maxHeight=150">150</button>
                 </div>
                 <WLeafletVue
                     style="width:800px; height:500px;"
@@ -53,7 +53,7 @@ export default {
                 center: [24.084, 121.068],
                 zoom: 8,
                 panelLegends: {
-                    maxWidth: null,
+                    maxHeight: 300,
                 },
                 contourSets: [
                     {

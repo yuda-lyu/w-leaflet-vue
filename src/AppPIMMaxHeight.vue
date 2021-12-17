@@ -1,0 +1,172 @@
+<template>
+    <div>
+
+        <div style="padding:20px;">
+            <div style="font-size:1.5rem;">panelItems.maxHeight</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPIMMaxHeight.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPIMMaxHeight.html" target="_blank" class="item-link">code</a>
+        </div>
+
+        <div style="display:flex; padding-bottom:20px;">
+
+            <div style="padding:0px 20px;">
+                <div>
+                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.maxHeight=null">null(default)</button>
+                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.maxHeight=100">100</button>
+                </div>
+                <WLeafletVue
+                    style="width:800px; height:500px;"
+                    :opt="opt"
+                ></WLeafletVue>
+            </div>
+
+            <div style="width:600px; padding:0px 20px 0px 0px; position:relative;">
+
+                <div class="option-label">
+                    opt example
+                </div>
+
+                <div style="border:1px solid #ddd;">
+                    <div style="padding-left:5px; overflow-y:auto; height:500px;">
+                        <div id="optjson" style="font-size:10pt;"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+import WLeafletVue from './components/WLeafletVue.vue'
+import jv from 'w-jsonview-tree'
+
+export default {
+    components: {
+        WLeafletVue,
+    },
+    data: function() {
+        return {
+            'opt': {
+                panelItems: {
+                    position: 'topleft',
+                    maxHeight: null,
+                },
+                pointSets: [
+                    {
+                        title: 'pointSet A',
+                        msg: 'msg from pointSet A',
+                        points: [
+                            {
+                                title: 'point A-1',
+                                msg: 'msg from data A-1',
+                                latLng: [24.20, 121.27],
+                            },
+                            {
+                                title: 'point A-2',
+                                msg: 'msg from data A-2',
+                                latLng: [23.90, 120.97],
+                            },
+                        ],
+                        visible: true,
+                    },
+                    {
+                        title: 'pointSet B',
+                        msg: 'msg from pointSet B',
+                        points: [
+                            {
+                                title: 'point B-1',
+                                msg: 'msg from data B-1',
+                                latLng: [23.30, 120.57],
+                            },
+                            {
+                                title: 'point B-2',
+                                msg: 'msg from data B-2',
+                                latLng: [23.00, 120.87],
+                            },
+                        ],
+                        visible: false,
+                    },
+                    {
+                        title: 'pointSet C',
+                        msg: 'msg from pointSet C',
+                        points: [
+                            {
+                                title: 'point C-1',
+                                msg: 'msg from data C-1',
+                                latLng: [23.30, 120.57],
+                            },
+                            {
+                                title: 'point C-2',
+                                msg: 'msg from data C-2',
+                                latLng: [23.00, 120.87],
+                            },
+                        ],
+                        visiCle: false,
+                    },
+                    {
+                        title: 'pointSet D',
+                        msg: 'msg from pointSet D',
+                        points: [
+                            {
+                                title: 'point D-1',
+                                msg: 'msg from data D-1',
+                                latLng: [23.30, 120.57],
+                            },
+                            {
+                                title: 'point D-2',
+                                msg: 'msg from data D-2',
+                                latLng: [23.00, 120.87],
+                            },
+                        ],
+                        visiDle: false,
+                    },
+                    {
+                        title: 'pointSet E',
+                        msg: 'msg from pointSet E',
+                        points: [
+                            {
+                                title: 'point E-1',
+                                msg: 'msg from data E-1',
+                                latLng: [23.30, 120.57],
+                            },
+                            {
+                                title: 'point E-2',
+                                msg: 'msg from data E-2',
+                                latLng: [23.00, 120.87],
+                            },
+                        ],
+                        visiEle: false,
+                    },
+                ],
+            },
+            'action': [
+            ],
+        }
+    },
+    mounted: function() {
+        let vo = this
+        vo.showOptJson()
+    },
+    watch: {
+        opt: {
+            handler: function() {
+                let vo = this
+                vo.showOptJson()
+            },
+            deep: true,
+        },
+    },
+    methods: {
+        showOptJson: function() {
+            let vo = this
+            jv(vo.opt, document.querySelector('#optjson'), { expanded: true })
+        },
+    },
+}
+</script>
+
+<style>
+</style>

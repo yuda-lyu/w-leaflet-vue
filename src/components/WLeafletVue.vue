@@ -39,101 +39,99 @@
                 :position="panelItems.position"
                 v-if="panelItems.show && items.length>0"
             >
-                <div
-                    class="clsPanel"
-                    :style="{background:panelBackgroundColor}"
-                >
-                    <Checkboxs
-                        :items.sync="items"
-                        :keyValue="'visible'"
-                        :keyTitle="'name'"
-                        @update:items="updateItems"
-                    ></Checkboxs>
+                <div class="clsPanel" :style="{background:panelBackgroundColor}">
+                    <div :style="{overflowY:'auto',...panelItems.style}">
+                        <Checkboxs
+                            :style="``"
+                            :items.sync="items"
+                            :keyValue="'visible'"
+                            :keyTitle="'name'"
+                            @update:items="updateItems"
+                        ></Checkboxs>
+                    </div>
                 </div>
             </l-control>
 
             <!-- 滑鼠座標顯示區 -->
             <l-control :position="panelLabels.position" v-if="panelLabels.show">
-                <div
-                    class="clsPanel"
-                    :style="{background:panelBackgroundColor}"
-                >
+                <div class="clsPanel" :style="{background:panelBackgroundColor}">
+                    <div :style="{overflowY:'auto',...panelLabels.style}">
 
-                    <template v-if="panelLabels.title!==''">
+                        <template v-if="panelLabels.title!==''">
 
-                        <div style="font-size:1.2rem; font-weight:bold; text-align:center;">
-                            <span>{{panelLabels.title}}</span>
-                        </div>
+                            <div style="font-size:1.2rem; font-weight:bold; text-align:center;">
+                                <span>{{panelLabels.title}}</span>
+                            </div>
 
-                        <div style="border-top:1px solid #bbb; margin:5px 0px;"></div>
+                            <div style="border-top:1px solid #bbb; margin:5px 0px;"></div>
 
-                    </template>
+                        </template>
 
-                    <table>
-                        <tbody>
-                            <tr :key="kitem" v-for="(item,kitem) in panelLabels.useItems">
-                                <td style="text-align:right;">{{panelLabels[item]}}</td>
-                                <td> : </td>
-                                <td>
-                                    {{
-                                        item==='lng' || item==='lat' ? showLoc[item] :
-                                        item==='zoom' ? zoom :
-                                        ''
-                                    }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table>
+                            <tbody>
+                                <tr :key="kitem" v-for="(item,kitem) in panelLabels.useItems">
+                                    <td style="text-align:right;">{{panelLabels[item]}}</td>
+                                    <td> : </td>
+                                    <td>
+                                        {{
+                                            item==='lng' || item==='lat' ? showLoc[item] :
+                                            item==='zoom' ? zoom :
+                                            ''
+                                        }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
+                    </div>
                 </div>
             </l-control>
 
             <!-- 圖例區 -->
             <l-control :position="panelLegends.position" v-if="panelLegends.show && countVisible(contourSets)>0">
-                <div
-                    class="clsPanel"
-                    :style="{display:'flex',alignItems:'flex-start',overflowX:'auto',maxWidth:`${panelLegends.maxWidth}px`,background:panelBackgroundColor}"
-                >
+                <div class="clsPanel" :style="{background:panelBackgroundColor}">
+                    <div :style="{display:'flex',alignItems:'flex-start',overflowX:'auto',overflowY:'auto',...panelLegends.style}">
 
-                    <template
-                        v-for="(contourSet,kcontourSet) in contourSets"
-                    >
-                        <div
-                            style="white-space:nowrap;"
-                            :key="'contourSet:'+kcontourSet"
-                            v-if="contourSet.visible"
+                        <template
+                            v-for="(contourSet,kcontourSet) in contourSets"
                         >
-                            <div style="padding:6px 8px;">
+                            <div
+                                style="white-space:nowrap;"
+                                :key="'contourSet:'+kcontourSet"
+                                v-if="contourSet.visible"
+                            >
+                                <div style="padding:6px 8px;">
 
-                                <div style="margin-bottom:5px; padding-left:5px;">
-                                    <div style="text-align:center;" v-html="contourSet.title"></div>
-                                    <div style="font-size:0.85rem; text-align:center;" v-html="contourSet.legendMsg"></div>
-                                </div>
-
-                                <template
-                                    v-for="(legend,klegend) in contourSet.legend"
-                                >
-                                    <div
-                                        style="position:relative; padding-left:5px;"
-                                        :key="'legend'+klegend"
-                                    >
-                                        <div style="position:absolute; margin:auto 0; transform:translateX(-100%);" v-if="legend.arrow">
-                                            ▶
-                                        </div>
-                                        <div
-                                            style="display:flex; align-items:center;"
-                                        >
-                                            <div :style="`background:${legend.color}; width:18px; height:18px; margin-right:8px;`"></div>
-                                            <div style="font-size:0.7rem; height:18px; line-height:18px;" v-html="legend.rangeText"></div>
-                                        </div>
+                                    <div style="margin-bottom:5px; padding-left:5px;">
+                                        <div style="text-align:center;" v-html="contourSet.title"></div>
+                                        <div style="font-size:0.85rem; text-align:center;" v-html="contourSet.legendMsg"></div>
                                     </div>
 
-                                </template>
+                                    <template
+                                        v-for="(legend,klegend) in contourSet.legend"
+                                    >
+                                        <div
+                                            style="position:relative; padding-left:5px;"
+                                            :key="'legend'+klegend"
+                                        >
+                                            <div style="position:absolute; margin:auto 0; transform:translateX(-100%);" v-if="legend.arrow">
+                                                ▶
+                                            </div>
+                                            <div
+                                                style="display:flex; align-items:center;"
+                                            >
+                                                <div :style="`background:${legend.color}; width:18px; height:18px; margin-right:8px;`"></div>
+                                                <div style="font-size:0.7rem; height:18px; line-height:18px;" v-html="legend.rangeText"></div>
+                                            </div>
+                                        </div>
 
+                                    </template>
+
+                                </div>
                             </div>
-                        </div>
-                    </template>
+                        </template>
 
+                    </div>
                 </div>
             </l-control>
 
@@ -247,7 +245,7 @@ import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LPolygo
 import LContour from './LContour.vue'
 import Radios from './Radios.vue'
 import Checkboxs from './Checkboxs.vue'
-import { getCentroidMultiPolygon } from '../js/gis.mjs'
+import wg from 'w-gis/src/WGis.mjs'
 
 
 function getDefBaseMaps() {
@@ -353,13 +351,18 @@ function getDefBaseMaps() {
  * @vue-prop {String} [opt.panelLabels.lat='Latitude'] 輸入地圖資訊區內標注緯度字串，預設'Latitude'
  * @vue-prop {String} [opt.panelLabels.zoom='Zoom'] 輸入地圖資訊區內標注顯示層級字串，預設'Zoom'
  * @vue-prop {Array} [opt.panelLabels.useItems=['lng','lat','zoom']] 輸入地圖資訊區內呈現項目陣列，各元素給字串，'lng'代表經度，'lat'代表緯度，'zoom'代表顯示層級，預設['lng','lat','zoom']
+ * @vue-prop {Number} [opt.panelLabels.maxWidth=null] 輸入地圖資訊區最大寬度數字，單位px，預設null
+ * @vue-prop {Number} [opt.panelLabels.maxHeight=null] 輸入地圖資訊區最大高度數字，單位px，預設null
  * @vue-prop {Boolean} [opt.panelZoom.show=true] 輸入縮放按鈕區是否顯示布林值，預設true
  * @vue-prop {String} [opt.panelZoom.position='bottomleft'] 輸入縮放按鈕區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomleft'
  * @vue-prop {Boolean} [opt.panelItems.show=true] 輸入圖層顯隱切換區是否顯示布林值，預設true
  * @vue-prop {String} [opt.panelItems.position='topleft'] 輸入圖層顯隱切換區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topleft'
- * @vue-prop {Boolean} [opt.panelItems.show=true] 輸入圖例區是否顯示布林值，預設true
- * @vue-prop {String} [opt.panelItems.position='bottomright'] 輸入圖例區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomright'
- * @vue-prop {Number} [opt.panelItems.maxWidth=300] 輸入圖例區最大寬度數字，單位px，預設300
+ * @vue-prop {Number} [opt.panelItems.maxWidth=null] 輸入圖層顯隱切換區最大寬度數字，單位px，預設null
+ * @vue-prop {Number} [opt.panelItems.maxHeight=null] 輸入圖層顯隱切換區最大高度數字，單位px，預設null
+ * @vue-prop {Boolean} [opt.panelLegends.show=true] 輸入圖例區是否顯示布林值，預設true
+ * @vue-prop {String} [opt.panelLegends.position='bottomright'] 輸入圖例區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomright'
+ * @vue-prop {Number} [opt.panelLegends.maxWidth=null] 輸入圖例區最大寬度數字，單位px，預設null
+ * @vue-prop {Number} [opt.panelLegends.maxHeight=null] 輸入圖例區最大高度數字，單位px，預設null
  * @vue-prop {Array} [opt.pointSets=[]] 輸入點集合陣列，各元素為物件，預設[]
  * @vue-prop {String} [opt.pointSets[i].title=''] 輸入第i個點集合的標題字串，預設為''
  * @vue-prop {String} [opt.pointSets[i].msg=''] 輸入第i個點集合的說明字串，預設為''
@@ -744,6 +747,13 @@ export default {
             if (!isobj(panelLabels)) {
                 panelLabels = {}
             }
+            panelLabels.style = {}
+            if (isNumber(panelLabels.maxWidth)) {
+                panelLabels.style.maxWidth = `${panelLabels.maxWidth}px`
+            }
+            if (isNumber(panelLabels.maxHeight)) {
+                panelLabels.style.maxHeight = `${panelLabels.maxHeight}px`
+            }
             vo.panelLabels = {
                 ...defPanelLabels,
                 ...panelLabels,
@@ -757,6 +767,13 @@ export default {
             let panelItems = get(vo, 'opt.panelItems', null)
             if (!isobj(panelItems)) {
                 panelItems = {}
+            }
+            panelItems.style = {}
+            if (isNumber(panelItems.maxWidth)) {
+                panelItems.style.maxWidth = `${panelItems.maxWidth}px`
+            }
+            if (isNumber(panelItems.maxHeight)) {
+                panelItems.style.maxHeight = `${panelItems.maxHeight}px`
             }
             vo.panelItems = {
                 ...defPanelItems,
@@ -772,6 +789,13 @@ export default {
             let panelLegends = get(vo, 'opt.panelLegends', null)
             if (!isobj(panelLegends)) {
                 panelLegends = {}
+            }
+            panelLegends.style = {}
+            if (isNumber(panelLegends.maxWidth)) {
+                panelLegends.style.maxWidth = `${panelLegends.maxWidth}px`
+            }
+            if (isNumber(panelLegends.maxHeight)) {
+                panelLegends.style.maxHeight = `${panelLegends.maxHeight}px`
             }
             vo.panelLegends = {
                 ...defPanelLegends,
@@ -1446,7 +1470,7 @@ export default {
             let { msg } = vo.parsePolygonData(ev, polygonSet, kpolygonSet, polygonSets)
 
             //getCentroidMultiPolygon
-            let centerlatLng = getCentroidMultiPolygon(msg.latLngs)
+            let centerlatLng = wg.getCentroidMultiPolygon(msg.latLngs)
 
             //check
             if (size(centerlatLng) !== 2) {
@@ -1585,7 +1609,7 @@ export default {
             //legend
             let legend = map(data.polygonSets, (v, k) => {
                 return {
-                    color: v.colorLegend,
+                    color: v.color,
                     rangeText: getText(k, v.range),
                     arrow: false,
                     index: k,

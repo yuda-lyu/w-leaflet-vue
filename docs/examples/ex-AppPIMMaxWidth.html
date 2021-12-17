@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppPIMShow</title>
+    <title>example for AppPIMMaxWidth</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -73,14 +73,14 @@
 >
     <div id="app" style="padding:0px 30px;">
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">panelItems.show</div>
+            <div style="font-size:1.5rem;">panelItems.maxWidth</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPIMShow.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPIMMaxWidth.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPIMShow.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPIMMaxWidth.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -91,12 +91,12 @@
                 <div>
                     <button
                         style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelItems.show=true"
-                    >show(default)</button>
+                        @click="opt.panelItems.maxWidth=null"
+                    >null(default)</button>
                     <button
                         style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelItems.show=false"
-                    >hide</button>
+                        @click="opt.panelItems.maxWidth=100"
+                    >100</button>
                 </div>
                 <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
             </div>
@@ -129,7 +129,8 @@
       return {
         opt: {
           panelItems: {
-            show: true
+            position: "topleft",
+            maxWidth: null
           },
           pointSets: [
             {
