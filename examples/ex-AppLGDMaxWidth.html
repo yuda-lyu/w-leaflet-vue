@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.8/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.9/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- data -->
     <script
@@ -91,12 +91,12 @@
                 <div>
                     <button
                         style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelLegends.maxWidth=300"
-                    >300(default)</button>
+                        @click="opt.panelLegends.maxWidth=null"
+                    >null(default)</button>
                     <button
                         style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelLegends.maxWidth=500"
-                    >500</button>
+                        @click="opt.panelLegends.maxWidth=150"
+                    >150</button>
                 </div>
                 <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
             </div>
@@ -131,7 +131,7 @@
           center: [24.084, 121.068],
           zoom: 8,
           panelLegends: {
-            maxWidth: 300
+            maxWidth: null
           },
           contourSets: [
             {
