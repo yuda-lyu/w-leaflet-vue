@@ -1,25 +1,19 @@
 {
   "name": "w-leaflet-vue",
-  "version": "1.0.11",
-  "author": "yuda-lyu(semisphere)",
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test": "mocha --parallel --timeout 60000 --experimental-modules --es-module-specifier-resolution=node",
-    "lint": "vue-cli-service lint",
-    "deploy": "gh-pages -d docs"
-  },
+  "version": "1.0.12",
   "main": "dist/w-leaflet-vue.umd.js",
   "dependencies": {
-    "@turf/turf": "^6.5.0",
-    "d3-tricontour": "^1.0.2",
-    "leaflet": "^1.7.1",
+    "leaflet": "^1.8.0",
     "lodash": "^4.17.21",
     "vue2-leaflet": "^2.7.1",
-    "w-gis": "^1.0.8",
-    "wsemi": "^1.6.54"
+    "w-component-vue": "^2.2.18",
+    "w-gis": "^1.0.9",
+    "wsemi": "^1.6.67"
   },
   "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
     "eslint": "^7.26.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-friendly-formatter": "^4.0.1",
@@ -29,12 +23,16 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^4.1.0",
     "eslint-plugin-vue": "^7.9.0",
-    "@vue/cli-plugin-babel": "^4.5.13",
-    "@vue/cli-plugin-eslint": "^4.5.13",
-    "@vue/cli-service": "^4.5.13",
     "vue": "^2.6.14",
     "w-jsonview-tree": "^1.0.27",
     "w-package-tools": "^1.0.65"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test": "mocha --parallel --timeout 60000 --experimental-modules --es-module-specifier-resolution=node",
+    "lint": "vue-cli-service lint",
+    "deploy": "gh-pages -d docs"
   },
   "eslintConfig": {
     "root": true,
@@ -59,11 +57,6 @@
     "> 1%",
     "last 2 versions"
   ],
-  "bugs": {
-    "url": "https://github.com/yuda-lyu/w-leaflet-vue/issues"
-  },
-  "homepage": "https://github.com/yuda-lyu/w-leaflet-vue#readme",
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yuda-lyu/w-leaflet-vue.git"
@@ -78,5 +71,7 @@
     "turf",
     "d3-tricontour",
     "wrapper"
-  ]
+  ],
+  "author": "yuda-lyu(semisphere)",
+  "license": "MIT"
 }

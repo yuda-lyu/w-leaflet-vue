@@ -19,7 +19,7 @@ To view some examples for more understanding, visit examples:
 
 ## Installation
 ### Using npm(ES6 module):
-> **Note:** w-leaflet-vue is mainly dependent on `leaflet`, `vue2-leaflet`, `@turf` and `d3-tricontour`.
+> **Note:** w-leaflet-vue is mainly dependent on `leaflet`, `vue2-leaflet`, `w-gis` and `wsemi`.
 ```alias
 npm i w-leaflet-vue
 ```
@@ -39,5 +39,5 @@ npm i w-leaflet-vue
 ```
 [Necessary] Add script for w-leaflet-vue.
 ```alias
-<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.11/dist/w-leaflet-vue.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.12/dist/w-leaflet-vue.umd.js"></script>
 ```

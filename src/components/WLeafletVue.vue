@@ -1,5 +1,9 @@
 <template>
-    <div style="display:inline-block;">
+    <div
+        style="display:inline-block;"
+        v-domresize
+        @domresize="resize"
+    >
 
         <l-map
             ref="lmap"
@@ -239,6 +243,7 @@ import ispint from 'wsemi/src/ispint.mjs'
 import isearr from 'wsemi/src/isearr.mjs'
 import dig from 'wsemi/src/dig.mjs'
 import debounce from 'wsemi/src/debounce.mjs'
+import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
 import { Icon } from 'leaflet'
 import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LPolygon } from 'vue2-leaflet'
@@ -421,6 +426,9 @@ function getDefBaseMaps() {
  * @vue-prop {Function} [opt.ContourSets[i].tooltip=function(){}] 輸入第i個等值線集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  */
 export default {
+    directives: {
+        domresize: domResize(),
+    },
     components: {
         LMap,
         LTileLayer,
@@ -533,6 +541,24 @@ export default {
     computed: {
     },
     methods: {
+
+        resize: function(msg) {
+            // console.log('methods resize', msg)
+
+            let vo = this
+
+            //mapObject
+            let mapObject = get(vo, '$refs.lmap.mapObject')
+            // console.log('mapObject', mapObject)
+
+            //invalidateSize
+            let invalidateSize = get(mapObject, 'invalidateSize')
+            if (isfun(invalidateSize)) {
+                mapObject.invalidateSize()
+                // console.log('invalidateSize')
+            }
+
+        },
 
         countVisible: function(arr) {
             let i = 0

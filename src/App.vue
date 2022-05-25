@@ -443,7 +443,9 @@ export default {
 
         nowSubCmps: function() {
             let vo = this
-            return get(vo.mainCmps, vo.showMainCmp, [])
+            let rs = get(vo.mainCmps, vo.showMainCmp, [])
+            vo.showSubCmp = get(rs, 0, '')
+            return rs
         },
 
     },
