@@ -768,6 +768,7 @@ export default {
             if (!isobj(panelLabels)) {
                 panelLabels = {}
             }
+            panelLabels = cloneDeep(panelLabels) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然添加style就會影響外部opt記憶體變更
             panelLabels.style = {}
             if (isNumber(panelLabels.maxWidth)) {
                 panelLabels.style.maxWidth = `${panelLabels.maxWidth}px`
@@ -789,6 +790,7 @@ export default {
             if (!isobj(panelItems)) {
                 panelItems = {}
             }
+            panelItems = cloneDeep(panelItems) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然添加style就會影響外部opt記憶體變更
             panelItems.style = {}
             if (isNumber(panelItems.maxWidth)) {
                 panelItems.style.maxWidth = `${panelItems.maxWidth}px`
@@ -811,6 +813,7 @@ export default {
             if (!isobj(panelLegends)) {
                 panelLegends = {}
             }
+            panelLegends = cloneDeep(panelLegends) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然添加style就會影響外部opt記憶體變更
             panelLegends.style = {}
             if (isNumber(panelLegends.maxWidth)) {
                 panelLegends.style.maxWidth = `${panelLegends.maxWidth}px`
