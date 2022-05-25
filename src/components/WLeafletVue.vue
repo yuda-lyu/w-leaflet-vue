@@ -496,11 +496,6 @@ export default {
             vo.wats.push(wat)
         })
 
-        each(['pointSets', 'defPointSetsClick', 'defPointSetsPopup', 'defPointSetsTooltip'], (v) => {
-            let wat = vo.$watch(`opt.${v}`, vo.changePointSetsDebounce, wo)
-            vo.wats.push(wat)
-        })
-
         each(['polygonSets', 'defPolygonSetsClick', 'defPolygonSetsPopup', 'defPolygonSetsTooltip'], (v) => {
             let wat = vo.$watch(`opt.${v}`, vo.changePolygonSetsDebounce, wo)
             vo.wats.push(wat)
