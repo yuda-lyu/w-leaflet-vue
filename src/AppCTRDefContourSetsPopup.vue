@@ -51,7 +51,7 @@ export default {
                 defContourSetsPopup: function(v) {
                     console.log('defContourSetsPopup', v)
                     let c = ''
-                    c += '<div>'
+                    c += '<div style="padding:15px;">'
                     c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#62f;">[Popup>contourSets]</span> ' + v.contourSet.title + '</div>'
                     c += '<div style="color:#aaa;">' + v.contourSet.msg + '</div>'
                     c += '</div>'

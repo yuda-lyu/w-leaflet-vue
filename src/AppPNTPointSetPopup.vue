@@ -49,7 +49,7 @@ export default {
                 defPointSetsPopup: function(v) {
                     console.log('defPointSetsPopup', v)
                     let c = ''
-                    c += '<div>'
+                    c += '<div style="padding:15px;">'
                     c += '<div style="color:#222; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;"><span style="color:#62f;">[Popup>pointSets]</span> ' + v.point.title + '</div>'
                     c += '<div style="color:#aaa;">' + v.point.msg + '</div>'
                     c += '</div>'
@@ -75,7 +75,7 @@ export default {
                         popup: function(v) {
                             console.log('pointSet[0] popup', v)
                             let c = ''
-                            c += '<div>'
+                            c += '<div style="padding:15px;">'
                             c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f26;">[Popup>pointSet:' + v.pointSet.title + ']</span> ' + v.point.title + '</div>'
                             c += '<div style="color:#aaa;">' + v.point.msg + '</div>'
                             c += '</div>'
@@ -101,7 +101,7 @@ export default {
                         popup: function(v) {
                             console.log('pointSet[1] popup', v)
                             let c = ''
-                            c += '<div>'
+                            c += '<div style="padding:15px;">'
                             c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f26;">[Popup>pointSet:' + v.pointSet.title + ']</span> ' + v.point.title + '</div>'
                             c += '<div style="color:#aaa;">' + v.point.msg + '</div>'
                             c += '</div>'

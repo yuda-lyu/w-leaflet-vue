@@ -1684,4 +1684,10 @@ export default {
     font-size: 0.8rem;
     font-family:'Microsoft JhengHei','Avenir','Helvetica';
 }
+::v-deep .leaflet-popup-content {
+    margin:0px;
+}
+::v-deep .leaflet-popup-content-wrapper {
+    border-radius:5px;
+}
 </style>

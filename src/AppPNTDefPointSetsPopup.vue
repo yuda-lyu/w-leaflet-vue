@@ -49,7 +49,7 @@ export default {
                 defPointSetsPopup: function(v) {
                     console.log('defPointSetsPopup', v)
                     let c = ''
-                    c += '<div>'
+                    c += '<div style="padding:15px;">'
                     c += '<div style="color:#222; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;"><span style="color:#62f;">[Popup>pointSets]</span> ' + v.point.title + '</div>'
                     c += '<div style="color:#aaa;">' + v.point.msg + '</div>'
                     c += '</div>'
