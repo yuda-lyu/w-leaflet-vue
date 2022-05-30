@@ -67,7 +67,7 @@
                                 <span>{{panelLabels.title}}</span>
                             </div>
 
-                            <div style="border-top:1px solid #bbb; margin:5px 0px;"></div>
+                            <div style="border-top:1px solid #b9b9b9; margin:5px 0px;"></div>
 
                         </template>
 
@@ -238,6 +238,7 @@ import isestr from 'wsemi/src/isestr.mjs'
 import isstr from 'wsemi/src/isstr.mjs'
 import isarr from 'wsemi/src/isarr.mjs'
 import isobj from 'wsemi/src/isobj.mjs'
+import iseobj from 'wsemi/src/iseobj.mjs'
 import isbol from 'wsemi/src/isbol.mjs'
 import ispint from 'wsemi/src/ispint.mjs'
 import isearr from 'wsemi/src/isearr.mjs'
@@ -1330,12 +1331,43 @@ export default {
 
         },
 
+        centerTo: function(latLng) {
+            // console.log('methods centerTo', latLng)
+
+            let vo = this
+
+            //check
+            if (!isearr(latLng)) {
+                console.log('latLng is not an effective array', latLng)
+                throw new Error('latLng is not an effective array')
+            }
+
+            //mapObject
+            let mapObject = get(vo, '$refs.lmap.mapObject')
+
+            //panTo
+            if (mapObject) {
+                mapObject.panTo(latLng)
+            }
+
+        },
+
+        closePopup: function() {
+            // console.log('methods closePopup')
+
+            let vo = this
+
+            //call closePopup
+            vo.$refs.refPopup.mapObject.closePopup()
+
+        },
+
         closeTooltip: function() {
             // console.log('methods closeTooltip')
 
             let vo = this
 
-            //call openTooltip
+            //call closeTooltip
             vo.$refs.refTooltip.mapObject.closeTooltip()
 
         },
@@ -1361,9 +1393,53 @@ export default {
         },
 
         clickPoint: function(ev, point, kpoint, pointSet, kpointSet, pointSets) {
-            //console.log('methods clickPoint', ev, point,kpoint,pointSet,kpointSet,pointSets)
+            // console.log('methods clickPoint', ev, point, kpoint, pointSet, kpointSet, pointSets)
 
             let vo = this
+
+            //popupPoint
+            vo.popupPoint({ ev, point, kpoint, pointSet, kpointSet, pointSets })
+
+        },
+
+        popupPoint: function(params) {
+            // console.log('methods popupPoint', params)
+
+            let vo = this
+            let ele = null
+
+            //spread
+            let { ev, point, kpoint, pointSet, kpointSet, pointSets, popup } = params
+
+            //check ev
+            if (!iseobj(ev)) {
+                ev = {}
+            }
+
+            //check point
+            if (!iseobj(point)) {
+                throw new Error('invalid point')
+            }
+
+            //check kpoint
+            if (!ispint(kpoint)) {
+                kpoint = 0
+            }
+
+            //check pointSet
+            if (!iseobj(pointSet)) {
+                pointSet = {}
+            }
+
+            //check kpointSet
+            if (!ispint(kpointSet)) {
+                kpointSet = 0
+            }
+
+            //check pointSets
+            if (!isearr(pointSets)) {
+                pointSets = []
+            }
 
             //obj
             let obj = point
@@ -1386,17 +1462,47 @@ export default {
                 obj.funPointSetsClick(msg)
             }
 
+            //funPopup popup
+            let funPopup = null
+            if (isfun(obj.funPopup)) { //obj.funPopup為套件內彙整popup事件
+                funPopup = obj.funPopup
+            }
+            else if (isfun(obj.popup)) { //obj.popup為外部傳入point時原先提供popup事件
+                funPopup = obj.popup
+            }
+            else if (isfun(popup)) { //popup為外部直接提供popup事件
+                funPopup = popup
+            }
+            // console.log('funPopup', funPopup)
+
             //funPopup
-            if (isfun(obj.funPopup)) {
+            if (isfun(funPopup)) {
 
                 //h
-                let h = obj.funPopup(msg)
+                let h = funPopup(msg)
+
+                //offset
+                let offset = get(obj, 'icon.options.popupAnchor', null)
+                if (!isearr(offset)) {
+                    offset = [0, -(40 / 1.5)] //若point沒有提供popupAnchor則代表使用原先icon與其popupAnchor
+                }
+
+                //opt
+                let opt = {
+                    offset,
+                    maxWidth: 'auto',
+                }
 
                 //call openPopup
-                vo.$refs.refPopup.mapObject.bindPopup(h, { offset: obj.icon.options.popupAnchor }).openPopup(latLng)
+                vo.$refs.refPopup.mapObject.bindPopup(h, opt).openPopup(latLng)
+
+                //ele
+                ele = get(vo, '$refs.refPopup.mapObject._popup._contentNode')
+                // console.log('ele', ele)
 
             }
 
+            return ele
         },
 
         tooltipPoint: function(ev, point, kpoint, pointSet, kpointSet, pointSets) {
