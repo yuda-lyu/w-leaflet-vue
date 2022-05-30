@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppPNTPointSetPointTooltip</title>
+    <title>example for AppPNTPointSetPointPopupToggle</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -73,14 +73,14 @@
 >
     <div id="app" style="padding:0px 30px;">
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">pointSet.point.tooltip</div>
+            <div style="font-size:1.5rem;">pointSet.point.popup-toggle</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetPointTooltip.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetPointPopupToggle.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetPointTooltip.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetPointPopupToggle.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -88,7 +88,25 @@
 
         <div style="display:flex; padding-bottom:20px;">
             <div style="padding:0px 20px;">
-                <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
+                <div>
+                    <button
+                        style="margin:0px 3px 3px 0px;"
+                        @click="toggleLake(0,'show')"
+                    >show Lakes[0]</button>
+                    <button
+                        style="margin:0px 3px 3px 0px;"
+                        @click="toggleLake(1,'show')"
+                    >show Lakes[1]</button>
+                    <button
+                        style="margin:0px 3px 3px 0px;"
+                        @click="toggleLake(null,'hide')"
+                    >hide popup</button>
+                </div>
+                <w-leaflet-vue
+                    ref="wlf"
+                    style="width:800px; height:500px;"
+                    :opt="opt"
+                ></w-leaflet-vue>
             </div>
 
             <div
@@ -118,18 +136,15 @@
     data: function() {
       return {
         opt: {
-          defPointSetsTooltip: function(v) {
-            console.log("defPointSetsTooltip", v);
+          defPointSetsPopup: function(v) {
+            console.log("defPointSetsPopup", v);
             let c = "";
-            c += '<div style="padding:5px 10px;">';
+            c += '<div style="padding:15px;">';
             c +=
-              '<div style="color:#222; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;"><span style="color:#62f;">[Tooltip>pointSets]</span> ' +
+              '<div style="color:#222; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;"><span style="color:#62f;">[Popup>pointSets]</span> ' +
               v.point.title +
               "</div>";
-            c +=
-              '<div style="color:#aaa; white-space:normal;">' +
-              v.point.msg +
-              "</div>";
+            c += '<div style="color:#aaa;">' + v.point.msg + "</div>";
             c += "</div>";
             return c;
           },
@@ -143,18 +158,15 @@
                   msg:
                     "Yingshi Village, Datong Township, Yilan County, Taiwan(台灣宜蘭縣大同鄉英士村)",
                   latLng: [24.6508143, 121.4716748],
-                  tooltip: function(v) {
-                    console.log("pointSet[0].point[0] tooltip", v);
+                  popup: function(v) {
+                    console.log("pointSet[0].point[0] popup", v);
                     let c = "";
-                    c += '<div style="padding:5px 10px;">';
+                    c += '<div style="padding:15px;">';
                     c +=
-                      '<div style="color:#222; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;"><span style="color:#f83;">[Tooltip>point]</span> ' +
+                      '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f83;">[Popup>point]</span> ' +
                       v.point.title +
                       "</div>";
-                    c +=
-                      '<div style="color:#aaa; white-space:normal;">' +
-                      v.point.msg +
-                      "</div>";
+                    c += '<div style="color:#aaa;">' + v.point.msg + "</div>";
                     c += "</div>";
                     return c;
                   }
@@ -167,20 +179,17 @@
                 }
               ],
               visible: true,
-              tooltip: function(v) {
-                console.log("pointSet[0] tooltip", v);
+              popup: function(v) {
+                console.log("pointSet[0] popup", v);
                 let c = "";
-                c += '<div style="padding:5px 10px;">';
+                c += '<div style="padding:15px;">';
                 c +=
-                  '<div style="color:#222; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;"><span style="color:#f26;">[Tooltip>pointSet:' +
+                  '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f26;">[Popup>pointSet:' +
                   v.pointSet.title +
                   "]</span> " +
                   v.point.title +
                   "</div>";
-                c +=
-                  '<div style="color:#aaa; white-space:normal;">' +
-                  v.point.msg +
-                  "</div>";
+                c += '<div style="color:#aaa;">' + v.point.msg + "</div>";
                 c += "</div>";
                 return c;
               }
@@ -200,6 +209,32 @@
                   latLng: [22.4, 120.67]
                 }
               ],
+              visible: false,
+              popup: function(v) {
+                console.log("pointSet[1] popup", v);
+                let c = "";
+                c += '<div style="padding:15px;">';
+                c +=
+                  '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f26;">[Popup>pointSet:' +
+                  v.pointSet.title +
+                  "]</span> " +
+                  v.point.title +
+                  "</div>";
+                c += '<div style="color:#aaa;">' + v.point.msg + "</div>";
+                c += "</div>";
+                return c;
+              }
+            },
+            {
+              title: "pointSet C",
+              msg: "msg from pointSet C",
+              points: [
+                {
+                  title: "point C-1",
+                  msg: "msg from data B-1",
+                  latLng: [21.95, 120.797]
+                }
+              ],
               visible: false
             }
           ]
@@ -216,6 +251,42 @@
       showOptJson: function() {
         let vo = this;
         jv(vo.opt, document.querySelector("#optjson"), { expanded: true });
+      },
+      toggleLake: function(ind, mode) {
+        let vo = this;
+
+        //objPoint
+        let objPoint = null;
+        if (ind === 0) {
+          objPoint = {
+            point: vo.opt.pointSets[0].points[0] //第0個point有內建popup事件
+          };
+        } else {
+          objPoint = {
+            point: {
+              ...vo.opt.pointSets[0].points[1],
+              popup: function() {
+                //第1個point沒有先給popup事件而是繼承使用pointSet[0]的popup, 故需另外提供popup事件
+                return '<div style="padding:15px; color:#666; font-size:0.9rem; white-space:nowrap;">custom popup</div>';
+              }
+            }
+          };
+        }
+
+        if (mode === "show") {
+          //centerTo
+          vo.$refs.wlf.centerTo(objPoint.point.latLng);
+
+          //delay, 通過延遲使centerTo效果出現才顯示popup
+          setTimeout(() => {
+            //popupPoint
+            let ele = vo.$refs.wlf.popupPoint(objPoint);
+            console.log("ele", ele); //可基於回傳ele再操作例如高亮指定區域或內容
+          }, 300);
+        } else {
+          //closePopup
+          vo.$refs.wlf.closePopup();
+        }
       }
     }
   });
