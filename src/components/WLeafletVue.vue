@@ -544,7 +544,7 @@ export default {
             let vo = this
 
             //mapObject
-            let mapObject = get(vo, '$refs.lmap.mapObject')
+            let mapObject = vo.getMapObject()
             // console.log('mapObject', mapObject)
 
             //invalidateSize
@@ -650,7 +650,7 @@ export default {
             let vo = this
 
             //mapObject
-            let mapObject = get(vo, '$refs.lmap.mapObject')
+            let mapObject = vo.getMapObject()
             // console.log('mapObject', mapObject)
 
             //panelBackgroundColor
@@ -1331,6 +1331,17 @@ export default {
 
         },
 
+        getMapObject: function() {
+            // console.log('methods getMapObject')
+
+            let vo = this
+
+            //mapObject
+            let mapObject = get(vo, '$refs.lmap.mapObject')
+
+            return mapObject
+        },
+
         centerTo: function(latLng) {
             // console.log('methods centerTo', latLng)
 
@@ -1343,7 +1354,7 @@ export default {
             }
 
             //mapObject
-            let mapObject = get(vo, '$refs.lmap.mapObject')
+            let mapObject = vo.getMapObject()
 
             //panTo
             if (mapObject) {

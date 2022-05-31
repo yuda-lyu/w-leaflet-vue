@@ -96,8 +96,6 @@
 
         <AppPNTPointSetPointPopup v-if="showSubCmp==='pointSet.point.popup'"></AppPNTPointSetPointPopup>
 
-        <AppPNTPointSetPointPopupToggle v-if="showSubCmp==='pointSet.point.popup-toggle'"></AppPNTPointSetPointPopupToggle>
-
         <AppPNTDefPointSetsTooltip v-if="showSubCmp==='defPointSetsTooltip'"></AppPNTDefPointSetsTooltip>
 
         <AppPNTPointSetTooltip v-if="showSubCmp==='pointSet.tooltip'"></AppPNTPointSetTooltip>
@@ -184,6 +182,12 @@
 
         <AppLGDMaxHeight v-if="showSubCmp==='panelLegends.maxHeight'"></AppLGDMaxHeight>
 
+        <AppEvGetMapObject v-if="showSubCmp==='event-getMapObject'"></AppEvGetMapObject>
+
+        <AppEvCenterTo v-if="showSubCmp==='event-centerTo'"></AppEvCenterTo>
+
+        <AppEvPopupPoint v-if="showSubCmp==='event-popupPoint'"></AppEvPopupPoint>
+
     </div>
 </template>
 
@@ -217,7 +221,6 @@ import AppPNTPointSetPointClick from './AppPNTPointSetPointClick.vue'
 import AppPNTDefPointSetsPopup from './AppPNTDefPointSetsPopup.vue'
 import AppPNTPointSetPopup from './AppPNTPointSetPopup.vue'
 import AppPNTPointSetPointPopup from './AppPNTPointSetPointPopup.vue'
-import AppPNTPointSetPointPopupToggle from './AppPNTPointSetPointPopupToggle.vue'
 import AppPNTDefPointSetsTooltip from './AppPNTDefPointSetsTooltip.vue'
 import AppPNTPointSetTooltip from './AppPNTPointSetTooltip.vue'
 import AppPNTPointSetPointTooltip from './AppPNTPointSetPointTooltip.vue'
@@ -261,6 +264,9 @@ import AppLGDShow from './AppLGDShow.vue'
 import AppLGDPosition from './AppLGDPosition.vue'
 import AppLGDMaxWidth from './AppLGDMaxWidth.vue'
 import AppLGDMaxHeight from './AppLGDMaxHeight.vue'
+import AppEvGetMapObject from './AppEvGetMapObject.vue'
+import AppEvCenterTo from './AppEvCenterTo.vue'
+import AppEvPopupPoint from './AppEvPopupPoint.vue'
 
 
 export default {
@@ -293,7 +299,6 @@ export default {
         AppPNTDefPointSetsPopup,
         AppPNTPointSetPopup,
         AppPNTPointSetPointPopup,
-        AppPNTPointSetPointPopupToggle,
         AppPNTDefPointSetsTooltip,
         AppPNTPointSetTooltip,
         AppPNTPointSetPointTooltip,
@@ -337,6 +342,9 @@ export default {
         AppLGDPosition,
         AppLGDMaxWidth,
         AppLGDMaxHeight,
+        AppEvGetMapObject,
+        AppEvCenterTo,
+        AppEvPopupPoint,
     },
     data: function() {
         return {
@@ -392,7 +400,6 @@ export default {
                     'defPointSetsPopup',
                     'pointSet.popup',
                     'pointSet.point.popup',
-                    'pointSet.point.popup-toggle',
                     'defPointSetsTooltip',
                     'pointSet.tooltip',
                     'pointSet.point.tooltip',
@@ -432,6 +439,11 @@ export default {
                     'defContourSetsTooltip',
                     'contourSet.tooltip',
                     'contourSet.largeSet',
+                ],
+                event: [
+                    'event-getMapObject',
+                    'event-centerTo',
+                    'event-popupPoint',
                 ],
             },
 
