@@ -1493,10 +1493,11 @@ export default {
                 let h = funPopup(msg)
 
                 //offset
-                let offset = get(obj, 'icon.options.popupAnchor', null)
+                let offset = get(obj, 'popupAnchor', null)
                 if (!isearr(offset)) {
                     offset = [0, -(40 / 1.5)] //若point沒有提供popupAnchor則代表使用原先icon與其popupAnchor
                 }
+                // console.log('offset', offset)
 
                 //opt
                 let opt = {
@@ -1535,8 +1536,20 @@ export default {
             //h
             let h = obj.funTooltip(msg)
 
+            //offset
+            let offset = get(obj, 'popupAnchor', null)
+            if (!isearr(offset)) {
+                offset = [0, -(40 / 1.5)] //若point沒有提供popupAnchor則代表使用原先icon與其popupAnchor
+            }
+            // console.log('offset', offset)
+
+            //opt
+            let opt = {
+                offset,
+            }
+
             //call openTooltip
-            vo.$refs.refTooltip.mapObject.bindTooltip(h, { offset: obj.icon.options.popupAnchor }).openTooltip(latLng)
+            vo.$refs.refTooltip.mapObject.bindTooltip(h, opt).openTooltip(latLng)
 
         },
 
