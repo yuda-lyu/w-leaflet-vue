@@ -2,17 +2,16 @@
     <div>
 
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">event-centerTo</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppEvCenterTo.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppEvCenterTo.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">function-getMapObject</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppFunGetMapObject.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppFunGetMapObject.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div style="display:flex; padding-bottom:20px;">
 
             <div style="padding:0px 20px;">
                 <div>
-                    <button style="margin:0px 3px 3px 0px;" @click="centerTo([24.6508143, 121.4716748])">centerTo([24.6508143, 121.4716748])</button>
-                    <button style="margin:0px 3px 3px 0px;" @click="centerTo([23.6508143, 120.4716748])">centerTo([23.6508143, 120.4716748])</button>
+                    <button style="margin:0px 3px 3px 0px;" @click="getMapObject()">getMapObject(random panTo)</button>
                 </div>
                 <WLeafletVue
                     ref="wlf"
@@ -93,11 +92,17 @@ export default {
             let vo = this
             jv(vo.opt, document.querySelector('#optjson'), { expanded: true })
         },
-        centerTo: function(latLng) {
+        getMapObject: function() {
             let vo = this
 
-            //centerTo
-            vo.$refs.wlf.centerTo(latLng)
+            //getMapObject
+            let map = vo.$refs.wlf.getMapObject()
+            console.log('map', map)
+
+            //panTo
+            let rx = (Math.random() - 0.5)
+            let ry = (Math.random() - 0.5)
+            map.panTo([24.6508143 + rx, 121.4716748 + ry])
 
         },
     },

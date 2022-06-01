@@ -182,11 +182,13 @@
 
         <AppLGDMaxHeight v-if="showSubCmp==='panelLegends.maxHeight'"></AppLGDMaxHeight>
 
-        <AppEvGetMapObject v-if="showSubCmp==='event-getMapObject'"></AppEvGetMapObject>
+        <AppFunGetMapObject v-if="showSubCmp==='function-getMapObject'"></AppFunGetMapObject>
 
-        <AppEvCenterTo v-if="showSubCmp==='event-centerTo'"></AppEvCenterTo>
+        <AppFunCenterTo v-if="showSubCmp==='function-centerTo'"></AppFunCenterTo>
 
-        <AppEvPopupPoint v-if="showSubCmp==='event-popupPoint'"></AppEvPopupPoint>
+        <AppFunPanTo v-if="showSubCmp==='function-panTo'"></AppFunPanTo>
+
+        <AppFunPopupPoint v-if="showSubCmp==='function-popupPoint'"></AppFunPopupPoint>
 
     </div>
 </template>
@@ -264,9 +266,10 @@ import AppLGDShow from './AppLGDShow.vue'
 import AppLGDPosition from './AppLGDPosition.vue'
 import AppLGDMaxWidth from './AppLGDMaxWidth.vue'
 import AppLGDMaxHeight from './AppLGDMaxHeight.vue'
-import AppEvGetMapObject from './AppEvGetMapObject.vue'
-import AppEvCenterTo from './AppEvCenterTo.vue'
-import AppEvPopupPoint from './AppEvPopupPoint.vue'
+import AppFunGetMapObject from './AppFunGetMapObject.vue'
+import AppFunCenterTo from './AppFunCenterTo.vue'
+import AppFunPanTo from './AppFunPanTo.vue'
+import AppFunPopupPoint from './AppFunPopupPoint.vue'
 
 
 export default {
@@ -342,9 +345,10 @@ export default {
         AppLGDPosition,
         AppLGDMaxWidth,
         AppLGDMaxHeight,
-        AppEvGetMapObject,
-        AppEvCenterTo,
-        AppEvPopupPoint,
+        AppFunGetMapObject,
+        AppFunCenterTo,
+        AppFunPanTo,
+        AppFunPopupPoint,
     },
     data: function() {
         return {
@@ -440,10 +444,11 @@ export default {
                     'contourSet.tooltip',
                     'contourSet.largeSet',
                 ],
-                event: [
-                    'event-getMapObject',
-                    'event-centerTo',
-                    'event-popupPoint',
+                function: [
+                    'function-getMapObject',
+                    'function-centerTo',
+                    'function-panTo',
+                    'function-popupPoint',
                 ],
             },
 

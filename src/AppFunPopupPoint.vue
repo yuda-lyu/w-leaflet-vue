@@ -2,9 +2,9 @@
     <div>
 
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">event-popupPoint</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppEvPopupPoint.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppEvPopupPoint.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">function-popupPoint</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppFunPopupPoint.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppFunPopupPoint.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div style="display:flex; padding-bottom:20px;">

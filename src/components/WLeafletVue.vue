@@ -242,8 +242,11 @@ import iseobj from 'wsemi/src/iseobj.mjs'
 import isbol from 'wsemi/src/isbol.mjs'
 import ispint from 'wsemi/src/ispint.mjs'
 import isearr from 'wsemi/src/isearr.mjs'
+import isnum from 'wsemi/src/isnum.mjs'
+import cdbl from 'wsemi/src/cdbl.mjs'
 import dig from 'wsemi/src/dig.mjs'
 import debounce from 'wsemi/src/debounce.mjs'
+import wg from 'w-gis/src/WGis.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
 import { Icon } from 'leaflet'
@@ -251,7 +254,6 @@ import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LPolygo
 import LContour from './LContour.vue'
 import Radios from './Radios.vue'
 import Checkboxs from './Checkboxs.vue'
-import wg from 'w-gis/src/WGis.mjs'
 
 
 function getDefBaseMaps() {
@@ -548,8 +550,7 @@ export default {
             // console.log('mapObject', mapObject)
 
             //invalidateSize
-            let invalidateSize = get(mapObject, 'invalidateSize')
-            if (isfun(invalidateSize)) {
+            if (iseobj(mapObject)) {
                 mapObject.invalidateSize()
                 // console.log('invalidateSize')
             }
@@ -674,7 +675,7 @@ export default {
                 vo.zoom = zoom
 
                 // //setZoom, 不會有像修改center的問題, 故不使用setZoom
-                // if (mapObject) {
+                // if (iseobj(mapObject)) {
                 //     mapObject.setZoom(zoom)
                 // }
 
@@ -695,7 +696,7 @@ export default {
                 vo.center = center
 
                 //panTo, 因為由外部更改center座標過近時, vue-leaflet會無法移動地圖, 故得呼叫原始leaflet事件panTo強制移動地圖至center
-                if (mapObject) {
+                if (iseobj(mapObject)) {
                     mapObject.panTo(center)
                 }
 
@@ -1342,8 +1343,8 @@ export default {
             return mapObject
         },
 
-        centerTo: function(latLng) {
-            // console.log('methods centerTo', latLng)
+        panTo: function(latLng, opt = {}) {
+            // console.log('methods panTo', latLng, opt)
 
             let vo = this
 
@@ -1356,10 +1357,98 @@ export default {
             //mapObject
             let mapObject = vo.getMapObject()
 
-            //panTo
-            if (mapObject) {
-                mapObject.panTo(latLng)
+            //check
+            if (!iseobj(mapObject)) {
+                return
             }
+
+            //ratioHorizontal, 左側起算之水平縮小比率
+            let ratioHorizontal = get(opt, 'ratioHorizontal')
+            if (isnum(ratioHorizontal)) {
+                ratioHorizontal = cdbl(ratioHorizontal)
+            }
+
+            //ratioVertical, 上方起算之垂直縮小比率
+            let ratioVertical = get(opt, 'ratioVertical')
+            if (isnum(ratioVertical)) {
+                ratioVertical = cdbl(ratioVertical)
+            }
+
+            //funLatLng
+            let funLatLng = get(opt, 'funLatLng')
+
+            //getBounds
+            let bds = mapObject.getBounds()
+            // console.log('getBounds', bds)
+
+            //lngRange, latRange
+            let lngRange = get(bds, '_northEast.lng') - get(bds, '_southWest.lng')
+            let latRange = get(bds, '_northEast.lat') - get(bds, '_southWest.lat')
+            // console.log('lngRange', lngRange, 'latRange', latRange)
+
+            //反算以外部latLng為中心之角點座標
+            let lngMin = latLng[1] - lngRange / 2
+            let lngMax = latLng[1] + lngRange / 2
+            let latMin = latLng[0] - latRange / 2
+            let latMax = latLng[0] + latRange / 2
+            // console.log('lngMin', lngMin, 'lngMax', lngMax)
+
+            //lngMaxNew, lngNew
+            let lngMaxNew = null
+            let lngNew = null
+            if (isNumber(ratioHorizontal)) {
+                lngMaxNew = lngMax - lngRange * ratioHorizontal
+                lngNew = (lngMin + lngMaxNew) / 2
+            }
+            // console.log('lngMaxNew', lngMaxNew, 'lngNew', lngNew)
+
+            //latMinNew, latNew
+            let latMinNew = null
+            let latNew = null
+            if (isNumber(ratioVertical)) {
+                latMinNew = latMin + latRange * ratioVertical
+                latNew = (latMinNew + latMax) / 2
+            }
+            // console.log('latMinNew', latMinNew, 'latNew', latNew)
+
+            //update latLng
+            let latLngNew = cloneDeep(latLng)
+            if (isNumber(ratioVertical)) {
+                latLngNew[0] = latNew
+            }
+            if (isNumber(ratioHorizontal)) {
+                latLngNew[1] = lngNew
+            }
+            // console.log('latLngNew', latLngNew)
+
+            //funLatLng
+            if (isfun(funLatLng)) {
+                latLngNew = funLatLng(latLng, {
+                    bds,
+                    lngRange,
+                    latRange,
+                    lngMin,
+                    lngMax,
+                    latMin,
+                    latMax,
+                    ratioHorizontal,
+                    ratioVertical,
+                    latLngNew,
+                })
+            }
+
+            //panTo
+            mapObject.panTo(latLngNew)
+
+        },
+
+        centerTo: function(latLng) {
+            // console.log('methods centerTo', latLng)
+
+            let vo = this
+
+            //panTo
+            vo.panTo(latLng)
 
         },
 
