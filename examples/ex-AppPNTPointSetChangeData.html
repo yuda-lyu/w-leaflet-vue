@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.18/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.19/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- data -->
     <script
@@ -91,12 +91,28 @@
                 <div>
                     <button
                         style="margin:0px 3px 3px 0px;"
-                        @click="opt.pointSets[0].points=pts2"
-                    >2 points</button>
+                        @click="opt.pointSets=cloneDeep(pointSets)"
+                    >default</button>
                     <button
                         style="margin:0px 3px 3px 0px;"
+                        v-if="hasPointSets"
+                        @click="opt.pointSets=[]"
+                    >empty</button>
+                    <button
+                        style="margin:0px 3px 3px 0px;"
+                        v-if="hasPointSets"
+                        @click="opt.pointSets[0].points=[]"
+                    >0 point(in pointSet[0])</button>
+                    <button
+                        style="margin:0px 3px 3px 0px;"
+                        v-if="hasPointSets"
+                        @click="opt.pointSets[0].points=pts2"
+                    >2 points(in pointSet[0])</button>
+                    <button
+                        style="margin:0px 3px 3px 0px;"
+                        v-if="hasPointSets"
                         @click="opt.pointSets[0].points=pts3"
-                    >3 points</button>
+                    >3 points(in pointSet[0])</button>
                 </div>
                 <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
             </div>
@@ -135,35 +151,38 @@
         [23.9, 120.97],
         [23.7, 121.27]
       ];
+      let pointSets = [
+        {
+          title: "pointSet A",
+          msg: "msg from pointSet A",
+          points: pts2,
+          visible: true
+        },
+        {
+          title: "pointSet B",
+          msg: "msg from pointSet B",
+          points: [
+            {
+              title: "point B-1",
+              msg: "msg from data B-1",
+              latLng: [23.3, 120.57]
+            },
+            {
+              title: "point B-2",
+              msg: "msg from data B-2",
+              latLng: [23.0, 120.87]
+            }
+          ],
+          visible: true
+        }
+      ];
       return {
+        cloneDeep: cloneDeep,
+        pointSets: cloneDeep(pointSets),
         pts2: pts2,
         pts3: pts3,
         opt: {
-          pointSets: [
-            {
-              title: "pointSet A",
-              msg: "msg from pointSet A",
-              points: pts2,
-              visible: true
-            },
-            {
-              title: "pointSet B",
-              msg: "msg from pointSet B",
-              points: [
-                {
-                  title: "point B-1",
-                  msg: "msg from data B-1",
-                  latLng: [23.3, 120.57]
-                },
-                {
-                  title: "point B-2",
-                  msg: "msg from data B-2",
-                  latLng: [23.0, 120.87]
-                }
-              ],
-              visible: false
-            }
-          ]
+          pointSets
         },
         action: []
       };
@@ -172,7 +191,11 @@
       let vo = this;
       vo.showOptJson();
     },
-    computed: {},
+    computed: {
+      hasPointSets: function() {
+        return this.opt.pointSets.length > 0;
+      }
+    },
     methods: {
       showOptJson: function() {
         let vo = this;
