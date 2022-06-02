@@ -856,10 +856,10 @@ export default {
             }
             pointSets = cloneDeep(pointSets) //cloneDeep, 後續map會直接修改設定物件記憶體故需脫勾, 但值為函數不會脫勾
 
-            //check
-            if (size(pointSets) === 0) {
-                return
-            }
+            // //check, 不能檢查size為0跳出, 否則外部會無法清空數據
+            // if (size(pointSets) === 0) {
+            //     return
+            // }
 
             //effPointSets
             let effPointSets = map(pointSets, (v) => {
@@ -1001,10 +1001,10 @@ export default {
             }
             polygonSets = cloneDeep(polygonSets) //cloneDeep, 後續map會直接修改設定物件記憶體故需脫勾, 但值為函數不會脫勾
 
-            //check
-            if (size(polygonSets) === 0) {
-                return
-            }
+            // //check, 不能檢查size為0跳出, 否則外部會無法清空數據
+            // if (size(polygonSets) === 0) {
+            //     return
+            // }
 
             //effPolygonSets
             let effPolygonSets = map(polygonSets, (v) => {
@@ -1162,10 +1162,10 @@ export default {
             }
             contourSets = cloneDeep(contourSets) //cloneDeep, 後續map會直接修改設定物件記憶體故需脫勾, 但值為函數不會脫勾
 
-            //check
-            if (size(contourSets) === 0) {
-                return
-            }
+            // //check, 不能檢查size為0跳出, 否則外部會無法清空數據
+            // if (size(contourSets) === 0) {
+            //     return
+            // }
 
             //effContourSets
             let effContourSets = map(contourSets, (v) => {

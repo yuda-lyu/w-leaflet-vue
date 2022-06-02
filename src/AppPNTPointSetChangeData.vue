@@ -11,8 +11,11 @@
 
             <div style="padding:0px 20px;">
                 <div>
-                    <button style="margin:0px 3px 3px 0px;" @click="opt.pointSets[0].points=pts2">2 points</button>
-                    <button style="margin:0px 3px 3px 0px;" @click="opt.pointSets[0].points=pts3">3 points</button>
+                    <button style="margin:0px 3px 3px 0px;" @click="opt.pointSets=cloneDeep(pointSets)">default</button>
+                    <button style="margin:0px 3px 3px 0px;" v-if="hasPointSets" @click="opt.pointSets=[]">empty</button>
+                    <button style="margin:0px 3px 3px 0px;" v-if="hasPointSets" @click="opt.pointSets[0].points=[]">0 point(in pointSet[0])</button>
+                    <button style="margin:0px 3px 3px 0px;" v-if="hasPointSets" @click="opt.pointSets[0].points=pts2">2 points(in pointSet[0])</button>
+                    <button style="margin:0px 3px 3px 0px;" v-if="hasPointSets" @click="opt.pointSets[0].points=pts3">3 points(in pointSet[0])</button>
                 </div>
                 <WLeafletVue
                     style="width:800px; height:500px;"
@@ -43,6 +46,10 @@
 import WLeafletVue from './components/WLeafletVue.vue'
 import jv from 'w-jsonview-tree'
 
+function cloneDeep(v) {
+    return JSON.parse(JSON.stringify(v))
+}
+
 export default {
     components: {
         WLeafletVue,
@@ -54,35 +61,38 @@ export default {
         let pts3 = [
             [24.20, 121.27], [23.90, 120.97], [23.70, 121.27],
         ]
+        let pointSets = [
+            {
+                title: 'pointSet A',
+                msg: 'msg from pointSet A',
+                points: pts2,
+                visible: true,
+            },
+            {
+                title: 'pointSet B',
+                msg: 'msg from pointSet B',
+                points: [
+                    {
+                        title: 'point B-1',
+                        msg: 'msg from data B-1',
+                        latLng: [23.30, 120.57],
+                    },
+                    {
+                        title: 'point B-2',
+                        msg: 'msg from data B-2',
+                        latLng: [23.00, 120.87],
+                    },
+                ],
+                visible: true,
+            },
+        ]
         return {
+            'cloneDeep': cloneDeep,
+            'pointSets': cloneDeep(pointSets),
             'pts2': pts2,
             'pts3': pts3,
             'opt': {
-                pointSets: [
-                    {
-                        title: 'pointSet A',
-                        msg: 'msg from pointSet A',
-                        points: pts2,
-                        visible: true,
-                    },
-                    {
-                        title: 'pointSet B',
-                        msg: 'msg from pointSet B',
-                        points: [
-                            {
-                                title: 'point B-1',
-                                msg: 'msg from data B-1',
-                                latLng: [23.30, 120.57],
-                            },
-                            {
-                                title: 'point B-2',
-                                msg: 'msg from data B-2',
-                                latLng: [23.00, 120.87],
-                            },
-                        ],
-                        visible: false,
-                    },
-                ],
+                pointSets,
             },
             'action': [
             ],
@@ -99,6 +109,11 @@ export default {
                 vo.showOptJson()
             },
             deep: true,
+        },
+    },
+    computed: {
+        hasPointSets: function() {
+            return this.opt.pointSets.length > 0
         },
     },
     methods: {
