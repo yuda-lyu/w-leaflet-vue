@@ -39,5 +39,5 @@ npm i w-leaflet-vue
 ```
 [Necessary] Add script for w-leaflet-vue.
 ```alias
-<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.19/dist/w-leaflet-vue.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.20/dist/w-leaflet-vue.umd.js"></script>
 ```
