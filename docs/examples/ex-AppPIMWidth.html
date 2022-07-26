@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppCTRContourSetChangeData</title>
+    <title>example for AppPIMWidth</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -73,14 +73,14 @@
 >
     <div id="app" style="padding:0px 30px;">
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">contourSet-changeData</div>
+            <div style="font-size:1.5rem;">panelItems.width</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetChangeData.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPIMMaxWidth.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetChangeData.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPIMMaxWidth.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -91,12 +91,12 @@
                 <div>
                     <button
                         style="margin:0px 3px 3px 0px;"
-                        @click="opt.contourSets[0].points=points4"
-                    >simple data</button>
+                        @click="opt.panelItems.width=null"
+                    >null(default)</button>
                     <button
                         style="margin:0px 3px 3px 0px;"
-                        @click="opt.contourSets[0].points=points13"
-                    >complex data</button>
+                        @click="opt.panelItems.width=100"
+                    >100</button>
                 </div>
                 <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
             </div>
@@ -126,49 +126,44 @@
     el: "#app",
 
     data: function() {
-      let points13 = [
-        [24.325, 120.786, 0],
-        [23.944, 120.968, 10],
-        [24.884, 121.234, 20],
-        [24.579, 121.345, 80],
-        [24.664, 121.761, 40],
-        [23.803, 121.397, 30],
-        [23.727, 120.772, 0],
-        [23.539, 120.975, 0],
-        [23.612, 121.434, 0],
-        [23.193, 120.355, 22],
-        [23.456, 120.89, 42],
-        [23.28, 120.551, 25],
-        [23.162, 121.247, 5]
-      ];
-      let points4 = [
-        [24.325, 120.786, 0],
-        [23.944, 120.968, 10],
-        [24.884, 121.234, 20],
-        [24.664, 121.761, 40],
-        [23.803, 121.397, 30]
-      ];
       return {
-        points13: points13,
-        points4: points4,
         opt: {
-          center: [24.084, 121.068],
-          zoom: 8,
-          contourSets: [
+          panelItems: {
+            position: "topleft",
+            width: null
+          },
+          pointSets: [
             {
-              title: "contourSet A",
-              msg: "msg from contourSet A",
-              points: points13,
+              title: "pointSet A",
+              msg: "msg from pointSet A",
+              points: [
+                {
+                  title: "point A-1",
+                  msg: "msg from data A-1",
+                  latLng: [24.2, 121.27]
+                },
+                {
+                  title: "point A-2",
+                  msg: "msg from data A-2",
+                  latLng: [23.9, 120.97]
+                }
+              ],
               visible: true
             },
             {
-              title: "contourSet B",
-              msg: "msg from contourSet B",
+              title: "pointSet B",
+              msg: "msg from pointSet B",
               points: [
-                [22.607, 120.416, 0],
-                [22.967, 120.663, 15],
-                [22.592, 120.922, 20],
-                [22.717, 120.644, 45]
+                {
+                  title: "point B-1",
+                  msg: "msg from data B-1",
+                  latLng: [23.3, 120.57]
+                },
+                {
+                  title: "point B-2",
+                  msg: "msg from data B-2",
+                  latLng: [23.0, 120.87]
+                }
               ],
               visible: false
             }

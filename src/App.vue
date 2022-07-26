@@ -170,6 +170,8 @@
 
         <AppPIMPosition v-if="showSubCmp==='panelItems.position'"></AppPIMPosition>
 
+        <AppPIMWidth v-if="showSubCmp==='panelItems.width'"></AppPIMWidth>
+
         <AppPIMMaxWidth v-if="showSubCmp==='panelItems.maxWidth'"></AppPIMMaxWidth>
 
         <AppPIMMaxHeight v-if="showSubCmp==='panelItems.maxHeight'"></AppPIMMaxHeight>
@@ -177,6 +179,8 @@
         <AppLGDShow v-if="showSubCmp==='panelLegends.show'"></AppLGDShow>
 
         <AppLGDPosition v-if="showSubCmp==='panelLegends.position'"></AppLGDPosition>
+
+        <AppLGDWidth v-if="showSubCmp==='panelLegends.width'"></AppLGDWidth>
 
         <AppLGDMaxWidth v-if="showSubCmp==='panelLegends.maxWidth'"></AppLGDMaxWidth>
 
@@ -260,10 +264,12 @@ import AppCTRContourSetTooltip from './AppCTRContourSetTooltip.vue'
 import AppCTRContourSetLargeSet from './AppCTRContourSetLargeSet.vue'
 import AppPIMShow from './AppPIMShow.vue'
 import AppPIMPosition from './AppPIMPosition.vue'
+import AppPIMWidth from './AppPIMWidth.vue'
 import AppPIMMaxWidth from './AppPIMMaxWidth.vue'
 import AppPIMMaxHeight from './AppPIMMaxHeight.vue'
 import AppLGDShow from './AppLGDShow.vue'
 import AppLGDPosition from './AppLGDPosition.vue'
+import AppLGDWidth from './AppLGDWidth.vue'
 import AppLGDMaxWidth from './AppLGDMaxWidth.vue'
 import AppLGDMaxHeight from './AppLGDMaxHeight.vue'
 import AppFunGetMapObject from './AppFunGetMapObject.vue'
@@ -339,10 +345,12 @@ export default {
         AppCTRContourSetLargeSet,
         AppPIMShow,
         AppPIMPosition,
+        AppPIMWidth,
         AppPIMMaxWidth,
         AppPIMMaxHeight,
         AppLGDShow,
         AppLGDPosition,
+        AppLGDWidth,
         AppLGDMaxWidth,
         AppLGDMaxHeight,
         AppFunGetMapObject,
@@ -382,12 +390,14 @@ export default {
                 panelItems: [
                     'panelItems.show',
                     'panelItems.position',
+                    'panelItems.width',
                     'panelItems.maxWidth',
                     'panelItems.maxHeight',
                 ],
                 panelLegends: [
                     'panelLegends.show',
                     'panelLegends.position',
+                    'panelLegends.width',
                     'panelLegends.maxWidth',
                     'panelLegends.maxHeight',
                 ],
