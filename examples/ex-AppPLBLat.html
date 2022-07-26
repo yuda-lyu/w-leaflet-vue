@@ -1,0 +1,142 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>example for AppPLBLat</title>
+
+    <!-- @babel/polyfill -->
+    <script
+        nomodule
+        src="https://cdn.jsdelivr.net/npm/@babel/polyfill/dist/polyfill.min.js"
+    ></script>
+
+    <!-- vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js"></script>
+
+    <!-- extractHtml已自動添加@babel/polyfill與vue -->
+
+    <!-- leaflet已包入 -->
+    <script _src="https://cdn.jsdelivr.net/npm/leaflet/dist/leaflet.min.js"></script>
+
+    <!-- vue2-leaflet已包入 -->
+    <script
+        _src="https://cdn.jsdelivr.net/npm/vue2-leaflet/dist/vue2-leaflet.min.js"
+    ></script>
+
+    <!-- w-leaflet-vue -->
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.21/dist/w-leaflet-vue.umd.js"></script>
+
+    <!-- data -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/w-demores@1.0.12/res/data/dataRain.js"
+    ></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/w-demores@1.0.12/res/data/dataRainClip.js"
+    ></script>
+    <script>
+  //save in window
+  window.dataRain = dataRain;
+  window.dataRainClip = dataRainClip;
+    </script>
+
+    <!-- w-jsonview-tree -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/w-jsonview-tree/dist/w-jsonview-tree.umd.js"
+    ></script>
+    <script>
+  let jv = window["w-jsonview-tree"];
+    </script>
+
+    <style>
+  .option-label {
+    position: absolute;
+    left: 10px;
+    top: -33px;
+    padding: 4px 20px 7px 20px;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #f6f6f6;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background: #f6f6f6;
+  }
+    </style>
+</head>
+<body
+    style="font-family:'Microsoft JhengHei','Avenir','Helvetica'; padding:0px; margin:0px;"
+>
+    <div id="app" style="padding:0px 30px;">
+        <div style="padding:20px;">
+            <div style="font-size:1.5rem;">panelLabels.lat</div>
+            <a
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPLBLat.html"
+                target="_blank"
+                class="item-link"
+            >example</a>
+            <a
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPLBLat.html"
+                target="_blank"
+                class="item-link"
+            >code</a>
+        </div>
+
+        <div style="display:flex; padding-bottom:20px;">
+            <div style="padding:0px 20px;">
+                <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
+            </div>
+
+            <div
+                style="width:600px; padding:0px 20px 0px 0px; position:relative;"
+            >
+                <div class="option-label">opt example</div>
+
+                <div style="border:1px solid #ddd;">
+                    <div
+                        style="padding-left:5px; overflow-y:auto; height:500px;"
+                    >
+                        <div id="optjson" style="font-size:10pt;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+  //install
+  Vue.component("w-leaflet-vue", window["w-leaflet-vue"]);
+
+  //initialize
+  new Vue({
+    el: "#app",
+
+    data: function() {
+      return {
+        opt: {
+          panelLabels: {
+            lat: "緯度"
+          }
+        },
+        action: []
+      };
+    },
+    mounted: function() {
+      let vo = this;
+      vo.showOptJson();
+    },
+    computed: {},
+    methods: {
+      showOptJson: function() {
+        let vo = this;
+        jv(vo.opt, document.querySelector("#optjson"), { expanded: true });
+      }
+    }
+  });
+    </script>
+</body>
+</html>
