@@ -365,10 +365,12 @@ function getDefBaseMaps() {
  * @vue-prop {String} [opt.panelZoom.position='bottomleft'] 輸入縮放按鈕區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomleft'
  * @vue-prop {Boolean} [opt.panelItems.show=true] 輸入圖層顯隱切換區是否顯示布林值，預設true
  * @vue-prop {String} [opt.panelItems.position='topleft'] 輸入圖層顯隱切換區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topleft'
+ * @vue-prop {Number} [opt.panelItems.width=null] 輸入圖層顯隱切換區寬度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelItems.maxWidth=null] 輸入圖層顯隱切換區最大寬度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelItems.maxHeight=null] 輸入圖層顯隱切換區最大高度數字，單位px，預設null
  * @vue-prop {Boolean} [opt.panelLegends.show=true] 輸入圖例區是否顯示布林值，預設true
  * @vue-prop {String} [opt.panelLegends.position='bottomright'] 輸入圖例區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomright'
+ * @vue-prop {Number} [opt.panelLegends.width=null] 輸入圖例區寬度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelLegends.maxWidth=null] 輸入圖例區最大寬度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelLegends.maxHeight=null] 輸入圖例區最大高度數字，單位px，預設null
  * @vue-prop {Array} [opt.pointSets=[]] 輸入點集合陣列，各元素為物件，預設[]
@@ -794,6 +796,9 @@ export default {
             }
             panelItems = cloneDeep(panelItems) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然添加style就會影響外部opt記憶體變更
             panelItems.style = {}
+            if (isNumber(panelItems.width)) {
+                panelItems.style.width = `${panelItems.width}px`
+            }
             if (isNumber(panelItems.maxWidth)) {
                 panelItems.style.maxWidth = `${panelItems.maxWidth}px`
             }
@@ -817,6 +822,9 @@ export default {
             }
             panelLegends = cloneDeep(panelLegends) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然添加style就會影響外部opt記憶體變更
             panelLegends.style = {}
+            if (isNumber(panelLegends.width)) {
+                panelLegends.style.width = `${panelLegends.width}px`
+            }
             if (isNumber(panelLegends.maxWidth)) {
                 panelLegends.style.maxWidth = `${panelLegends.maxWidth}px`
             }
