@@ -42,6 +42,9 @@ function writeHtml(v) {
         <!-- w-leaflet-vue -->
         <script src="../dist/w-leaflet-vue.umd.js"></script>
     
+        <!-- w-gis -->
+        <script src="https://cdn.jsdelivr.net/npm/w-gis@1.0.18/dist/w-gis.umd.js"></script>
+  
         <!-- data -->
         <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.12/res/data/dataRain.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.12/res/data/dataRainClip.js"></script>
