@@ -246,7 +246,7 @@ import isnum from 'wsemi/src/isnum.mjs'
 import cdbl from 'wsemi/src/cdbl.mjs'
 import dig from 'wsemi/src/dig.mjs'
 import debounce from 'wsemi/src/debounce.mjs'
-import wg from 'w-gis/src/WGis.mjs'
+import getCentroidMultiPolygon from 'w-gis/src/getCentroidMultiPolygon.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
 import { Icon } from 'leaflet'
@@ -279,6 +279,8 @@ function getDefBaseMaps() {
             url: '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
             visible: false,
         },
+
+        //使用google.cn圖資
         {
             name: 'GoogleStreets',
             url: '//www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}',
@@ -294,6 +296,8 @@ function getDefBaseMaps() {
             url: '//www.google.cn/maps/vt?lyrs=s,h@189&gl=cn&x={x}&y={y}&z={z}',
             visible: false,
         },
+
+        //google要申請tokne才能用
         // {
         //     name: 'googleStreets',
         //     url: 'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
@@ -314,31 +318,34 @@ function getDefBaseMaps() {
         //     url: 'http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
         //     visible: false,
         // },
-        {
-            name: 'TGOS福衛二號影像',
-            url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=F2IMAGE_W-png-{z}-{x}-{y}',
-            visible: false,
-        },
-        {
-            name: 'TGOS福衛二號混合圖',
-            url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=ROADMAP_W-png-{z}-{x}-{y}',
-            visible: false,
-        },
-        {
-            name: 'TGOS電子地圖',
-            url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=TGOSMAP_W-png-{z}-{x}-{y}',
-            visible: false,
-        },
-        {
-            name: 'TGOS地形暈渲圖',
-            url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=HILLSHADE_W-png-{z}-{x}-{y}',
-            visible: false,
-        },
-        {
-            name: 'TGOS地形暈渲混合圖',
-            url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=HILLSHADEMIX_W-png-{z}-{x}-{y}',
-            visible: false,
-        },
+
+        //TGOS要申請token才能用
+        // {
+        //     name: 'TGOS福衛二號影像',
+        //     url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=F2IMAGE_W-png-{z}-{x}-{y}',
+        //     visible: false,
+        // },
+        // {
+        //     name: 'TGOS福衛二號混合圖',
+        //     url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=ROADMAP_W-png-{z}-{x}-{y}',
+        //     visible: false,
+        // },
+        // {
+        //     name: 'TGOS電子地圖',
+        //     url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=TGOSMAP_W-png-{z}-{x}-{y}',
+        //     visible: false,
+        // },
+        // {
+        //     name: 'TGOS地形暈渲圖',
+        //     url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=HILLSHADE_W-png-{z}-{x}-{y}',
+        //     visible: false,
+        // },
+        // {
+        //     name: 'TGOS地形暈渲混合圖',
+        //     url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=HILLSHADEMIX_W-png-{z}-{x}-{y}',
+        //     visible: false,
+        // },
+
     ]
     return defBaseMaps
 }
@@ -1721,7 +1728,7 @@ export default {
             let { msg } = vo.parsePolygonData(ev, polygonSet, kpolygonSet, polygonSets)
 
             //getCentroidMultiPolygon
-            let centerlatLng = wg.getCentroidMultiPolygon(msg.latLngs)
+            let centerlatLng = getCentroidMultiPolygon(msg.latLngs)
 
             //check
             if (size(centerlatLng) !== 2) {

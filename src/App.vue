@@ -166,6 +166,8 @@
 
         <AppCTRContourSetLargeSet v-if="showSubCmp==='contourSet.largeSet'"></AppCTRContourSetLargeSet>
 
+        <AppCTRContourSetInterp2 v-if="showSubCmp==='contourSet.interp2'"></AppCTRContourSetInterp2>
+
         <AppPIMShow v-if="showSubCmp==='panelItems.show'"></AppPIMShow>
 
         <AppPIMPosition v-if="showSubCmp==='panelItems.position'"></AppPIMPosition>
@@ -262,6 +264,7 @@ import AppCTRContourSetPopup from './AppCTRContourSetPopup.vue'
 import AppCTRDefContourSetsTooltip from './AppCTRDefContourSetsTooltip.vue'
 import AppCTRContourSetTooltip from './AppCTRContourSetTooltip.vue'
 import AppCTRContourSetLargeSet from './AppCTRContourSetLargeSet.vue'
+import AppCTRContourSetInterp2 from './AppCTRContourSetInterp2.vue'
 import AppPIMShow from './AppPIMShow.vue'
 import AppPIMPosition from './AppPIMPosition.vue'
 import AppPIMWidth from './AppPIMWidth.vue'
@@ -343,6 +346,7 @@ export default {
         AppCTRDefContourSetsTooltip,
         AppCTRContourSetTooltip,
         AppCTRContourSetLargeSet,
+        AppCTRContourSetInterp2,
         AppPIMShow,
         AppPIMPosition,
         AppPIMWidth,
@@ -453,6 +457,7 @@ export default {
                     'defContourSetsTooltip',
                     'contourSet.tooltip',
                     'contourSet.largeSet',
+                    'contourSet.interp2',
                 ],
                 function: [
                     'function-getMapObject',

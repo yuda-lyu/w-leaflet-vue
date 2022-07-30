@@ -17,7 +17,7 @@
 import map from 'lodash/map'
 import oc from 'wsemi/src/color.mjs'
 import { LPolygon } from 'vue2-leaflet'
-import wg from 'w-gis/src/WGis.mjs'
+import calcContours from 'w-gis/src/calcContours.mjs'
 
 
 export default {
@@ -90,7 +90,7 @@ export default {
                 clipInner: vo.polygonsClipInner,
                 clipOuter: vo.polygonClipOuter,
             }
-            let polygonSets = wg.calcContours(points, opt)
+            let polygonSets = calcContours(points, opt)
             // console.log('polygonSets',  cloneDeep(polygonSets))
 
             //add style and event
