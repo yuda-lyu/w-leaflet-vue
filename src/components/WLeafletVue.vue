@@ -207,6 +207,12 @@
                     :polygonsClipInner="contourSet.polygonsClipInner"
                     :polygonClipOuter="contourSet.polygonClipOuter"
                     :gradient="contourSet.gradient"
+                    :lineWidth="contourSet.lineWidth"
+                    :lineWidthHover="contourSet.lineWidthHover"
+                    :lineColor="contourSet.lineColor"
+                    :lineColorHover="contourSet.lineColorHover"
+                    :fillOpacity="contourSet.fillOpacity"
+                    :fillOpacityHover="contourSet.fillOpacityHover"
                     :changeStyleWhenHover="contourSet.changeStyleWhenHover"
                     @refresh="(v)=>{contourRefresh(v,contourSet,kcontourSet)}"
                     @mouseenter="(v)=>{contourMouseenter(v,contourSet,kcontourSet,contourSets);tooltipContour(v,contourSet,kcontourSet,contourSets)}"
@@ -424,6 +430,12 @@ function getDefBaseMaps() {
  * @vue-prop {Array} [opt.contourSets=[]] 輸入等值線集合陣列，各元素為物件，預設[]
  * @vue-prop {Number} [opt.contourSets[i].order=null] 輸入第i個等值線集合的排序用數字，預設null
  * @vue-prop {Object} [opt.contourSets[i].gradient=詳見程式碼] 輸入第i個等值線集合的色階(color map)設定物件，鍵範圍0至1，值為對應之顏色，於各鍵之間則採用內插取色，預設值詳見程式碼
+ * @vue-prop {String} [opt.contourSets[i].lineColor=''] 輸入第i個等值線集合的框線顏色字串，若不輸入則預設為gradient內插所得顏色，預設為''
+ * @vue-prop {String} [opt.contourSets[i].lineColorHover=''] 輸入滑鼠移入時第i個等值線集合的框線顏色字串，若不輸入則預設為gradient內插所得顏色，預設為''
+ * @vue-prop {Number} [opt.contourSets[i].lineWidth=1] 輸入第i個等值線集合的框線寬度數字，預設為1
+ * @vue-prop {Number} [opt.contourSets[i].lineWidthHover=3] 輸入滑鼠移入時第i個等值線集合的框線寬度數字，預設為3
+ * @vue-prop {Number} [opt.contourSets[i].fillOpacity=0.2] 輸入第i個等值線集合的填充透明度數字，預設為0.2
+ * @vue-prop {Number} [opt.contourSets[i].fillOpacityHover=0.5] 輸入滑鼠移入時第i個等值線集合的填充透明度數字，預設為0.5
  * @vue-prop {Boolean} [opt.contourSets[i].changeStyleWhenHover=true] 輸入第i個等值線集合的是否使用滑鼠移入時切換style效果布林值，預設true
  * @vue-prop {Number} [opt.contourSets[i].legendNumDig=null] 輸入第i個等值線集合的對圖例內數字取小數位數，null代表不取，預設null
  * @vue-prop {Function} [opt.contourSets[i].legendTextFormater=null] 輸入第i個等值線集合的對圖例內各色階的內容產生函數，可基於傳入資料回傳顯示文字或html內容，null代表不取，預設null
@@ -1218,6 +1230,70 @@ export default {
                 //funSetTooltip
                 let funSetTooltip = get(contourSet, 'tooltip', null) || funContourSetsTooltip //僅提供一種tooltip, 若多邊形有tooltip則優先使用
 
+                //lineColor
+                let lineColor = get(contourSet, 'lineColor', null)
+                if (!isestr(lineColor)) {
+                    lineColor = 'rgba(0,150,255,1)'
+                }
+
+                //lineWidth
+                let lineWidth = get(contourSet, 'lineWidth', null)
+                if (!isNumber(lineWidth)) {
+                    lineWidth = 3
+                }
+
+                //fillOpacity
+                let fillOpacity = get(contourSet, 'fillOpacity', null)
+                if (!isNumber(fillOpacity)) {
+                    fillOpacity = 0.2
+                }
+
+                // //fillColor
+                // let fillColor = get(contourSet, 'fillColor', null)
+                // if (!isestr(fillColor)) {
+                //     fillColor = 'rgba(0,150,255,0.25)'
+                // }
+
+                // //style
+                // let style = {
+                //     fillColor,
+                //     fillOpacity: 1, //vue leaflet預設為0.2得還原
+                //     color: lineColor,
+                //     weight: lineWidth,
+                // }
+
+                //lineColorHover
+                let lineColorHover = get(contourSet, 'lineColorHover', null)
+                if (!isestr(lineColorHover)) {
+                    lineColorHover = lineColor
+                }
+
+                //lineWidthHover
+                let lineWidthHover = get(contourSet, 'lineWidthHover', null)
+                if (!isNumber(lineWidthHover)) {
+                    lineWidthHover = lineWidth
+                }
+
+                //fillOpacityHover
+                let fillOpacityHover = get(contourSet, 'fillOpacityHover', null)
+                if (!isNumber(fillOpacityHover)) {
+                    fillOpacityHover = 0.5
+                }
+
+                // //fillColorHover
+                // let fillColorHover = get(contourSet, 'fillColorHover', null)
+                // if (!isestr(fillColorHover)) {
+                //     fillColorHover = fillColor
+                // }
+
+                // //styleHover
+                // let styleHover = {
+                //     fillColor: fillColorHover,
+                //     fillOpacity: 1, //vue leaflet預設為0.2得還原
+                //     color: lineColorHover,
+                //     weight: lineWidthHover,
+                // }
+
                 //legendNumDig
                 let legendNumDig = get(contourSet, 'legendNumDig', null)
                 if (!isNumber(legendNumDig)) {
@@ -1253,6 +1329,17 @@ export default {
                 return {
                     ...contourSet,
                     order,
+                    // style, //需給予, 才能通過v-bind給予初始樣式
+                    // mouseenter: (ev) => {
+                    //     // console.log('mouseenter', ev)
+                    //     let layer = ev.target
+                    //     layer.setStyle(styleHover)
+                    // },
+                    // mouseleave: (ev) => {
+                    //     // console.log('mouseleave', ev)
+                    //     let layer = ev.target
+                    //     layer.setStyle(style)
+                    // },
                     legendNumDig,
                     legendTextFormater,
                     legend: [],

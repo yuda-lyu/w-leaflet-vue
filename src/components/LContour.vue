@@ -15,6 +15,7 @@
 
 <script>
 import map from 'lodash/map'
+import isestr from 'wsemi/src/isestr.mjs'
 import oc from 'wsemi/src/color.mjs'
 import { LPolygon } from 'vue2-leaflet'
 import calcContours from 'w-gis/src/calcContours.mjs'
@@ -53,6 +54,30 @@ export default {
                     1: 'rgb(180, 30, 60)',
                 }
             },
+        },
+        lineWidth: {
+            type: Number,
+            default: 1,
+        },
+        lineWidthHover: {
+            type: Number,
+            default: 3,
+        },
+        lineColor: {
+            type: String,
+            default: '',
+        },
+        lineColorHover: {
+            type: String,
+            default: '',
+        },
+        fillOpacity: {
+            type: Number,
+            default: 0.2,
+        },
+        fillOpacityHover: {
+            type: Number,
+            default: 0.5,
         },
         changeStyleWhenHover: {
             type: Boolean,
@@ -102,15 +127,18 @@ export default {
 
                 //lineColor
                 let lineColor = color
+                if (isestr(vo.lineColor)) {
+                    lineColor = vo.lineColor
+                }
 
                 //fillColor
                 let fillColor = color
 
                 //lineWidth
-                let lineWidth = 1
+                let lineWidth = vo.lineWidth
 
                 //fillOpacity
-                let fillOpacity = 0.2
+                let fillOpacity = vo.fillOpacity
 
                 //style
                 let style = {
@@ -122,15 +150,18 @@ export default {
 
                 //lineColorHover
                 let lineColorHover = color
+                if (isestr(vo.lineColorHover)) {
+                    lineColorHover = vo.lineColorHover
+                }
 
                 //fillColorHover
                 let fillColorHover = color
 
                 //lineWidthHover
-                let lineWidthHover = 3
+                let lineWidthHover = vo.lineWidthHover
 
                 //fillOpacityHover
-                let fillOpacityHover = 0.5
+                let fillOpacityHover = vo.fillOpacityHover
 
                 //styleHover
                 let styleHover = {

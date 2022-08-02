@@ -140,6 +140,18 @@
 
         <AppCTRContourSetGradient v-if="showSubCmp==='contourSet.gradient'"></AppCTRContourSetGradient>
 
+        <AppCTRContourSetLineColor v-if="showSubCmp==='contourSet.lineColor'"></AppCTRContourSetLineColor>
+
+        <AppCTRContourSetLineColorHover v-if="showSubCmp==='contourSet.lineColorHover'"></AppCTRContourSetLineColorHover>
+
+        <AppCTRContourSetLineWidth v-if="showSubCmp==='contourSet.lineWidth'"></AppCTRContourSetLineWidth>
+
+        <AppCTRContourSetLineWidthHover v-if="showSubCmp==='contourSet.lineWidthHover'"></AppCTRContourSetLineWidthHover>
+
+        <AppCTRContourSetFillOpacity v-if="showSubCmp==='contourSet.fillOpacity'"></AppCTRContourSetFillOpacity>
+
+        <AppCTRContourSetFillOpacityHover v-if="showSubCmp==='contourSet.fillOpacityHover'"></AppCTRContourSetFillOpacityHover>
+
         <AppCTRContourSetChangeStyleWhenHover v-if="showSubCmp==='contourSet.changeStyleWhenHover'"></AppCTRContourSetChangeStyleWhenHover>
 
         <AppCTRContourSetLegendNumDig v-if="showSubCmp==='contourSet.legendNumDig'"></AppCTRContourSetLegendNumDig>
@@ -251,6 +263,12 @@ import AppCTRContourSets from './AppCTRContourSets.vue'
 import AppCTRContourSetChangeData from './AppCTRContourSetChangeData.vue'
 import AppCTRContourSetOrder from './AppCTRContourSetOrder.vue'
 import AppCTRContourSetGradient from './AppCTRContourSetGradient.vue'
+import AppCTRContourSetLineColor from './AppCTRContourSetLineColor.vue'
+import AppCTRContourSetLineColorHover from './AppCTRContourSetLineColorHover.vue'
+import AppCTRContourSetLineWidth from './AppCTRContourSetLineWidth.vue'
+import AppCTRContourSetLineWidthHover from './AppCTRContourSetLineWidthHover.vue'
+import AppCTRContourSetFillOpacity from './AppCTRContourSetFillOpacity.vue'
+import AppCTRContourSetFillOpacityHover from './AppCTRContourSetFillOpacityHover.vue'
 import AppCTRContourSetChangeStyleWhenHover from './AppCTRContourSetChangeStyleWhenHover.vue'
 import AppCTRContourSetLegendNumDig from './AppCTRContourSetLegendNumDig.vue'
 import AppCTRContourSetLegendTextFormater from './AppCTRContourSetLegendTextFormater.vue'
@@ -333,6 +351,12 @@ export default {
         AppCTRContourSetChangeData,
         AppCTRContourSetOrder,
         AppCTRContourSetGradient,
+        AppCTRContourSetLineColor,
+        AppCTRContourSetLineColorHover,
+        AppCTRContourSetLineWidth,
+        AppCTRContourSetLineWidthHover,
+        AppCTRContourSetFillOpacity,
+        AppCTRContourSetFillOpacityHover,
         AppCTRContourSetChangeStyleWhenHover,
         AppCTRContourSetLegendNumDig,
         AppCTRContourSetLegendTextFormater,
@@ -444,6 +468,12 @@ export default {
                     'contourSet-changeData',
                     'contourSet.order',
                     'contourSet.gradient',
+                    'contourSet.lineColor',
+                    'contourSet.lineColorHover',
+                    'contourSet.lineWidth',
+                    'contourSet.lineWidthHover',
+                    'contourSet.fillOpacity',
+                    'contourSet.fillOpacityHover',
                     'contourSet.changeStyleWhenHover',
                     'contourSet.legendNumDig',
                     'contourSet.legendTextFormater',
