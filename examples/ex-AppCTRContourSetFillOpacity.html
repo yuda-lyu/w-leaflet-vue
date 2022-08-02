@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppPZMShow</title>
+    <title>example for AppCTRContourSetFillOpacity</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -76,14 +76,14 @@
 >
     <div id="app" style="padding:0px 30px;">
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">panelZoom.show</div>
+            <div style="font-size:1.5rem;">contourSet.fillOpacity</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPZMShow.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetFillOpacity.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPZMShow.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetFillOpacity.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -91,16 +91,6 @@
 
         <div style="display:flex; padding-bottom:20px;">
             <div style="padding:0px 20px;">
-                <div>
-                    <button
-                        style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelZoom.show=true"
-                    >show(default)</button>
-                    <button
-                        style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelZoom.show=false"
-                    >hide</button>
-                </div>
                 <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
             </div>
 
@@ -131,9 +121,42 @@
     data: function() {
       return {
         opt: {
-          panelZoom: {
-            show: true
-          }
+          center: [24.084, 121.068],
+          zoom: 8,
+          contourSets: [
+            {
+              title: "contourSet A",
+              msg: "msg from contourSet A",
+              points: [
+                [24.325, 120.786, 0],
+                [23.944, 120.968, 10],
+                [24.884, 121.234, 20],
+                [24.579, 121.345, 80],
+                [24.664, 121.761, 40],
+                [23.803, 121.397, 30],
+                [23.727, 120.772, 0],
+                [23.539, 120.975, 0],
+                [23.612, 121.434, 0],
+                [23.193, 120.355, 22],
+                [23.456, 120.89, 42],
+                [23.28, 120.551, 25],
+                [23.162, 121.247, 5]
+              ],
+              fillOpacity: 0.5,
+              visible: true
+            },
+            {
+              title: "contourSet B",
+              msg: "msg from contourSet B",
+              points: [
+                [22.607, 120.416, 0],
+                [22.967, 120.663, 15],
+                [22.592, 120.922, 20],
+                [22.717, 120.644, 45]
+              ],
+              visible: false
+            }
+          ]
         },
         action: []
       };
