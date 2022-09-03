@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppCTRDefContourSetsTooltip</title>
+    <title>example for AppCTRContourSetThresholds</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -79,14 +79,14 @@
 >
     <div id="app" style="padding:0px 30px;">
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">defContourSetsTooltip</div>
+            <div style="font-size:1.5rem;">contourSet.thresholds</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRDefContourSetsTooltip.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetOrder.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRDefContourSetsTooltip.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetOrder.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -126,21 +126,6 @@
         opt: {
           center: [24.084, 121.068],
           zoom: 8,
-          defContourSetsTooltip: function(v) {
-            console.log("defContourSetsTooltip", v);
-            let c = "";
-            c += '<div style="padding:5px 10px;">';
-            c +=
-              '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#62f;">[Popup>contourSets]</span> ' +
-              v.contourSet.title +
-              "</div>";
-            c +=
-              '<div style="color:#aaa; white-space:normal;">' +
-              v.contourSet.msg +
-              "</div>";
-            c += "</div>";
-            return c;
-          },
           contourSets: [
             {
               title: "contourSet A",
@@ -160,7 +145,8 @@
                 [23.28, 120.551, 25],
                 [23.162, 121.247, 5]
               ],
-              visible: true
+              visible: true,
+              thresholds: [0, 5, 10, 20, 30, 40, 55, 70, 85]
             },
             {
               title: "contourSet B",
@@ -171,7 +157,8 @@
                 [22.592, 120.922, 20],
                 [22.717, 120.644, 45]
               ],
-              visible: false
+              visible: false,
+              thresholds: [0, 15, 30, 35, 40, 45, 50]
             }
           ]
         },
