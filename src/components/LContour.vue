@@ -16,6 +16,7 @@
 <script>
 import map from 'lodash/map'
 import isestr from 'wsemi/src/isestr.mjs'
+import isfun from 'wsemi/src/isfun.mjs'
 import oc from 'wsemi/src/color.mjs'
 import { LPolygon } from 'vue2-leaflet'
 import calcContours from 'w-gis/src/calcContours.mjs'
@@ -42,6 +43,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        thresholds: {
+            type: Array,
+            default: () => [],
+        },
         gradient: {
             type: Object,
             default: () => {
@@ -54,6 +59,10 @@ export default {
                     1: 'rgb(180, 30, 60)',
                 }
             },
+        },
+        funGetColor: {
+            type: Function,
+            default: null,
         },
         lineWidth: {
             type: Number,
@@ -114,15 +123,17 @@ export default {
                 containInner: vo.polygonsContainInner,
                 clipInner: vo.polygonsClipInner,
                 clipOuter: vo.polygonClipOuter,
+                thresholds: vo.thresholds,
             }
             let polygonSets = calcContours(points, opt)
             // console.log('polygonSets',  cloneDeep(polygonSets))
 
             //add style and event
             polygonSets = map(polygonSets, (polygonSet, k) => {
+                // console.log(k, 'polygonSet', polygonSet)
 
                 //color
-                let color = vo.getColor(k, polygonSets.length - 1)
+                let color = vo.getColor(k, polygonSets.length - 1, polygonSet)
                 // console.log('color', color)
 
                 //lineColor
@@ -225,18 +236,35 @@ export default {
     },
     methods: {
 
-        getColor: function (k, n) {
-            // console.log('methods getColor', k, n)
+        getColor: function (k, n, polygonSet) {
+            // console.log('methods getColor', k, n, polygonSet)
 
             let vo = this
 
-            let c
+            //default
+            let _c = ''
             if (n > 0) {
-                c = vo.funColor(k / n)
+                _c = vo.funColor(k / n)
             }
             else {
-                c = vo.funColor(1)
+                _c = vo.funColor(1)
             }
+
+            //c
+            let c = ''
+            if (isfun(vo.funGetColor)) {
+                c = vo.funGetColor({
+                    defaultColor: _c,
+                    k,
+                    n,
+                    polygonSet,
+                    // thresholds: vo.thresholds,
+                })
+            }
+            if (!isestr(c)) {
+                c = _c
+            }
+
             return c
         },
 

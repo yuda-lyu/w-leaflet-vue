@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppCTRDefContourSetsTooltip</title>
+    <title>example for AppCTRContourSetLegendTextExtra</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -79,14 +79,14 @@
 >
     <div id="app" style="padding:0px 30px;">
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">defContourSetsTooltip</div>
+            <div style="font-size:1.5rem;">contourSet.legendTextExtra</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRDefContourSetsTooltip.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetOrder.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRDefContourSetsTooltip.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetOrder.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -124,54 +124,32 @@
     data: function() {
       return {
         opt: {
-          center: [24.084, 121.068],
-          zoom: 8,
-          defContourSetsTooltip: function(v) {
-            console.log("defContourSetsTooltip", v);
-            let c = "";
-            c += '<div style="padding:5px 10px;">';
-            c +=
-              '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#62f;">[Popup>contourSets]</span> ' +
-              v.contourSet.title +
-              "</div>";
-            c +=
-              '<div style="color:#aaa; white-space:normal;">' +
-              v.contourSet.msg +
-              "</div>";
-            c += "</div>";
-            return c;
-          },
+          center: [24.4, 121.239],
+          zoom: 9,
           contourSets: [
             {
               title: "contourSet A",
               msg: "msg from contourSet A",
               points: [
-                [24.325, 120.786, 0],
-                [23.944, 120.968, 10],
+                [24.325, 120.786, 4],
+                [23.944, 120.968, 15],
                 [24.884, 121.234, 20],
-                [24.579, 121.345, 80],
-                [24.664, 121.761, 40],
-                [23.803, 121.397, 30],
-                [23.727, 120.772, 0],
-                [23.539, 120.975, 0],
-                [23.612, 121.434, 0],
-                [23.193, 120.355, 22],
-                [23.456, 120.89, 42],
-                [23.28, 120.551, 25],
-                [23.162, 121.247, 5]
+                [24.579, 121.345, 62],
+                [24.664, 121.761, 35],
+                [23.803, 121.397, 30]
               ],
+              legendTextExtra: msg => {
+                console.log("contourSet A: legendTextExtra", msg);
+                let v =
+                  (msg.polygonSet.range.low + msg.polygonSet.range.up) / 2;
+                if (v <= 25) {
+                  return '<div style="color:#439c30;">(low)</div>';
+                } else if (v <= 50) {
+                  return '<div style="color:#91830b;">(middle)</div>';
+                }
+                return '<div style="color:#f26;">(high)</div>';
+              },
               visible: true
-            },
-            {
-              title: "contourSet B",
-              msg: "msg from contourSet B",
-              points: [
-                [22.607, 120.416, 0],
-                [22.967, 120.663, 15],
-                [22.592, 120.922, 20],
-                [22.717, 120.644, 45]
-              ],
-              visible: false
             }
           ]
         },

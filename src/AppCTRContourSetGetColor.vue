@@ -2,9 +2,9 @@
     <div>
 
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">contourSet.legendTextFormater</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetLegendTextFormater.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetLegendTextFormater.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">contourSet.getColor</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetOrder.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetOrder.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div style="display:flex; padding-bottom:20px;">
@@ -46,40 +46,39 @@ export default {
     data: function() {
         return {
             'opt': {
-                center: [24.4, 121.239],
-                zoom: 9,
+                center: [24.084, 121.068],
+                zoom: 8,
                 contourSets: [
                     {
                         title: 'contourSet A',
                         msg: 'msg from contourSet A',
                         points: [
-                            [24.325, 120.786, 4], [23.944, 120.968, 15], [24.884, 121.234, 20], [24.579, 121.345, 62], [24.664, 121.761, 35], [23.803, 121.397, 30],
+                            [24.325, 120.786, 0], [23.944, 120.968, 10], [24.884, 121.234, 20], [24.579, 121.345, 80], [24.664, 121.761, 40], [23.803, 121.397, 30],
+                            [23.727, 120.772, 0], [23.539, 120.975, 0], [23.612, 121.434, 0],
+                            [23.193, 120.355, 22], [23.456, 120.890, 42], [23.280, 120.551, 25], [23.162, 121.247, 5],
                         ],
-                        legendTextFormater: function(msg) {
-                            console.log('contourSet A: legendTextFormater', msg)
-                            let low = msg.low
-                            let up = msg.up
-                            let v = (low + up) / 2
-                            if (v <= 25) {
-                                low = `<div style="color:#439c30;">${low}</div>`
-                                up = `<div style="color:#439c30;">${up}</div>`
+                        visible: true,
+                        thresholds: [0, 5, 10, 20, 30, 40, 55, 70, 85],
+                        getColor: (msg) => {
+                            console.log('contourSet A: getColor', msg)
+                            let v = (msg.polygonSet.range.low + msg.polygonSet.range.up) / 2
+                            if (v <= 15) {
+                                return '#6e7'
                             }
                             else if (v <= 50) {
-                                low = `<div style="color:#91830b;">${low}</div>`
-                                up = `<div style="color:#91830b;">${up}</div>`
+                                return '#f92'
                             }
-                            else {
-                                low = `<div style="color:#f26;">${low}</div>`
-                                up = `<div style="color:#f26;">${up}</div>`
-                            }
-                            let delimiter = `<div style="color:#888;">⊶</div>`
-                            return {
-                                low,
-                                up,
-                                delimiter,
-                            }
+                            return '#e23'
                         },
-                        visible: true,
+                    },
+                    {
+                        title: 'contourSet B',
+                        msg: 'msg from contourSet B',
+                        points: [
+                            [22.607, 120.416, 0], [22.967, 120.663, 15], [22.592, 120.922, 20], [22.717, 120.644, 45],
+                        ],
+                        visible: false,
+                        thresholds: [0, 15, 30, 35, 40, 45, 50],
                     },
                 ],
             },

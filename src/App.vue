@@ -136,6 +136,10 @@
 
         <AppCTRContourSetChangeData v-if="showSubCmp==='contourSet-changeData'"></AppCTRContourSetChangeData>
 
+        <AppCTRContourSetThresholds v-if="showSubCmp==='contourSet.thresholds'"></AppCTRContourSetThresholds>
+
+        <AppCTRContourSetGetColor v-if="showSubCmp==='contourSet.funGetColor'"></AppCTRContourSetGetColor>
+
         <AppCTRContourSetOrder v-if="showSubCmp==='contourSet.order'"></AppCTRContourSetOrder>
 
         <AppCTRContourSetGradient v-if="showSubCmp==='contourSet.gradient'"></AppCTRContourSetGradient>
@@ -157,6 +161,8 @@
         <AppCTRContourSetLegendNumDig v-if="showSubCmp==='contourSet.legendNumDig'"></AppCTRContourSetLegendNumDig>
 
         <AppCTRContourSetLegendTextFormater v-if="showSubCmp==='contourSet.legendTextFormater'"></AppCTRContourSetLegendTextFormater>
+
+        <AppCTRContourSetLegendTextExtra v-if="showSubCmp==='contourSet.legendTextExtra'"></AppCTRContourSetLegendTextExtra>
 
         <AppCTRContourSetPolygonClipOuter v-if="showSubCmp==='contourSet.polygonClipOuter'"></AppCTRContourSetPolygonClipOuter>
 
@@ -261,6 +267,8 @@ import AppPGNDefPolygonSetsTooltip from './AppPGNDefPolygonSetsTooltip.vue'
 import AppPGNPolygonSetTooltip from './AppPGNPolygonSetTooltip.vue'
 import AppCTRContourSets from './AppCTRContourSets.vue'
 import AppCTRContourSetChangeData from './AppCTRContourSetChangeData.vue'
+import AppCTRContourSetThresholds from './AppCTRContourSetThresholds.vue'
+import AppCTRContourSetGetColor from './AppCTRContourSetGetColor.vue'
 import AppCTRContourSetOrder from './AppCTRContourSetOrder.vue'
 import AppCTRContourSetGradient from './AppCTRContourSetGradient.vue'
 import AppCTRContourSetLineColor from './AppCTRContourSetLineColor.vue'
@@ -272,6 +280,7 @@ import AppCTRContourSetFillOpacityHover from './AppCTRContourSetFillOpacityHover
 import AppCTRContourSetChangeStyleWhenHover from './AppCTRContourSetChangeStyleWhenHover.vue'
 import AppCTRContourSetLegendNumDig from './AppCTRContourSetLegendNumDig.vue'
 import AppCTRContourSetLegendTextFormater from './AppCTRContourSetLegendTextFormater.vue'
+import AppCTRContourSetLegendTextExtra from './AppCTRContourSetLegendTextExtra.vue'
 import AppCTRContourSetPolygonClipOuter from './AppCTRContourSetPolygonClipOuter.vue'
 import AppCTRContourSetPolygonsClipInner from './AppCTRContourSetPolygonsClipInner.vue'
 import AppCTRContourSetPolygonsContainInner from './AppCTRContourSetPolygonsContainInner.vue'
@@ -349,6 +358,8 @@ export default {
         AppPGNPolygonSetTooltip,
         AppCTRContourSets,
         AppCTRContourSetChangeData,
+        AppCTRContourSetThresholds,
+        AppCTRContourSetGetColor,
         AppCTRContourSetOrder,
         AppCTRContourSetGradient,
         AppCTRContourSetLineColor,
@@ -360,6 +371,7 @@ export default {
         AppCTRContourSetChangeStyleWhenHover,
         AppCTRContourSetLegendNumDig,
         AppCTRContourSetLegendTextFormater,
+        AppCTRContourSetLegendTextExtra,
         AppCTRContourSetPolygonClipOuter,
         AppCTRContourSetPolygonsClipInner,
         AppCTRContourSetPolygonsContainInner,
@@ -466,6 +478,8 @@ export default {
                 contour: [
                     'contourSets',
                     'contourSet-changeData',
+                    'contourSet.thresholds',
+                    'contourSet.funGetColor',
                     'contourSet.order',
                     'contourSet.gradient',
                     'contourSet.lineColor',
@@ -477,6 +491,7 @@ export default {
                     'contourSet.changeStyleWhenHover',
                     'contourSet.legendNumDig',
                     'contourSet.legendTextFormater',
+                    'contourSet.legendTextExtra',
                     'contourSet.polygonClipOuter',
                     'contourSet.polygonsClipInner',
                     'contourSet.polygonsContainInner',

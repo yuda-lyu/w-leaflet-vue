@@ -104,32 +104,56 @@
                                 :key="'contourSet:'+kcontourSet"
                                 v-if="contourSet.visible"
                             >
-                                <div style="padding:6px 8px;">
+                                <div style="padding:4px 6px;">
 
-                                    <div style="margin-bottom:5px; padding-left:5px;">
+                                    <div style="margin-bottom:5px;">
                                         <div style="text-align:center;" v-html="contourSet.title"></div>
                                         <div style="font-size:0.85rem; text-align:center;" v-html="contourSet.legendMsg"></div>
                                     </div>
 
-                                    <template
-                                        v-for="(legend,klegend) in contourSet.legend"
-                                    >
-                                        <div
-                                            style="position:relative; padding-left:5px;"
-                                            :key="'legend'+klegend"
-                                        >
-                                            <div style="position:absolute; margin:auto 0; transform:translateX(-100%);" v-if="legend.arrow">
-                                                ▶
-                                            </div>
-                                            <div
-                                                style="display:flex; align-items:center;"
-                                            >
-                                                <div :style="`background:${legend.color}; width:18px; height:18px; margin-right:8px;`"></div>
-                                                <div style="font-size:0.7rem; height:18px; line-height:18px;" v-html="legend.rangeText"></div>
-                                            </div>
-                                        </div>
+                                <div style="">
 
-                                    </template>
+                                    <table style="border-collapse:collapse;">
+                                        <tbody>
+                                            <tr
+                                                :key="'klegend-'+klegend"
+                                                v-for="(legend,klegend) in contourSet.legend"
+                                            >
+
+                                                <td style="height:18px; line-height:18px;">
+                                                    <span :style="`opacity:${legend.arrow?1:0};`">
+                                                        ▶
+                                                    </span>
+                                                </td>
+
+                                                <td :style="`background:${legend.color}; width:18px; height:18px;`">
+                                                </td>
+
+                                                <td style="padding-left:5px;"></td>
+
+                                                <td style="text-align:right; font-size:0.7rem; height:18px; line-height:18px;">
+                                                    <span v-html="legend.low"></span>
+                                                </td>
+
+                                                <td style="padding:0px 2px; text-align:center; font-size:0.7rem; height:18px; line-height:18px;">
+                                                    <span v-html="legend.delimiter"></span>
+                                                </td>
+
+                                                <td style="text-align:left; font-size:0.7rem; height:18px; line-height:18px;">
+                                                    <span v-html="legend.up"></span>
+                                                </td>
+
+                                                <td style="padding-left:3px;"></td>
+
+                                                <td style="text-align:left; font-size:0.7rem; height:18px; line-height:18px;">
+                                                    <span v-html="legend.textExt"></span>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
 
                                 </div>
                             </div>
@@ -201,12 +225,14 @@
                 :visible.sync="contourSet.visible"
                 v-for="(contourSet,kcontourSet) in contourSets"
             >
-                <l-contour
+                <LContour
                     :points="contourSet.points"
                     :polygonsContainInner="contourSet.polygonsContainInner"
                     :polygonsClipInner="contourSet.polygonsClipInner"
                     :polygonClipOuter="contourSet.polygonClipOuter"
+                    :thresholds="contourSet.thresholds"
                     :gradient="contourSet.gradient"
+                    :funGetColor="contourSet.getColor"
                     :lineWidth="contourSet.lineWidth"
                     :lineWidthHover="contourSet.lineWidthHover"
                     :lineColor="contourSet.lineColor"
@@ -218,7 +244,7 @@
                     @mouseenter="(v)=>{contourMouseenter(v,contourSet,kcontourSet,contourSets);tooltipContour(v,contourSet,kcontourSet,contourSets)}"
                     @mouseleave="(v)=>{contourMouseleave(v,contourSet,kcontourSet,contourSets);closeTooltip()}"
                     @click="(v)=>{clickContour(v,contourSet,kcontourSet,contourSets)}"
-                ></l-contour>
+                ></LContour>
             </l-layer-group>
 
         </l-map>
@@ -430,6 +456,7 @@ function getDefBaseMaps() {
  * @vue-prop {Array} [opt.contourSets=[]] 輸入等值線集合陣列，各元素為物件，預設[]
  * @vue-prop {Number} [opt.contourSets[i].order=null] 輸入第i個等值線集合的排序用數字，預設null
  * @vue-prop {Object} [opt.contourSets[i].gradient=詳見程式碼] 輸入第i個等值線集合的色階(color map)設定物件，鍵範圍0至1，值為對應之顏色，於各鍵之間則採用內插取色，預設值詳見程式碼
+ * @vue-prop {Function} [opt.contourSets[i].getColor=null] 輸入第i個等值線集合的顏色函數，預設null
  * @vue-prop {String} [opt.contourSets[i].lineColor=''] 輸入第i個等值線集合的框線顏色字串，若不輸入則預設為gradient內插所得顏色，預設為''
  * @vue-prop {String} [opt.contourSets[i].lineColorHover=''] 輸入滑鼠移入時第i個等值線集合的框線顏色字串，若不輸入則預設為gradient內插所得顏色，預設為''
  * @vue-prop {Number} [opt.contourSets[i].lineWidth=1] 輸入第i個等值線集合的框線寬度數字，預設為1
@@ -438,10 +465,12 @@ function getDefBaseMaps() {
  * @vue-prop {Number} [opt.contourSets[i].fillOpacityHover=0.5] 輸入滑鼠移入時第i個等值線集合的填充透明度數字，預設為0.5
  * @vue-prop {Boolean} [opt.contourSets[i].changeStyleWhenHover=true] 輸入第i個等值線集合的是否使用滑鼠移入時切換style效果布林值，預設true
  * @vue-prop {Number} [opt.contourSets[i].legendNumDig=null] 輸入第i個等值線集合的對圖例內數字取小數位數，null代表不取，預設null
- * @vue-prop {Function} [opt.contourSets[i].legendTextFormater=null] 輸入第i個等值線集合的對圖例內各色階的內容產生函數，可基於傳入資料回傳顯示文字或html內容，null代表不取，預設null
+ * @vue-prop {Function} [opt.contourSets[i].legendTextFormater=null] 輸入第i個等值線集合的對圖例內各色階的文字內容產生函數，可基於傳入資料回傳顯示文字或html內容，null代表不取，預設null
+ * @vue-prop {Function} [opt.contourSets[i].legendTextExtra=null] 輸入第i個等值線集合的對圖例內各色階的文字提供額外文字函數，預設null
  * @vue-prop {Array} [opt.contourSets[i].polygonClipOuter=[]] 輸入第i個等值線集合的剔除以外之多邊形(polygon，深度為2，例如[[p1lat,p1lng],[p2lat,p2lng],...])陣列，預設[]
  * @vue-prop {Array} [opt.contourSets[i].polygonsClipInner=[]] 輸入第i個等值線集合的剔除以內之複數多邊形(multi-polygon，深度為3，例如[[[p1lat,p1lng]],[[p2lat,p2lng]],...])陣列，預設[]
  * @vue-prop {Array} [opt.contourSets[i].polygonsContainInner=[]] 輸入第i個等值線集合的保留以內之複數多邊形(multi-polygon，深度為3，例如[[[p1lat,p1lng]],[[p2lat,p2lng]],...])陣列，預設[]
+ * @vue-prop {Array} [opt.contourSets[i].thresholds=[]] 輸入第i個等值線集合的用等值線門檻值陣列，給予非有效陣列則使用自動計算各線門檻值，預設[]
  * @vue-prop {Function} [opt.defContourSetsClick=function(){}] 輸入全域等值線集合的click呼叫函數，可給予函數接收點擊事件，預設為function(){}
  * @vue-prop {Function} [opt.ContourSets[i].click=function(){}] 輸入第i個等值線集合的click呼叫函數，預設為function(){}
  * @vue-prop {Function} [opt.defContourSetsPopup=function(){}] 輸入全域等值線集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
@@ -1306,6 +1335,12 @@ export default {
                     legendTextFormater = null
                 }
 
+                //legendTextExtra
+                let legendTextExtra = get(contourSet, 'legendTextExtra', null)
+                if (!isfun(legendTextExtra)) {
+                    legendTextExtra = null
+                }
+
                 //title
                 if (!isestr(get(contourSet, 'title', null))) {
                     contourSet.title = ''
@@ -1342,6 +1377,7 @@ export default {
                     // },
                     legendNumDig,
                     legendTextFormater,
+                    legendTextExtra,
                     legend: [],
                     funContourSetsClick,
                     funSetClick,
@@ -1935,30 +1971,50 @@ export default {
             let legends = map(data.polygonSets, 'range')
 
             function getText(k, range) {
-                let t = range.text
+                // let t = range.text
                 let low = range.low
                 let up = range.up
+                let delimiter = '-'
                 if (isNumber(contourSet.legendNumDig)) {
                     low = dig(range.low, contourSet.legendNumDig)
                     up = dig(range.up, contourSet.legendNumDig)
                 }
                 if (isfun(contourSet.legendTextFormater)) {
-                    t = contourSet.legendTextFormater({ low, up, legends, index: k })
+                    let r = contourSet.legendTextFormater({ low, up, legends, index: k })
+                    low = get(r, 'low')
+                    up = get(r, 'up')
+                    delimiter = get(r, 'delimiter', delimiter) //使用delimiter視為預設值
                 }
-                else {
-                    t = `${low} - ${up}`
+                return {
+                    low,
+                    up,
+                    delimiter,
                 }
-                return t
             }
 
             //legend
             let legend = map(data.polygonSets, (v, k) => {
-                return {
+
+                //legendTextExtra
+                let textExt = ''
+                if (isfun(contourSet.legendTextExtra)) {
+                    textExt = contourSet.legendTextExtra({
+                        k,
+                        n: size(data.polygonSets),
+                        polygonSet: v,
+                    })
+                }
+
+                //r
+                let r = {
+                    ...getText(k, v.range),
+                    textExt,
                     color: v.color,
-                    rangeText: getText(k, v.range),
                     arrow: false,
                     index: k,
                 }
+
+                return r
             })
 
             //reverse
@@ -1999,7 +2055,7 @@ export default {
 
 <style scoped>
 .clsPanel {
-    padding:6px 10px;
+    padding:4px 5px;
     box-shadow:0 0 15px rgba(0,0,0,0.2);
     border-radius:5px;
     font-size: 0.8rem;
