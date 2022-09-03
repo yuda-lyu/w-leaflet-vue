@@ -3,8 +3,8 @@
 
         <div style="padding:20px;">
             <div style="font-size:1.5rem;">contourSet.thresholds</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetOrder.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetOrder.html" target="_blank" class="item-link">code</a>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetThresholds.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetThresholds.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div style="display:flex; padding-bottom:20px;">
@@ -57,8 +57,8 @@ export default {
                             [23.727, 120.772, 0], [23.539, 120.975, 0], [23.612, 121.434, 0],
                             [23.193, 120.355, 22], [23.456, 120.890, 42], [23.280, 120.551, 25], [23.162, 121.247, 5],
                         ],
-                        visible: true,
                         thresholds: [0, 5, 10, 20, 30, 40, 55, 70, 85],
+                        visible: true,
                     },
                     {
                         title: 'contourSet B',
@@ -66,8 +66,8 @@ export default {
                         points: [
                             [22.607, 120.416, 0], [22.967, 120.663, 15], [22.592, 120.922, 20], [22.717, 120.644, 45],
                         ],
-                        visible: false,
                         thresholds: [0, 15, 30, 35, 40, 45, 50],
+                        visible: false,
                     },
                 ],
             },
