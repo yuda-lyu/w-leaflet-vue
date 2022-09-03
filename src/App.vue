@@ -138,7 +138,7 @@
 
         <AppCTRContourSetThresholds v-if="showSubCmp==='contourSet.thresholds'"></AppCTRContourSetThresholds>
 
-        <AppCTRContourSetGetColor v-if="showSubCmp==='contourSet.funGetColor'"></AppCTRContourSetGetColor>
+        <AppCTRContourSetGetColor v-if="showSubCmp==='contourSet.getColor'"></AppCTRContourSetGetColor>
 
         <AppCTRContourSetOrder v-if="showSubCmp==='contourSet.order'"></AppCTRContourSetOrder>
 
@@ -479,7 +479,7 @@ export default {
                     'contourSets',
                     'contourSet-changeData',
                     'contourSet.thresholds',
-                    'contourSet.funGetColor',
+                    'contourSet.getColor',
                     'contourSet.order',
                     'contourSet.gradient',
                     'contourSet.lineColor',
