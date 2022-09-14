@@ -1,13 +1,13 @@
 {
   "name": "w-leaflet-vue",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "main": "dist/w-leaflet-vue.umd.js",
   "dependencies": {
     "leaflet": "^1.8.0",
     "lodash": "^4.17.21",
     "vue2-leaflet": "^2.7.1",
-    "w-component-vue": "^2.2.51",
-    "w-gis": "^1.0.27",
+    "w-component-vue": "^2.2.52",
+    "w-gis": "^1.0.31",
     "wsemi": "^1.6.78"
   },
   "devDependencies": {

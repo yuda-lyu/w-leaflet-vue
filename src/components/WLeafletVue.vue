@@ -955,6 +955,7 @@ export default {
 
                 //iconPointSet
                 let iconPointSet = vo.getIcon(pointSet).icon
+                console.log('pointSet icon', iconPointSet)
 
                 //points
                 pointSet.points = map(pointSet.points, (point, kpoint) => {
@@ -982,6 +983,7 @@ export default {
                             popupAnchor: r.popupAnchor,
                         })
                     }
+                    console.log('point icon', icon)
 
                     //funClick
                     let funClick = get(point, 'click', null)
@@ -1720,9 +1722,10 @@ export default {
                 let h = funPopup(msg)
 
                 //offset
-                let offset = get(obj, 'popupAnchor', null)
+                let offset = get(obj, 'icon.options.popupAnchor', null) //point或pointSet的popupAnchor已存入icon本身
                 if (!isearr(offset)) {
                     offset = [0, -(40 / 1.5)] //若point沒有提供popupAnchor則代表使用原先icon與其popupAnchor
+                    // console.log('default offset', offset, obj)
                 }
                 // console.log('offset', offset)
 
@@ -1764,9 +1767,10 @@ export default {
             let h = obj.funTooltip(msg)
 
             //offset
-            let offset = get(obj, 'popupAnchor', null)
+            let offset = get(obj, 'icon.options.popupAnchor', null) //point或pointSet的popupAnchor已存入icon本身
             if (!isearr(offset)) {
                 offset = [0, -(40 / 1.5)] //若point沒有提供popupAnchor則代表使用原先icon與其popupAnchor
+                // console.log('default offset', offset, obj)
             }
             // console.log('offset', offset)
 
