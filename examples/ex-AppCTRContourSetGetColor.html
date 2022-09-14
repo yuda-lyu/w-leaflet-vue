@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.30/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.31/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- w-gis -->
     <script _src="https://cdn.jsdelivr.net/npm/w-gis@1.0.25/dist/w-gis.umd.js"></script>
@@ -81,12 +81,12 @@
         <div style="padding:20px;">
             <div style="font-size:1.5rem;">contourSet.getColor</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetOrder.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetGetColor.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetOrder.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetGetColor.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -145,7 +145,6 @@
                 [23.28, 120.551, 25],
                 [23.162, 121.247, 5]
               ],
-              visible: true,
               thresholds: [0, 5, 10, 20, 30, 40, 55, 70, 85],
               getColor: msg => {
                 console.log("contourSet A: getColor", msg);
@@ -157,7 +156,8 @@
                   return "#f92";
                 }
                 return "#e23";
-              }
+              },
+              visible: true
             },
             {
               title: "contourSet B",
@@ -168,8 +168,8 @@
                 [22.592, 120.922, 20],
                 [22.717, 120.644, 45]
               ],
-              visible: false,
-              thresholds: [0, 15, 30, 35, 40, 45, 50]
+              thresholds: [0, 15, 30, 35, 40, 45, 50],
+              visible: false
             }
           ]
         },
