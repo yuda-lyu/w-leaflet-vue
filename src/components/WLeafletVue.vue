@@ -955,7 +955,7 @@ export default {
 
                 //iconPointSet
                 let iconPointSet = vo.getIcon(pointSet).icon
-                console.log('pointSet icon', iconPointSet)
+                // console.log('pointSet icon', iconPointSet)
 
                 //points
                 pointSet.points = map(pointSet.points, (point, kpoint) => {
@@ -983,7 +983,7 @@ export default {
                             popupAnchor: r.popupAnchor,
                         })
                     }
-                    console.log('point icon', icon)
+                    // console.log('point icon', icon)
 
                     //funClick
                     let funClick = get(point, 'click', null)
