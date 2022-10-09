@@ -1722,7 +1722,13 @@ export default {
                 let h = funPopup(msg)
 
                 //offset
-                let offset = get(obj, 'icon.options.popupAnchor', null) //point或pointSet的popupAnchor已存入icon本身
+                let offset = null
+                if (!isearr(offset)) {
+                    offset = get(obj, 'icon.options.popupAnchor', null) //由leaflet內部呼叫時, point或pointSet的popupAnchor已存入icon本身
+                }
+                if (!isearr(offset)) {
+                    offset = get(obj, 'popupAnchor', null) //若無, 由leaflet外部呼叫時, popupAnchor由point提供
+                }
                 if (!isearr(offset)) {
                     offset = [0, -(40 / 1.5)] //若point沒有提供popupAnchor則代表使用原先icon與其popupAnchor
                     // console.log('default offset', offset, obj)
@@ -1767,7 +1773,13 @@ export default {
             let h = obj.funTooltip(msg)
 
             //offset
-            let offset = get(obj, 'icon.options.popupAnchor', null) //point或pointSet的popupAnchor已存入icon本身
+            let offset = null
+            if (!isearr(offset)) {
+                offset = get(obj, 'icon.options.popupAnchor', null) //由leaflet內部呼叫時, point或pointSet的popupAnchor已存入icon本身
+            }
+            if (!isearr(offset)) {
+                offset = get(obj, 'popupAnchor', null) //若無, 由leaflet外部呼叫時, popupAnchor由point提供
+            }
             if (!isearr(offset)) {
                 offset = [0, -(40 / 1.5)] //若point沒有提供popupAnchor則代表使用原先icon與其popupAnchor
                 // console.log('default offset', offset, obj)
