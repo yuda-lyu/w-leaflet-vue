@@ -775,9 +775,15 @@ export default {
                 ...panelBaseMaps,
             }
             if (size(get(panelBaseMaps, 'baseMaps', [])) === 0) {
-                panelBaseMaps.baseMaps = getDefBaseMaps() //default baseMaps
+                if (size(get(vo, 'panelBaseMaps.baseMaps', [])) === 0) {
+                    panelBaseMaps.baseMaps = getDefBaseMaps() //無既有數據, 使用getDefBaseMaps產生預設地圖
+                }
+                else {
+                    panelBaseMaps.baseMaps = cloneDeep(vo.panelBaseMaps.baseMaps) //有既有數據, 因baseMaps包含使用者已切換指定之底圖, 故得要優先使用
+                }
             }
             panelBaseMaps = cloneDeep(panelBaseMaps) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然更新baseMaps時就會觸發外部opt記憶體變更而被watch到, 進而導致無限觸發事件
+            // console.log('panelBaseMaps', panelBaseMaps)
 
             //check
             if (!isEqual(vo.panelBaseMapsTemp, panelBaseMaps)) { //判斷純外部給資料是否有變更, baseMaps會因切換底圖而有變更, 故若外部設定數據有變更才重新複寫
