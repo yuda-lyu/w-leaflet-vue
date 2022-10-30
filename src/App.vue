@@ -214,6 +214,8 @@
 
         <AppFunPopupPoint v-if="showSubCmp==='function-popupPoint'"></AppFunPopupPoint>
 
+        <AppFunModifyItemsVisible v-if="showSubCmp==='function-modifyItemsVisible'"></AppFunModifyItemsVisible>
+
     </div>
 </template>
 
@@ -306,6 +308,7 @@ import AppFunGetMapObject from './AppFunGetMapObject.vue'
 import AppFunCenterTo from './AppFunCenterTo.vue'
 import AppFunPanTo from './AppFunPanTo.vue'
 import AppFunPopupPoint from './AppFunPopupPoint.vue'
+import AppFunModifyItemsVisible from './AppFunModifyItemsVisible.vue'
 
 
 export default {
@@ -397,6 +400,7 @@ export default {
         AppFunCenterTo,
         AppFunPanTo,
         AppFunPopupPoint,
+        AppFunModifyItemsVisible,
     },
     data: function() {
         return {
@@ -509,6 +513,7 @@ export default {
                     'function-centerTo',
                     'function-panTo',
                     'function-popupPoint',
+                    'function-modifyItemsVisible',
                 ],
             },
 

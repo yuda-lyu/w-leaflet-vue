@@ -1478,6 +1478,32 @@ export default {
 
         },
 
+        modifyItemsVisible: function(fun) {
+            // console.log('methods modifyItemsVisible')
+
+            let vo = this
+
+            //check
+            if (!isfun(fun)) {
+                throw new Error('fun is not a function')
+            }
+
+            //process
+            each(vo.items, (v, k) => {
+
+                //fun
+                let b = fun(v, k)
+
+                //set, 將items的變更用set配path, 對原本各數據集的visible做同步
+                set(vo, v.updatePath, b)
+
+                //對外部opt各數據集的visible做同步, 否則外部變更數據時會傳入原本的visible造成操作問題
+                set(vo.opt, v.updatePath, b)
+
+            })
+
+        },
+
         getMapObject: function() {
             // console.log('methods getMapObject')
 
