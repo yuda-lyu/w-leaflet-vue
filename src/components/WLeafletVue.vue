@@ -1821,6 +1821,7 @@ export default {
             //opt
             let opt = {
                 offset,
+                maxWidth: 'auto',
             }
 
             //call openTooltip
@@ -1875,8 +1876,13 @@ export default {
                 //h
                 let h = obj.funSetPopup(msg)
 
+                //opt
+                let opt = {
+                    maxWidth: 'auto',
+                }
+
                 //call openPopup
-                vo.$refs.refPopup.mapObject.bindPopup(h).openPopup(latLng)
+                vo.$refs.refPopup.mapObject.bindPopup(h, opt).openPopup(latLng)
 
             }
 
@@ -1909,8 +1915,13 @@ export default {
             //h
             let h = obj.funSetTooltip(msg)
 
+            //opt
+            let opt = {
+                maxWidth: 'auto',
+            }
+
             //call openTooltip
-            vo.$refs.refTooltip.mapObject.bindTooltip(h).openTooltip(centerlatLng)
+            vo.$refs.refTooltip.mapObject.bindTooltip(h, opt).openTooltip(centerlatLng)
 
         },
 
@@ -1963,8 +1974,13 @@ export default {
                 //h
                 let h = obj.funSetPopup(msg)
 
+                //opt
+                let opt = {
+                    maxWidth: 'auto',
+                }
+
                 //call openPopup
-                vo.$refs.refPopup.mapObject.bindPopup(h).openPopup(latLng)
+                vo.$refs.refPopup.mapObject.bindPopup(h, opt).openPopup(latLng)
 
             }
 
@@ -1992,8 +2008,13 @@ export default {
             //h
             let h = obj.funSetTooltip(msg)
 
+            //opt
+            let opt = {
+                maxWidth: 'auto',
+            }
+
             //call openTooltip
-            vo.$refs.refTooltip.mapObject.bindTooltip(h).openTooltip(centerlatLng)
+            vo.$refs.refTooltip.mapObject.bindTooltip(h, opt).openTooltip(centerlatLng)
 
         },
 
