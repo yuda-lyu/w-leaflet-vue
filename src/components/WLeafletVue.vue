@@ -181,25 +181,6 @@
                 v-for="(baseMap,kbaseMap) in panelBaseMaps.baseMaps"
             ></l-tile-layer>
 
-            <!-- 點圖層 -->
-            <l-layer-group
-                layer-type="overlay"
-                :key="'pointSet:'+kpointSet"
-                :name="pointSet.title"
-                :visible.sync="pointSet.visible"
-                v-for="(pointSet,kpointSet) in pointSets"
-            >
-                <l-marker
-                    :key="'point:'+kpoint"
-                    :lat-lng="point.latLng"
-                    :icon="point.icon"
-                    @click="(ev)=>{clickPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
-                    @mouseenter="(ev)=>{tooltipPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
-                    @mouseleave="closeTooltip"
-                    v-for="(point,kpoint) in pointSet.points"
-                ></l-marker>
-            </l-layer-group>
-
             <!-- 多邊形圖層 -->
             <l-layer-group
                 layer-type="overlay"
@@ -215,6 +196,24 @@
                     @mouseleave="(ev)=>{polygonSet.mouseleave(ev);closeTooltip()}"
                     @click="(ev)=>{clickPolygon(ev,polygonSet,kpolygonSet,polygonSets)}"
                 ></l-polygon>
+            </l-layer-group>
+
+            <!-- geojson圖層 -->
+            <l-layer-group
+                layer-type="overlay"
+                :key="'geojsonSet:'+kgeojsonSet"
+                :name="geojsonSet.title"
+                :visible.sync="geojsonSet.visible"
+                v-for="(geojsonSet,kgeojsonSet) in geojsonSets"
+            >
+                <l-geo-json
+                    :geojson="geojsonSet.geojson"
+                    v-bind="geojsonSet.style"
+                    :optionsStyle="(feature)=>{ return getGeojsonStyle(feature,geojsonSet)}"
+                    @mouseenter="(ev)=>{geojsonSet.mouseenter(ev);tooltipGeojson(ev,geojsonSet,kgeojsonSet,geojsonSets)}"
+                    @mouseleave="(ev)=>{geojsonSet.mouseleave(ev);closeTooltip()}"
+                    @click="(ev)=>{clickGeojson(ev,geojsonSet,kgeojsonSet,geojsonSets)}"
+                ></l-geo-json>
             </l-layer-group>
 
             <!-- 等值線圖層 -->
@@ -245,6 +244,25 @@
                     @mouseleave="(v)=>{contourMouseleave(v,contourSet,kcontourSet,contourSets);closeTooltip()}"
                     @click="(v)=>{clickContour(v,contourSet,kcontourSet,contourSets)}"
                 ></LContour>
+            </l-layer-group>
+
+            <!-- 點圖層 -->
+            <l-layer-group
+                layer-type="overlay"
+                :key="'pointSet:'+kpointSet"
+                :name="pointSet.title"
+                :visible.sync="pointSet.visible"
+                v-for="(pointSet,kpointSet) in pointSets"
+            >
+                <l-marker
+                    :key="'point:'+kpoint"
+                    :lat-lng="point.latLng"
+                    :icon="point.icon"
+                    @click="(ev)=>{clickPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
+                    @mouseenter="(ev)=>{tooltipPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
+                    @mouseleave="closeTooltip"
+                    v-for="(point,kpoint) in pointSet.points"
+                ></l-marker>
             </l-layer-group>
 
         </l-map>
@@ -282,7 +300,7 @@ import getCentroidMultiPolygon from 'w-gis/src/getCentroidMultiPolygon.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
 import { Icon } from 'leaflet'
-import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LPolygon } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LPolygon, LGeoJson } from 'vue2-leaflet'
 import LContour from './LContour.vue'
 import Radios from './Radios.vue'
 import Checkboxs from './Checkboxs.vue'
@@ -420,10 +438,11 @@ function getDefBaseMaps() {
  * @vue-prop {Array} [opt.pointSets[i].iconSize=[24,40]] 輸入第i個點集合的顯示圖標尺寸陣列，使用[寬,高]，長寬單位px，預設[24,40]
  * @vue-prop {Array} [opt.pointSets[i].iconAnchor=[iconSize[0]/2,iconSize[1]]] 輸入第i個點集合的顯示圖標的實際定位位置陣列，由圖標左上角代表實際定位點起算，往左移動為+x，往上移動為+y，x與y單位px，需給予[x,y]，預設[iconSize[0]/2,iconSize[1]]
  * @vue-prop {Array} [opt.pointSets[i].popupAnchor=[0,-iconSize[1]/1.5]] 輸入第i個點集合的顯示popup或tooltip時的指向位置陣列，由實際定位點起算，往右移動為+x，往下移動為+y，x與y單位px，需給予[x,y]，預設[0,-iconSize[1]/1.5]
- * @vue-prop {Array} [opt.pointSets[i].points=[]] 輸入第i個點集合的各點陣列，各元素為物件或為緯經度(注意非經緯度)陣列，也就是[{p1},{p2},...]或是[[p1lat,p1lng],[p2lat,p2lng],...]，預設為[]
+ * @vue-prop {Boolean} [opt.pointSets[i].visible=true] 輸入第i個點集合的是否顯示布林值，預設為true
+ * @vue-prop {Array} [opt.pointSets[i].points=[]] 輸入第i個點集合的各點數據陣列，各元素為物件或為緯經度陣列，也就是[{p1},{p2},...]或是[[p1lat,p1lng],[p2lat,p2lng],...]，預設為[]
  * @vue-prop {String} [opt.pointSets[i].points[j].title=''] 輸入第i個點集合的第j個點的標題字串，預設為''
  * @vue-prop {String} [opt.pointSets[i].points[j].msg=''] 輸入第i個點集合的第j個點的說明字串，預設為''
- * @vue-prop {Array} [opt.pointSets[i].points[j].latLng=[]] 輸入第i個點集合的第j個點的緯經度(注意非經緯度)座標陣列，也就是給予[lat,lng]，預設[]
+ * @vue-prop {Array} [opt.pointSets[i].points[j].latLng=[]] 輸入第i個點集合的第j個點的緯經度座標陣列，也就是給予[lat,lng]，預設[]
  * @vue-prop {String} [opt.pointSets[i].points[j].iconSrc=詳見程式碼] 輸入第i個點集合的第j個點的顯示圖標來源字串，可使用base64格式或網址，預設為google map的點圖標，值詳見程式碼
  * @vue-prop {Array} [opt.pointSets[i].points[j].iconSize=[24,40]] 輸入第i個點集合的第j個點的顯示圖標尺寸陣列，使用[寬,高]，長寬單位px，預設[24,40]
  * @vue-prop {Array} [opt.pointSets[i].points[j].iconAnchor=[iconSize[0]/2,iconSize[1]]] 輸入第i個點集合的第j個點的顯示圖標的實際定位位置陣列，由圖標左上角代表實際定位點起算，往左移動為+x，往上移動為+y，x與y單位px，需給予[x,y]，預設[iconSize[0]/2,iconSize[1]]
@@ -447,12 +466,32 @@ function getDefBaseMaps() {
  * @vue-prop {Number} [opt.polygonSets[i].lineWidthHover=3] 輸入滑鼠移入時第i個多邊形集合的框線寬度數字，預設為3
  * @vue-prop {String} [opt.polygonSets[i].fillColor='rgba(0,150,255,0.25)'] 輸入第i個多邊形集合的填充顏色字串，預設為'rgba(0,150,255,0.25)'
  * @vue-prop {String} [opt.polygonSets[i].fillColorHover='rgba(0,150,255,0.25)'] 輸入滑鼠移入時第i個多邊形集合的填充顏色字串，預設為'rgba(0,150,255,0.25)'
+ * @vue-prop {Array} [opt.polygonSets[i].latLngs=[]] 輸入第i個多邊形集合的數據陣列，可使用polygon或multiPolygon，各點座標為緯經度，預設[]
  * @vue-prop {Function} [opt.defPolygonSetsClick=function(){}] 輸入全域多邊形集合的click呼叫函數，可給予函數接收點擊事件，預設為function(){}
  * @vue-prop {Function} [opt.polygonSets[i].click=function(){}] 輸入第i個多邊形集合的click呼叫函數，預設為function(){}
  * @vue-prop {Function} [opt.defPolygonSetsPopup=function(){}] 輸入全域多邊形集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  * @vue-prop {Function} [opt.polygonSets[i].popup=function(){}] 輸入第i個多邊形集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  * @vue-prop {Function} [opt.defPolygonSetsTooltip=function(){}] 輸入全域多邊形集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  * @vue-prop {Function} [opt.polygonSets[i].tooltip=function(){}] 輸入第i個多邊形集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
+ * @vue-prop {Boolean} [opt.polygonSets[i].visible=true] 輸入第i個多邊形集合的是否顯示布林值，預設為true
+ * @vue-prop {Array} [opt.geojsonSets=[]] 輸入geojson集合陣列，各元素為物件，預設[]
+ * @vue-prop {String} [opt.geojsonSets[i].title=''] 輸入第i個geojson集合的標題字串，預設為''
+ * @vue-prop {String} [opt.geojsonSets[i].msg=''] 輸入第i個geojson集合的說明字串，預設為''
+ * @vue-prop {Number} [opt.geojsonSets[i].order=null] 輸入第i個geojson集合的排序用數字，預設null
+ * @vue-prop {String} [opt.geojsonSets[i].lineColor='rgba(0,150,255,1)'] 輸入第i個geojson集合的框線顏色字串，預設為'rgba(0,150,255,1)'
+ * @vue-prop {String} [opt.geojsonSets[i].lineColorHover='rgba(0,150,255,1)'] 輸入滑鼠移入時第i個geojson集合的框線顏色字串，預設為'rgba(0,150,255,1)'
+ * @vue-prop {Number} [opt.geojsonSets[i].lineWidth=3] 輸入第i個geojson集合的框線寬度數字，預設為3
+ * @vue-prop {Number} [opt.geojsonSets[i].lineWidthHover=3] 輸入滑鼠移入時第i個geojson集合的框線寬度數字，預設為3
+ * @vue-prop {String} [opt.geojsonSets[i].fillColor='rgba(0,150,255,0.25)'] 輸入第i個geojson集合的填充顏色字串，預設為'rgba(0,150,255,0.25)'
+ * @vue-prop {String} [opt.geojsonSets[i].fillColorHover='rgba(0,150,255,0.25)'] 輸入滑鼠移入時第i個geojson集合的填充顏色字串，預設為'rgba(0,150,255,0.25)'
+ * @vue-prop {Object} [opt.geojsonSets[i].geojson={}] 輸入第i個geojson集合的數據物件，各點座標為緯經度，預設{}
+ * @vue-prop {Function} [opt.defGeojsonSetsClick=function(){}] 輸入全域geojson集合的click呼叫函數，可給予函數接收點擊事件，預設為function(){}
+ * @vue-prop {Function} [opt.geojsonSets[i].click=function(){}] 輸入第i個geojson集合的click呼叫函數，預設為function(){}
+ * @vue-prop {Function} [opt.defGeojsonSetsPopup=function(){}] 輸入全域geojson集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
+ * @vue-prop {Function} [opt.geojsonSets[i].popup=function(){}] 輸入第i個geojson集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
+ * @vue-prop {Function} [opt.defGeojsonSetsTooltip=function(){}] 輸入全域geojson集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
+ * @vue-prop {Function} [opt.geojsonSets[i].tooltip=function(){}] 輸入第i個geojson集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
+ * @vue-prop {Boolean} [opt.geojsonSets[i].visible=true] 輸入第i個geojson集合的是否顯示布林值，預設為true
  * @vue-prop {Array} [opt.contourSets=[]] 輸入等值線集合陣列，各元素為物件，預設[]
  * @vue-prop {Number} [opt.contourSets[i].order=null] 輸入第i個等值線集合的排序用數字，預設null
  * @vue-prop {Object} [opt.contourSets[i].gradient=詳見程式碼] 輸入第i個等值線集合的色階(color map)設定物件，鍵範圍0至1，值為對應之顏色，於各鍵之間則採用內插取色，預設值詳見程式碼
@@ -471,12 +510,14 @@ function getDefBaseMaps() {
  * @vue-prop {Array} [opt.contourSets[i].polygonsClipInner=[]] 輸入第i個等值線集合的剔除以內之複數多邊形(multi-polygon，深度為3，例如[[[p1lat,p1lng]],[[p2lat,p2lng]],...])陣列，預設[]
  * @vue-prop {Array} [opt.contourSets[i].polygonsContainInner=[]] 輸入第i個等值線集合的保留以內之複數多邊形(multi-polygon，深度為3，例如[[[p1lat,p1lng]],[[p2lat,p2lng]],...])陣列，預設[]
  * @vue-prop {Array} [opt.contourSets[i].thresholds=[]] 輸入第i個等值線集合的用等值線門檻值陣列，給予非有效陣列則使用自動計算各線門檻值，預設[]
+ * @vue-prop {Array} [opt.contourSets[i].points=[]] 輸入第i個等值線集合的數據陣列，各點座標為緯經度，並自動基於三角網格技術計算等值線，預設[]
  * @vue-prop {Function} [opt.defContourSetsClick=function(){}] 輸入全域等值線集合的click呼叫函數，可給予函數接收點擊事件，預設為function(){}
- * @vue-prop {Function} [opt.ContourSets[i].click=function(){}] 輸入第i個等值線集合的click呼叫函數，預設為function(){}
+ * @vue-prop {Function} [opt.contourSets[i].click=function(){}] 輸入第i個等值線集合的click呼叫函數，預設為function(){}
  * @vue-prop {Function} [opt.defContourSetsPopup=function(){}] 輸入全域等值線集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
- * @vue-prop {Function} [opt.ContourSets[i].popup=function(){}] 輸入第i個等值線集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
+ * @vue-prop {Function} [opt.contourSets[i].popup=function(){}] 輸入第i個等值線集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  * @vue-prop {Function} [opt.defContourSetsTooltip=function(){}] 輸入全域等值線集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
- * @vue-prop {Function} [opt.ContourSets[i].tooltip=function(){}] 輸入第i個等值線集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
+ * @vue-prop {Function} [opt.contourSets[i].tooltip=function(){}] 輸入第i個等值線集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
+ * @vue-prop {Boolean} [opt.contourSets[i].visible=true] 輸入第i個等值線集合的是否顯示布林值，預設為true
  */
 export default {
     directives: {
@@ -490,6 +531,7 @@ export default {
         LLayerGroup,
         LMarker,
         LPolygon,
+        LGeoJson,
         LContour,
         Radios,
         Checkboxs,
@@ -504,6 +546,7 @@ export default {
         return {
             dbcChangePointSets: debounce(),
             dbcChangePolygonSets: debounce(),
+            dbcChangeGeojsonSets: debounce(),
             dbcChangeContourSets: debounce(),
             dbcChangeItems: debounce(),
             wats: [],
@@ -526,6 +569,9 @@ export default {
 
             polygonSets: [],
             effPolygonSetsTemp: [],
+
+            geojsonSets: [],
+            effGeojsonSetsTemp: [],
 
             contourSets: [],
             effContourSetsTemp: [],
@@ -551,6 +597,11 @@ export default {
 
         each(['polygonSets', 'defPolygonSetsClick', 'defPolygonSetsPopup', 'defPolygonSetsTooltip'], (v) => {
             let wat = vo.$watch(`opt.${v}`, vo.changePolygonSetsDebounce, wo)
+            vo.wats.push(wat)
+        })
+
+        each(['geojsonSets', 'defGeojsonSetsClick', 'defGeojsonSetsPopup', 'defGeojsonSetsTooltip'], (v) => {
+            let wat = vo.$watch(`opt.${v}`, vo.changeGeojsonSetsDebounce, wo)
             vo.wats.push(wat)
         })
 
@@ -935,14 +986,14 @@ export default {
             vo.effPointSetsTemp = effPointSets
             // console.log('call changePointSets')
 
-            //funPointSetsClick
-            let funPointSetsClick = get(vo, 'opt.defPointSetsClick', null)
+            //funSetsClick
+            let funSetsClick = get(vo, 'opt.defPointSetsClick', null)
 
-            //funPointSetsPopup
-            let funPointSetsPopup = get(vo, 'opt.defPointSetsPopup', null)
+            //funSetsPopup
+            let funSetsPopup = get(vo, 'opt.defPointSetsPopup', null)
 
-            //funPointSetsTooltip
-            let funPointSetsTooltip = get(vo, 'opt.defPointSetsTooltip', null)
+            //funSetsTooltip
+            let funSetsTooltip = get(vo, 'opt.defPointSetsTooltip', null)
 
             //pointSets
             vo.pointSets = map(pointSets, (pointSet, kpointSet) => {
@@ -995,15 +1046,15 @@ export default {
                     let funClick = get(point, 'click', null)
 
                     //funPopup
-                    let funPopup = get(point, 'popup', null) || funSetPopup || funPointSetsPopup //僅提供一種popup, 若點有popup則優先使用
+                    let funPopup = get(point, 'popup', null) || funSetPopup || funSetsPopup //僅提供一種popup, 若點有popup則優先使用
 
                     //funTooltip
-                    let funTooltip = get(point, 'tooltip', null) || funSetTooltip || funPointSetsTooltip //僅提供一種tooltip, 若點有tooltip則優先使用
+                    let funTooltip = get(point, 'tooltip', null) || funSetTooltip || funSetsTooltip //僅提供一種tooltip, 若點有tooltip則優先使用
 
                     return {
                         ...point,
                         icon,
-                        funPointSetsClick,
+                        funSetsClick,
                         funSetClick,
                         funClick,
                         funPopup,
@@ -1082,14 +1133,14 @@ export default {
             vo.effPolygonSetsTemp = effPolygonSets
             // console.log('call changePolygonSets')
 
-            //funPolygonSetsClick
-            let funPolygonSetsClick = get(vo, 'opt.defPolygonSetsClick', null)
+            //funSetsClick
+            let funSetsClick = get(vo, 'opt.defPolygonSetsClick', null)
 
-            //funPolygonSetsPopup
-            let funPolygonSetsPopup = get(vo, 'opt.defPolygonSetsPopup', null)
+            //funSetsPopup
+            let funSetsPopup = get(vo, 'opt.defPolygonSetsPopup', null)
 
-            //funPolygonSetsTooltip
-            let funPolygonSetsTooltip = get(vo, 'opt.defPolygonSetsTooltip', null)
+            //funSetsTooltip
+            let funSetsTooltip = get(vo, 'opt.defPolygonSetsTooltip', null)
 
             vo.polygonSets = map(polygonSets, (polygonSet, kpolygonSet) => {
 
@@ -1100,10 +1151,10 @@ export default {
                 let funSetClick = get(polygonSet, 'click', null)
 
                 //funSetPopup, 預設以滑鼠點下位置出現
-                let funSetPopup = get(polygonSet, 'popup', null) || funPolygonSetsPopup //僅提供一種popup, 若多邊形有popup則優先使用
+                let funSetPopup = get(polygonSet, 'popup', null) || funSetsPopup //僅提供一種popup, 若多邊形有popup則優先使用
 
                 //funSetTooltip
-                let funSetTooltip = get(polygonSet, 'tooltip', null) || funPolygonSetsTooltip //僅提供一種tooltip, 若多邊形有tooltip則優先使用
+                let funSetTooltip = get(polygonSet, 'tooltip', null) || funSetsTooltip //僅提供一種tooltip, 若多邊形有tooltip則優先使用
 
                 //lineColor
                 let lineColor = get(polygonSet, 'lineColor', null)
@@ -1181,6 +1232,7 @@ export default {
                     ...polygonSet,
                     order,
                     style, //需給予, 才能通過v-bind給予初始樣式
+                    styleHover,
                     mouseenter: (ev) => {
                         // console.log('mouseenter', ev)
                         let layer = ev.target
@@ -1191,7 +1243,7 @@ export default {
                         let layer = ev.target
                         layer.setStyle(style)
                     },
-                    funPolygonSetsClick,
+                    funSetsClick,
                     funSetClick,
                     funSetPopup,
                     funSetTooltip,
@@ -1200,6 +1252,230 @@ export default {
 
             //changeItemsDebounce
             vo.changeItemsDebounce('changePolygonSets')
+
+        },
+
+        changeGeojsonSetsDebounce: function(v) {
+            // console.log('methods changeGeojsonSetsDebounce', v)
+
+            let vo = this
+
+            vo.dbcChangeGeojsonSets(() => {
+                vo.changeGeojsonSets()
+            })
+
+        },
+
+        changeGeojsonSets: function() {
+            // console.log('methods changeGeojsonSets')
+
+            let vo = this
+
+            //geojsonSets
+            let geojsonSets = get(vo, 'opt.geojsonSets', null)
+            if (!isarr(geojsonSets)) {
+                geojsonSets = []
+            }
+            geojsonSets = cloneDeep(geojsonSets) //cloneDeep, 後續map會直接修改設定物件記憶體故需脫勾, 但值為函數不會脫勾
+
+            // //check, 不能檢查size為0跳出, 否則外部會無法清空數據
+            // if (size(geojsonSets) === 0) {
+            //     return
+            // }
+
+            //effGeojsonSets
+            let effGeojsonSets = map(geojsonSets, (v) => {
+                return omit(v, 'visible')
+            })
+
+            //check
+            if (isEqual(vo.effGeojsonSetsTemp, effGeojsonSets)) {
+                return
+            }
+            vo.effGeojsonSetsTemp = effGeojsonSets
+            // console.log('call changeGeojsonSets')
+
+            //funSetsClick
+            let funSetsClick = get(vo, 'opt.defGeojsonSetsClick', null)
+
+            //funSetsPopup
+            let funSetsPopup = get(vo, 'opt.defGeojsonSetsPopup', null)
+
+            //funSetsTooltip
+            let funSetsTooltip = get(vo, 'opt.defGeojsonSetsTooltip', null)
+
+            vo.geojsonSets = map(geojsonSets, (geojsonSet, kgeojsonSet) => {
+
+                //geojson
+                let geojson = get(geojsonSet, 'geojson', null)
+
+                //check
+                if (!iseobj(geojson)) {
+                    console.log(`geojsonSet.geojson is not an object`)
+                }
+
+                //features
+                let features = get(geojson, 'features', [])
+
+                //latLngs
+                let latLngs = []
+                each(features, (feature) => {
+                    if (get(feature, 'geometry.type', '') === 'MultiPolygon') {
+                        let coordinates = get(feature, 'geometry.coordinates', [])
+                        latLngs = [...latLngs, ...coordinates]
+                    }
+                })
+
+                //order
+                let order = get(geojsonSet, 'order', null)
+
+                //funSetClick
+                let funSetClick = get(geojsonSet, 'click', null)
+
+                //funSetPopup, 預設以滑鼠點下位置出現
+                let funSetPopup = get(geojsonSet, 'popup', null) || funSetsPopup //僅提供一種popup, 若多邊形有popup則優先使用
+
+                //funSetTooltip
+                let funSetTooltip = get(geojsonSet, 'tooltip', null) || funSetsTooltip //僅提供一種tooltip, 若多邊形有tooltip則優先使用
+
+                //keyStyle
+                let keyStyle = get(geojsonSet, 'keyStyle', '')
+                // if (!isestr(keyStyle)) {
+                //     keyStyle = 'properties.style'
+                // }
+
+                //bMouseEnter, 因geojson組件另外有提供feature給予style(optionsStyle), 此會因render導致覆蓋hover所給予的style, 故得另外偵測處理
+                let bMouseEnter = false
+
+                //lineColor
+                let lineColor = get(geojsonSet, 'lineColor', null)
+                if (!isestr(lineColor)) {
+                    lineColor = 'rgba(0,150,255,1)'
+                }
+
+                //lineWidth
+                let lineWidth = get(geojsonSet, 'lineWidth', null)
+                if (!isNumber(lineWidth)) {
+                    lineWidth = 3
+                }
+
+                //fillColor
+                let fillColor = get(geojsonSet, 'fillColor', null)
+                if (!isestr(fillColor)) {
+                    fillColor = 'rgba(0,150,255,0.25)'
+                }
+
+                //funSetsStyle
+                let funSetsStyle = (feature, geojsonSet) => {
+                    let style = {}
+                    if (isestr(keyStyle)) {
+                        style = get(feature, keyStyle, {})
+                        if (!iseobj(style)) {
+                            console.log(`feature.${keyStyle} is not an effective object`)
+                        }
+                    }
+                    else {
+                        if (bMouseEnter) {
+                            style = get(geojsonSet, 'styleHover', {})
+                        }
+                        else {
+                            style = get(geojsonSet, 'style', {})
+                        }
+                    }
+                    return style
+                }
+
+                //style
+                let style = {
+                    fillColor,
+                    fillOpacity: 1, //vue leaflet預設為0.2得還原
+                    color: lineColor,
+                    weight: lineWidth,
+                }
+
+                //lineColorHover
+                let lineColorHover = get(geojsonSet, 'lineColorHover', null)
+                if (!isestr(lineColorHover)) {
+                    lineColorHover = lineColor
+                }
+
+                //lineWidthHover
+                let lineWidthHover = get(geojsonSet, 'lineWidthHover', null)
+                if (!isNumber(lineWidthHover)) {
+                    lineWidthHover = lineWidth
+                }
+
+                //fillColorHover
+                let fillColorHover = get(geojsonSet, 'fillColorHover', null)
+                if (!isestr(fillColorHover)) {
+                    fillColorHover = fillColor
+                }
+
+                //styleHover
+                let styleHover = {
+                    fillColor: fillColorHover,
+                    fillOpacity: 1, //vue leaflet預設為0.2得還原
+                    color: lineColorHover,
+                    weight: lineWidthHover,
+                }
+
+                //title
+                if (!isestr(get(geojsonSet, 'title', null))) {
+                    geojsonSet.title = ''
+                }
+
+                //msg
+                if (!isestr(get(geojsonSet, 'msg', null))) {
+                    geojsonSet.msg = ''
+                }
+
+                //order
+                if (!isNumber(get(geojsonSet, 'order', null))) {
+                    geojsonSet.order = null
+                }
+
+                //visible
+                if (!isbol(get(geojsonSet, 'visible', null))) {
+                    geojsonSet.visible = false
+                }
+
+                // feature.properties.style
+
+                return {
+                    ...geojsonSet,
+                    latLngs,
+                    order,
+                    style, //需給予, 才能通過v-bind給予初始樣式
+                    styleHover,
+                    mouseenter: (ev) => {
+                        // console.log('mouseenter', ev)
+                        bMouseEnter = true
+                        if (!isestr(keyStyle)) { //非指定geojson內style
+                            let layer = ev.target
+                            layer.setStyle(styleHover)
+                            // console.log('mouseenter', ev, cloneDeep(styleHover))
+                        }
+                    },
+                    mouseleave: (ev) => {
+                        // console.log('mouseleave', ev)
+                        bMouseEnter = false
+                        if (!isestr(keyStyle)) { //非指定geojson內style
+                            let layer = ev.target
+                            layer.setStyle(style)
+                            // console.log('mouseleave', ev, cloneDeep(style))
+                        }
+                    },
+                    funSetsStyle,
+                    // funSetsStyleHover,
+                    funSetsClick,
+                    funSetClick,
+                    funSetPopup,
+                    funSetTooltip,
+                }
+            })
+
+            //changeItemsDebounce
+            vo.changeItemsDebounce('changeGeojsonSets')
 
         },
 
@@ -1243,14 +1519,14 @@ export default {
             vo.effContourSetsTemp = effContourSets
             // console.log('call changeContourSets')
 
-            //funContourSetsClick
-            let funContourSetsClick = get(vo, 'opt.defContourSetsClick', null)
+            //funSetsClick
+            let funSetsClick = get(vo, 'opt.defContourSetsClick', null)
 
-            //funContourSetsPopup
-            let funContourSetsPopup = get(vo, 'opt.defContourSetsPopup', null)
+            //funSetsPopup
+            let funSetsPopup = get(vo, 'opt.defContourSetsPopup', null)
 
-            //funContourSetsTooltip
-            let funContourSetsTooltip = get(vo, 'opt.defContourSetsTooltip', null)
+            //funSetsTooltip
+            let funSetsTooltip = get(vo, 'opt.defContourSetsTooltip', null)
 
             vo.contourSets = map(contourSets, (contourSet, kcontourSet) => {
                 //contour會使用legend故不提供popup與tooltip
@@ -1262,10 +1538,10 @@ export default {
                 let funSetClick = get(contourSet, 'click', null)
 
                 //funSetPopup, 預設以滑鼠點下位置出現
-                let funSetPopup = get(contourSet, 'popup', null) || funContourSetsPopup //僅提供一種popup, 若多邊形有popup則優先使用
+                let funSetPopup = get(contourSet, 'popup', null) || funSetsPopup //僅提供一種popup, 若多邊形有popup則優先使用
 
                 //funSetTooltip
-                let funSetTooltip = get(contourSet, 'tooltip', null) || funContourSetsTooltip //僅提供一種tooltip, 若多邊形有tooltip則優先使用
+                let funSetTooltip = get(contourSet, 'tooltip', null) || funSetsTooltip //僅提供一種tooltip, 若多邊形有tooltip則優先使用
 
                 //lineColor
                 let lineColor = get(contourSet, 'lineColor', null)
@@ -1373,6 +1649,7 @@ export default {
                     ...contourSet,
                     order,
                     // style, //需給予, 才能通過v-bind給予初始樣式
+                    // styleHover,
                     // mouseenter: (ev) => {
                     //     // console.log('mouseenter', ev)
                     //     let layer = ev.target
@@ -1387,7 +1664,7 @@ export default {
                     legendTextFormater,
                     legendTextExtra,
                     legend: [],
-                    funContourSetsClick,
+                    funSetsClick,
                     funSetClick,
                     funSetPopup,
                     funSetTooltip,
@@ -1422,6 +1699,9 @@ export default {
             })
             each(vo.polygonSets, (v, k) => {
                 add(v.title, v.msg, v.order, v.visible, `polygonSets.${k}.visible`)
+            })
+            each(vo.geojsonSets, (v, k) => {
+                add(v.title, v.msg, v.order, v.visible, `geojsonSets.${k}.visible`)
             })
             each(vo.contourSets, (v, k) => {
                 add(v.title, v.msg, v.order, v.visible, `contourSets.${k}.visible`)
@@ -1729,9 +2009,9 @@ export default {
                 obj.funSetClick(msg)
             }
 
-            //funPointSetsClick
-            if (isfun(obj.funPointSetsClick)) {
-                obj.funPointSetsClick(msg)
+            //funSetsClick
+            if (isfun(obj.funSetsClick)) {
+                obj.funSetsClick(msg)
             }
 
             //funPopup popup
@@ -1865,9 +2145,9 @@ export default {
                 obj.funSetClick(msg)
             }
 
-            //funPolygonSetsClick
-            if (isfun(obj.funPolygonSetsClick)) {
-                obj.funPolygonSetsClick(msg)
+            //funSetsClick
+            if (isfun(obj.funSetsClick)) {
+                obj.funSetsClick(msg)
             }
 
             //funSetPopup
@@ -1925,6 +2205,115 @@ export default {
 
         },
 
+        getGeojsonStyle: function(feature, geojsonSet) {
+            // console.log('getGeojsonStyle', 'feature', feature, 'geojsonSet', geojsonSet)
+
+            //funSetsStyle
+            let style = geojsonSet.funSetsStyle(feature, geojsonSet)
+            // console.log('getGeojsonStyle', cloneDeep(style))
+
+            return style
+        },
+
+        parseGeojsonData: function(ev, geojsonSet, kgeojsonSet, geojsonSets) {
+
+            //latLng, msg
+            let ll = ev.latlng
+            let latLng = [ll.lat, ll.lng]
+
+            //msg
+            let msg = {
+                ev,
+                lat: get(latLng, 0, null),
+                lng: get(latLng, 1, null),
+                latLngs: geojsonSet.latLngs, //latLngs由features的mutlipolygon提取
+                geojsonSet,
+                kgeojsonSet,
+                geojsonSets,
+            }
+
+            return { latLng, msg }
+        },
+
+        clickGeojson: function(ev, geojsonSet, kgeojsonSet, geojsonSets) {
+            // console.log('methods clickGeojson', ev, geojsonSet, kgeojsonSet, geojsonSets)
+
+            let vo = this
+
+            //obj
+            let obj = geojsonSet
+
+            //parseGeojsonData
+            let { latLng, msg } = vo.parseGeojsonData(ev, geojsonSet, kgeojsonSet, geojsonSets)
+
+            //funSetClick
+            if (isfun(obj.funSetClick)) {
+                obj.funSetClick(msg)
+            }
+
+            //funSetsClick
+            if (isfun(obj.funSetsClick)) {
+                obj.funSetsClick(msg)
+            }
+
+            //funSetPopup
+            if (isfun(obj.funSetPopup)) {
+
+                //h
+                let h = obj.funSetPopup(msg)
+
+                //opt
+                let opt = {
+                    maxWidth: 'auto',
+                }
+
+                //call openPopup
+                vo.$refs.refPopup.mapObject.bindPopup(h, opt).openPopup(latLng)
+
+            }
+
+        },
+
+        tooltipGeojson: function(ev, geojsonSet, kgeojsonSet, geojsonSets) {
+            // console.log('methods tooltipGeojson', ev, geojsonSet, kgeojsonSet, geojsonSets)
+
+            let vo = this
+
+            //check, 因tooltip只有處理funSetTooltip, 故可先偵測先行跳出
+            if (!isfun(geojsonSet.funSetTooltip)) {
+                return
+            }
+
+            //obj
+            let obj = geojsonSet
+
+            //parseGeojsonData
+            let { msg } = vo.parseGeojsonData(ev, geojsonSet, kgeojsonSet, geojsonSets)
+
+            //getCentroidMultiPolygon
+            let centerlatLng = getCentroidMultiPolygon(msg.latLngs) //latLngs由features的mutlipolygon提取
+
+            //check
+            if (size(centerlatLng) !== 2) {
+                return
+            }
+
+            //inv, 因geojson為經緯度而leaflet為緯經度, 得交換
+            centerlatLng = [centerlatLng[1], centerlatLng[0]]
+
+            //h
+            let h = obj.funSetTooltip(msg)
+
+            //opt
+            let opt = {
+                maxWidth: 'auto',
+            }
+
+            //call openTooltip
+            vo.$refs.refTooltip.mapObject.bindTooltip(h, opt).openTooltip(centerlatLng)
+
+        },
+
         parseContourData: function(ev, polygonSet, kpolygonSet, contourSet, kcontourSet, contourSets) {
 
             //latLng, msg
@@ -1963,9 +2352,9 @@ export default {
                 obj.funSetClick(msg)
             }
 
-            //funContourSetsClick
-            if (isfun(obj.funContourSetsClick)) {
-                obj.funContourSetsClick(msg)
+            //funSetsClick
+            if (isfun(obj.funSetsClick)) {
+                obj.funSetsClick(msg)
             }
 
             //funSetPopup

@@ -132,6 +132,36 @@
 
         <AppPGNPolygonSetTooltip v-if="showSubCmp==='polygonSet.tooltip'"></AppPGNPolygonSetTooltip>
 
+        <AppGJNGeojsonSets v-if="showSubCmp==='geojsonSets'"></AppGJNGeojsonSets>
+
+        <AppGJNGeojsonSetChangeData v-if="showSubCmp==='geojsonSet-changeData'"></AppGJNGeojsonSetChangeData>
+
+        <AppGJNGeojsonSetOrder v-if="showSubCmp==='geojsonSet.order'"></AppGJNGeojsonSetOrder>
+
+        <AppGJNGeojsonSetLineColor v-if="showSubCmp==='geojsonSet.lineColor'"></AppGJNGeojsonSetLineColor>
+
+        <AppGJNGeojsonSetLineColorHover v-if="showSubCmp==='geojsonSet.lineColorHover'"></AppGJNGeojsonSetLineColorHover>
+
+        <AppGJNGeojsonSetLineWidth v-if="showSubCmp==='geojsonSet.lineWidth'"></AppGJNGeojsonSetLineWidth>
+
+        <AppGJNGeojsonSetLineWidthHover v-if="showSubCmp==='geojsonSet.lineWidthHover'"></AppGJNGeojsonSetLineWidthHover>
+
+        <AppGJNGeojsonSetFillColor v-if="showSubCmp==='geojsonSet.fillColor'"></AppGJNGeojsonSetFillColor>
+
+        <AppGJNGeojsonSetFillColorHover v-if="showSubCmp==='geojsonSet.fillColorHover'"></AppGJNGeojsonSetFillColorHover>
+
+        <AppGJNDefGeojsonSetsClick v-if="showSubCmp==='defGeojsonSetsClick'"></AppGJNDefGeojsonSetsClick>
+
+        <AppGJNGeojsonSetClick v-if="showSubCmp==='geojsonSet.click'"></AppGJNGeojsonSetClick>
+
+        <AppGJNDefGeojsonSetsPopup v-if="showSubCmp==='defGeojsonSetsPopup'"></AppGJNDefGeojsonSetsPopup>
+
+        <AppGJNGeojsonSetPopup v-if="showSubCmp==='geojsonSet.popup'"></AppGJNGeojsonSetPopup>
+
+        <AppGJNDefGeojsonSetsTooltip v-if="showSubCmp==='defGeojsonSetsTooltip'"></AppGJNDefGeojsonSetsTooltip>
+
+        <AppGJNGeojsonSetTooltip v-if="showSubCmp==='geojsonSet.tooltip'"></AppGJNGeojsonSetTooltip>
+
         <AppCTRContourSets v-if="showSubCmp==='contourSets'"></AppCTRContourSets>
 
         <AppCTRContourSetChangeData v-if="showSubCmp==='contourSet-changeData'"></AppCTRContourSetChangeData>
@@ -267,6 +297,21 @@ import AppPGNDefPolygonSetsPopup from './AppPGNDefPolygonSetsPopup.vue'
 import AppPGNPolygonSetPopup from './AppPGNPolygonSetPopup.vue'
 import AppPGNDefPolygonSetsTooltip from './AppPGNDefPolygonSetsTooltip.vue'
 import AppPGNPolygonSetTooltip from './AppPGNPolygonSetTooltip.vue'
+import AppGJNGeojsonSets from './AppGJNGeojsonSets.vue'
+import AppGJNGeojsonSetChangeData from './AppGJNGeojsonSetChangeData.vue'
+import AppGJNGeojsonSetOrder from './AppGJNGeojsonSetOrder.vue'
+import AppGJNGeojsonSetLineColor from './AppGJNGeojsonSetLineColor.vue'
+import AppGJNGeojsonSetLineColorHover from './AppGJNGeojsonSetLineColorHover.vue'
+import AppGJNGeojsonSetLineWidth from './AppGJNGeojsonSetLineWidth.vue'
+import AppGJNGeojsonSetLineWidthHover from './AppGJNGeojsonSetLineWidthHover.vue'
+import AppGJNGeojsonSetFillColor from './AppGJNGeojsonSetFillColor.vue'
+import AppGJNGeojsonSetFillColorHover from './AppGJNGeojsonSetFillColorHover.vue'
+import AppGJNDefGeojsonSetsClick from './AppGJNDefGeojsonSetsClick.vue'
+import AppGJNGeojsonSetClick from './AppGJNGeojsonSetClick.vue'
+import AppGJNDefGeojsonSetsPopup from './AppGJNDefGeojsonSetsPopup.vue'
+import AppGJNGeojsonSetPopup from './AppGJNGeojsonSetPopup.vue'
+import AppGJNDefGeojsonSetsTooltip from './AppGJNDefGeojsonSetsTooltip.vue'
+import AppGJNGeojsonSetTooltip from './AppGJNGeojsonSetTooltip.vue'
 import AppCTRContourSets from './AppCTRContourSets.vue'
 import AppCTRContourSetChangeData from './AppCTRContourSetChangeData.vue'
 import AppCTRContourSetThresholds from './AppCTRContourSetThresholds.vue'
@@ -386,6 +431,21 @@ export default {
         AppCTRContourSetTooltip,
         AppCTRContourSetLargeSet,
         AppCTRContourSetInterp2,
+        AppGJNGeojsonSets,
+        AppGJNGeojsonSetChangeData,
+        AppGJNGeojsonSetOrder,
+        AppGJNGeojsonSetLineColor,
+        AppGJNGeojsonSetLineColorHover,
+        AppGJNGeojsonSetLineWidth,
+        AppGJNGeojsonSetLineWidthHover,
+        AppGJNGeojsonSetFillColor,
+        AppGJNGeojsonSetFillColorHover,
+        AppGJNDefGeojsonSetsClick,
+        AppGJNGeojsonSetClick,
+        AppGJNDefGeojsonSetsPopup,
+        AppGJNGeojsonSetPopup,
+        AppGJNDefGeojsonSetsTooltip,
+        AppGJNGeojsonSetTooltip,
         AppPIMShow,
         AppPIMPosition,
         AppPIMWidth,
@@ -478,6 +538,23 @@ export default {
                     'polygonSet.popup',
                     'defPolygonSetsTooltip',
                     'polygonSet.tooltip',
+                ],
+                geojson: [
+                    'geojsonSets',
+                    'geojsonSet-changeData',
+                    'geojsonSet.order',
+                    'geojsonSet.lineColor',
+                    'geojsonSet.lineColorHover',
+                    'geojsonSet.lineWidth',
+                    'geojsonSet.lineWidthHover',
+                    'geojsonSet.fillColor',
+                    'geojsonSet.fillColorHover',
+                    'defGeojsonSetsClick',
+                    'geojsonSet.click',
+                    'defGeojsonSetsPopup',
+                    'geojsonSet.popup',
+                    'defGeojsonSetsTooltip',
+                    'geojsonSet.tooltip',
                 ],
                 contour: [
                     'contourSets',

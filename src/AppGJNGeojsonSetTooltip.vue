@@ -1,0 +1,205 @@
+<template>
+    <div>
+
+        <div style="padding:20px;">
+            <div style="font-size:1.5rem;">geojsonSet.tooltip</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppGJNGeojsonSetTooltip.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppGJNGeojsonSetTooltip.html" target="_blank" class="item-link">code</a>
+        </div>
+
+        <div style="display:flex; padding-bottom:20px;">
+
+            <div style="padding:0px 20px;">
+                <WLeafletVue
+                    style="width:800px; height:500px;"
+                    :opt="opt"
+                ></WLeafletVue>
+            </div>
+
+            <div style="width:600px; padding:0px 20px 0px 0px; position:relative;">
+
+                <div class="option-label">
+                    opt example
+                </div>
+
+                <div style="border:1px solid #ddd;">
+                    <div style="padding-left:5px; overflow-y:auto; height:500px;">
+                        <div id="optjson" style="font-size:10pt;"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</template>
+
+<script>
+import WLeafletVue from './components/WLeafletVue.vue'
+import jv from 'w-jsonview-tree'
+
+export default {
+    components: {
+        WLeafletVue,
+    },
+    data: function() {
+        return {
+            'opt': {
+                center: [25, 121.58],
+                zoom: 10,
+                defGeojsonSetsTooltip: function(v) {
+                    console.log('defGeojsonSetsTooltip', v)
+                    let c = ''
+                    c += '<div style="padding:5px 10px;">'
+                    c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#62f;">[Tooltip>geojsonSets]</span> ' + v.geojsonSet.title + '</div>'
+                    c += '<div style="color:#aaa; white-space:normal;">' + v.geojsonSet.msg + '</div>'
+                    c += '</div>'
+                    return c
+                },
+                geojsonSets: [
+                    {
+                        title: 'geojsonSet A',
+                        msg: 'msg from geojsonSet A',
+                        geojson: {
+                            'type': 'FeatureCollection',
+                            'features': [
+                                {
+                                    'type': 'Feature',
+                                    'properties': {
+                                        'style': {
+                                            'color': 'rgba(255, 255, 255, 1)',
+                                            'weight': 1,
+                                            'fillColor': 'rgba(255, 50, 100, 1)',
+                                            'fillOpacity': 0.2,
+                                            'stroke': 'rgba(255, 255, 255, 1)',
+                                            'stroke-width': 1,
+                                            'stroke-opacity': 1,
+                                            'fill': 'rgba(255, 255, 255, 1)',
+                                            'fill-opacity': 0.2
+                                        }
+                                    },
+                                    'geometry': {
+                                        'type': 'MultiPolygon',
+                                        'coordinates': [
+                                            [
+                                                [ //add p1
+                                                    [121.41, 24.96],
+                                                    [121.47, 25.11],
+                                                    [121.69, 25.06],
+                                                    [121.61, 24.99],
+                                                    [121.53, 24.95]
+                                                ],
+                                                [ //c1 XOR p1
+                                                    [121.45, 24.98],
+                                                    [121.49, 25.07],
+                                                    [121.54, 25.06],
+                                                    [121.5, 25]
+                                                ],
+                                                [ //add p1-1 in c1
+                                                    [121.48, 25.017],
+                                                    [121.49, 25.032],
+                                                    [121.5, 25.036],
+                                                    [121.502, 25.02]
+                                                ],
+                                                [ //c2 XOR p1
+                                                    [121.54, 24.99],
+                                                    [121.56, 25.056],
+                                                    [121.61, 25.05],
+                                                    [121.59, 25]
+                                                ],
+                                                [ //add p2
+                                                    [121.6, 24.92],
+                                                    [121.75, 25.045],
+                                                    [121.79, 24.99],
+                                                    [121.74, 24.93]
+                                                ],
+                                                [ //c3 XOR p1, p2
+                                                    [121.523, 24.961],
+                                                    [121.551, 24.979],
+                                                    [121.674, 24.95],
+                                                    [121.606, 24.887]
+                                                ],
+                                            ]
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        keyStyle: 'properties.style',
+                        visible: true,
+                        tooltip: function(v) {
+                            console.log('geojsonSets[0] tooltip', v)
+                            let c = ''
+                            c += '<div style="padding:5px 10px;">'
+                            c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f26;">[Tooltip>geojsonSet]</span> ' + v.geojsonSet.title + '</div>'
+                            c += '<div style="color:#aaa; white-space:normal;">' + v.geojsonSet.msg + '</div>'
+                            c += '</div>'
+                            return c
+                        },
+                    },
+                    {
+                        title: 'geojsonSet B',
+                        msg: 'msg from geojsonSet B',
+                        geojson: {
+                            'type': 'FeatureCollection',
+                            'features': [
+                                {
+                                    'type': 'Feature',
+                                    'properties': {
+                                        'style': {
+                                            'color': 'rgba(255, 255, 255, 1)',
+                                            'weight': 1,
+                                            'fillColor': 'rgba(50, 100, 255, 1)',
+                                            'fillOpacity': 0.2,
+                                            'stroke': 'rgba(255, 255, 255, 1)',
+                                            'stroke-width': 1,
+                                            'stroke-opacity': 1,
+                                            'fill': 'rgba(255, 255, 255, 1)',
+                                            'fill-opacity': 0.2
+                                        }
+                                    },
+                                    'geometry': {
+                                        'type': 'MultiPolygon',
+                                        'coordinates': [
+                                            [
+                                                [[121.372, 24.971], [121.434, 24.976], [121.473, 24.937], [121.418, 24.918]], [[121.14, 24.90], [121.09, 24.97], [121.177, 25.05], [121.32, 24.95]]
+                                            ]
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        keyStyle: 'properties.style',
+                        visible: false,
+                    },
+                ],
+            },
+            'action': [
+            ],
+        }
+    },
+    mounted: function() {
+        let vo = this
+        vo.showOptJson()
+    },
+    watch: {
+        opt: {
+            handler: function() {
+                let vo = this
+                vo.showOptJson()
+            },
+            deep: true,
+        },
+    },
+    methods: {
+        showOptJson: function() {
+            let vo = this
+            jv(vo.opt, document.querySelector('#optjson'), { expanded: true })
+        },
+    },
+}
+</script>
+
+<style>
+</style>

@@ -58,7 +58,7 @@ export default {
                         points: [
                             [24.325, 120.786, 4], [23.944, 120.968, 15], [24.884, 121.234, 20], [24.579, 121.345, 62], [24.664, 121.761, 35], [23.803, 121.397, 30],
                         ],
-                        polygonClipOuter: polygonClipOuter,
+                        polygonClipOuter,
                         visible: true,
                         order: 1,
                     },
