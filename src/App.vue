@@ -216,6 +216,8 @@
 
         <AppCTRContourSetInterp2 v-if="showSubCmp==='contourSet.interp2'"></AppCTRContourSetInterp2>
 
+        <AppIMGImageSets v-if="showSubCmp==='imageSets'"></AppIMGImageSets>
+
         <AppPIMShow v-if="showSubCmp==='panelItems.show'"></AppPIMShow>
 
         <AppPIMPosition v-if="showSubCmp==='panelItems.position'"></AppPIMPosition>
@@ -339,6 +341,7 @@ import AppCTRDefContourSetsTooltip from './AppCTRDefContourSetsTooltip.vue'
 import AppCTRContourSetTooltip from './AppCTRContourSetTooltip.vue'
 import AppCTRContourSetLargeSet from './AppCTRContourSetLargeSet.vue'
 import AppCTRContourSetInterp2 from './AppCTRContourSetInterp2.vue'
+import AppIMGImageSets from './AppIMGImageSets.vue'
 import AppPIMShow from './AppPIMShow.vue'
 import AppPIMPosition from './AppPIMPosition.vue'
 import AppPIMWidth from './AppPIMWidth.vue'
@@ -404,6 +407,21 @@ export default {
         AppPGNPolygonSetPopup,
         AppPGNDefPolygonSetsTooltip,
         AppPGNPolygonSetTooltip,
+        AppGJNGeojsonSets,
+        AppGJNGeojsonSetChangeData,
+        AppGJNGeojsonSetOrder,
+        AppGJNGeojsonSetLineColor,
+        AppGJNGeojsonSetLineColorHover,
+        AppGJNGeojsonSetLineWidth,
+        AppGJNGeojsonSetLineWidthHover,
+        AppGJNGeojsonSetFillColor,
+        AppGJNGeojsonSetFillColorHover,
+        AppGJNDefGeojsonSetsClick,
+        AppGJNGeojsonSetClick,
+        AppGJNDefGeojsonSetsPopup,
+        AppGJNGeojsonSetPopup,
+        AppGJNDefGeojsonSetsTooltip,
+        AppGJNGeojsonSetTooltip,
         AppCTRContourSets,
         AppCTRContourSetChangeData,
         AppCTRContourSetThresholds,
@@ -431,21 +449,7 @@ export default {
         AppCTRContourSetTooltip,
         AppCTRContourSetLargeSet,
         AppCTRContourSetInterp2,
-        AppGJNGeojsonSets,
-        AppGJNGeojsonSetChangeData,
-        AppGJNGeojsonSetOrder,
-        AppGJNGeojsonSetLineColor,
-        AppGJNGeojsonSetLineColorHover,
-        AppGJNGeojsonSetLineWidth,
-        AppGJNGeojsonSetLineWidthHover,
-        AppGJNGeojsonSetFillColor,
-        AppGJNGeojsonSetFillColorHover,
-        AppGJNDefGeojsonSetsClick,
-        AppGJNGeojsonSetClick,
-        AppGJNDefGeojsonSetsPopup,
-        AppGJNGeojsonSetPopup,
-        AppGJNDefGeojsonSetsTooltip,
-        AppGJNGeojsonSetTooltip,
+        AppIMGImageSets,
         AppPIMShow,
         AppPIMPosition,
         AppPIMWidth,
@@ -584,6 +588,9 @@ export default {
                     'contourSet.tooltip',
                     'contourSet.largeSet',
                     'contourSet.interp2',
+                ],
+                image: [
+                    'imageSets',
                 ],
                 function: [
                     'function-getMapObject',

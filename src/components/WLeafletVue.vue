@@ -181,6 +181,23 @@
                 v-for="(baseMap,kbaseMap) in panelBaseMaps.baseMaps"
             ></l-tile-layer>
 
+            <!-- 點陣圖圖層 -->
+            <l-layer-group
+                layer-type="overlay"
+                :key="'imageSet:'+kimageSet"
+                :name="imageSet.title"
+                :visible.sync="imageSet.visible"
+                v-for="(imageSet,kimageSet) in imageSets"
+            >
+                <l-image-overlay
+                    :url="imageSet.image.url"
+                    :bounds="imageSet.bounds"
+                    _mouseenter="(ev)=>{imageSet.mouseenter(ev);tooltipImage(ev,imageSet,kimageSet,imageSets)}"
+                    _mouseleave="(ev)=>{imageSet.mouseleave(ev);closeTooltip()}"
+                    _click="(ev)=>{clickImage(ev,imageSet,kimageSet,imageSets)}"
+                ></l-image-overlay>
+            </l-layer-group>
+
             <!-- 多邊形圖層 -->
             <l-layer-group
                 layer-type="overlay"
@@ -300,7 +317,7 @@ import getCentroidMultiPolygon from 'w-gis/src/getCentroidMultiPolygon.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
 import { Icon } from 'leaflet'
-import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LPolygon, LGeoJson } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LPolygon, LGeoJson, LImageOverlay } from 'vue2-leaflet'
 import LContour from './LContour.vue'
 import Radios from './Radios.vue'
 import Checkboxs from './Checkboxs.vue'
@@ -532,6 +549,7 @@ export default {
         LMarker,
         LPolygon,
         LGeoJson,
+        LImageOverlay,
         LContour,
         Radios,
         Checkboxs,
@@ -548,6 +566,7 @@ export default {
             dbcChangePolygonSets: debounce(),
             dbcChangeGeojsonSets: debounce(),
             dbcChangeContourSets: debounce(),
+            dbcChangeImageSets: debounce(),
             dbcChangeItems: debounce(),
             wats: [],
 
@@ -563,6 +582,9 @@ export default {
                 lat: '',
                 lng: '',
             },
+
+            imageSets: [],
+            effImageSetsTemp: [],
 
             pointSets: [],
             effPointSetsTemp: [],
@@ -589,6 +611,11 @@ export default {
             immediate: true,
             deep: true,
         }
+
+        each(['imageSets', 'defImageSetsClick', 'defImageSetsPopup', 'defImageSetsTooltip'], (v) => {
+            let wat = vo.$watch(`opt.${v}`, vo.changeImageSetsDebounce, wo)
+            vo.wats.push(wat)
+        })
 
         each(['pointSets', 'defPointSetsClick', 'defPointSetsPopup', 'defPointSetsTooltip'], (v) => {
             let wat = vo.$watch(`opt.${v}`, vo.changePointSetsDebounce, wo)
@@ -943,6 +970,212 @@ export default {
 
             //changeItemsDebounce
             vo.changeItemsDebounce('changeOpt')
+
+        },
+
+        changeImageSetsDebounce: function(v) {
+            // console.log('methods changeImageSetsDebounce', v)
+
+            let vo = this
+
+            vo.dbcChangeImageSets(() => {
+                vo.changeImageSets()
+            })
+
+        },
+
+        changeImageSets: function() {
+            // console.log('methods changeImageSets')
+
+            let vo = this
+
+            //imageSets
+            let imageSets = get(vo, 'opt.imageSets', null)
+            if (!isarr(imageSets)) {
+                imageSets = []
+            }
+            imageSets = cloneDeep(imageSets) //cloneDeep, 後續map會直接修改設定物件記憶體故需脫勾, 但值為函數不會脫勾
+
+            // //check, 不能檢查size為0跳出, 否則外部會無法清空數據
+            // if (size(imageSets) === 0) {
+            //     return
+            // }
+
+            //effImageSets
+            let effImageSets = map(imageSets, (v) => {
+                return omit(v, 'visible')
+            })
+
+            //check
+            if (isEqual(vo.effImageSetsTemp, effImageSets)) {
+                return
+            }
+            vo.effImageSetsTemp = effImageSets
+            // console.log('call changeImageSets')
+
+            // //funSetsClick
+            // let funSetsClick = get(vo, 'opt.defImageSetsClick', null)
+
+            // //funSetsPopup
+            // let funSetsPopup = get(vo, 'opt.defImageSetsPopup', null)
+
+            // //funSetsTooltip
+            // let funSetsTooltip = get(vo, 'opt.defImageSetsTooltip', null)
+
+            vo.imageSets = map(imageSets, (imageSet, kimageSet) => {
+
+                //image
+                let image = get(imageSet, 'image', {})
+                // console.log('image', image)
+
+                //check
+                if (!iseobj(image)) {
+                    throw new Error(`imageSet.image is not an effective object`)
+                }
+
+                //url
+                let url = get(image, 'url', '')
+
+                //check
+                if (!isestr(url)) {
+                    throw new Error(`imageSet.url is not an effective string`)
+                }
+
+                //lngMin
+                let lngMin = get(image, 'lngMin', '')
+                let lngMax = get(image, 'lngMax', '')
+                let latMin = get(image, 'latMin', '')
+                let latMax = get(image, 'latMax', '')
+
+                //check
+                if (!isnum(lngMin)) {
+                    throw new Error(`imageSet.image.lngMin is not a number`)
+                }
+                if (!isnum(lngMax)) {
+                    throw new Error(`imageSet.image.lngMax is not a number`)
+                }
+                if (!isnum(latMin)) {
+                    throw new Error(`imageSet.image.latMin is not a number`)
+                }
+                if (!isnum(latMax)) {
+                    throw new Error(`imageSet.image.latMax is not a number`)
+                }
+
+                //bounds
+                let bounds = [
+                    [latMin, lngMin],
+                    [latMax, lngMax],
+                ]
+
+                //order
+                let order = get(imageSet, 'order', null)
+
+                // //funSetClick
+                // let funSetClick = get(imageSet, 'click', null)
+
+                // //funSetPopup, 預設以滑鼠點下位置出現
+                // let funSetPopup = get(imageSet, 'popup', null) || funSetsPopup //僅提供一種popup, 若多邊形有popup則優先使用
+
+                // //funSetTooltip
+                // let funSetTooltip = get(imageSet, 'tooltip', null) || funSetsTooltip //僅提供一種tooltip, 若多邊形有tooltip則優先使用
+
+                // //lineColor
+                // let lineColor = get(imageSet, 'lineColor', null)
+                // if (!isestr(lineColor)) {
+                //     lineColor = 'rgba(0,150,255,1)'
+                // }
+
+                // //lineWidth
+                // let lineWidth = get(imageSet, 'lineWidth', null)
+                // if (!isNumber(lineWidth)) {
+                //     lineWidth = 3
+                // }
+
+                // //fillColor
+                // let fillColor = get(imageSet, 'fillColor', null)
+                // if (!isestr(fillColor)) {
+                //     fillColor = 'rgba(0,150,255,0.25)'
+                // }
+
+                // //style
+                // let style = {
+                //     fillColor,
+                //     fillOpacity: 1, //vue leaflet預設為0.2得還原
+                //     color: lineColor,
+                //     weight: lineWidth,
+                // }
+
+                // //lineColorHover
+                // let lineColorHover = get(imageSet, 'lineColorHover', null)
+                // if (!isestr(lineColorHover)) {
+                //     lineColorHover = lineColor
+                // }
+
+                // //lineWidthHover
+                // let lineWidthHover = get(imageSet, 'lineWidthHover', null)
+                // if (!isNumber(lineWidthHover)) {
+                //     lineWidthHover = lineWidth
+                // }
+
+                // //fillColorHover
+                // let fillColorHover = get(imageSet, 'fillColorHover', null)
+                // if (!isestr(fillColorHover)) {
+                //     fillColorHover = fillColor
+                // }
+
+                // //styleHover
+                // let styleHover = {
+                //     fillColor: fillColorHover,
+                //     fillOpacity: 1, //vue leaflet預設為0.2得還原
+                //     color: lineColorHover,
+                //     weight: lineWidthHover,
+                // }
+
+                //title
+                if (!isestr(get(imageSet, 'title', null))) {
+                    imageSet.title = ''
+                }
+
+                //msg
+                if (!isestr(get(imageSet, 'msg', null))) {
+                    imageSet.msg = ''
+                }
+
+                //order
+                if (!isNumber(get(imageSet, 'order', null))) {
+                    imageSet.order = null
+                }
+
+                //visible
+                if (!isbol(get(imageSet, 'visible', null))) {
+                    imageSet.visible = false
+                }
+
+                return {
+                    ...imageSet,
+                    bounds,
+                    order,
+                    // style, //需給予, 才能通過v-bind給予初始樣式
+                    // styleHover,
+                    mouseenter: (ev) => {
+                        // console.log('mouseenter', ev)
+                        // let layer = ev.target
+                        // layer.setStyle(styleHover)
+                    },
+                    mouseleave: (ev) => {
+                        // console.log('mouseleave', ev)
+                        // let layer = ev.target
+                        // layer.setStyle(style)
+                    },
+                    // funSetsClick,
+                    // funSetClick,
+                    // funSetPopup,
+                    // funSetTooltip,
+                }
+            })
+
+            //changeItemsDebounce
+            vo.changeItemsDebounce('changeImageSets')
 
         },
 
@@ -1311,7 +1544,7 @@ export default {
 
                 //check
                 if (!iseobj(geojson)) {
-                    console.log(`geojsonSet.geojson is not an object`)
+                    throw new Error(`geojsonSet.geojson is not an effective object`)
                 }
 
                 //features
@@ -1694,6 +1927,9 @@ export default {
                     updatePath,
                 })
             }
+            each(vo.imageSets, (v, k) => {
+                add(v.title, v.msg, v.order, v.visible, `imageSets.${k}.visible`)
+            })
             each(vo.pointSets, (v, k) => {
                 add(v.title, v.msg, v.order, v.visible, `pointSets.${k}.visible`)
             })
@@ -1923,6 +2159,102 @@ export default {
             vo.$refs.refTooltip.mapObject.closeTooltip()
 
         },
+
+        // parseImageData: function(ev, imageSet, kimageSet, imageSets) {
+
+        //     //latLng, msg
+        //     let ll = ev.latlng
+        //     let latLng = [ll.lat, ll.lng]
+
+        //     //msg
+        //     let msg = {
+        //         ev,
+        //         lat: get(latLng, 0, null),
+        //         lng: get(latLng, 1, null),
+        //         latLngs: imageSet.latLngs, //bbb
+        //         imageSet,
+        //         kimageSet,
+        //         imageSets,
+        //     }
+
+        //     return { latLng, msg }
+        // },
+
+        // clickImage: function(ev, imageSet, kimageSet, imageSets) {
+        //     // console.log('methods clickImage', ev, imageSet, kimageSet, imageSets)
+
+        //     let vo = this
+
+        //     //obj
+        //     let obj = imageSet
+
+        //     //parseImageData
+        //     let { latLng, msg } = vo.parseImageData(ev, imageSet, kimageSet, imageSets)
+
+        //     //funSetClick
+        //     if (isfun(obj.funSetClick)) {
+        //         obj.funSetClick(msg)
+        //     }
+
+        //     //funSetsClick
+        //     if (isfun(obj.funSetsClick)) {
+        //         obj.funSetsClick(msg)
+        //     }
+
+        //     //funSetPopup
+        //     if (isfun(obj.funSetPopup)) {
+
+        //         //h
+        //         let h = obj.funSetPopup(msg)
+
+        //         //opt
+        //         let opt = {
+        //             maxWidth: 'auto',
+        //         }
+
+        //         //call openPopup
+        //         vo.$refs.refPopup.mapObject.bindPopup(h, opt).openPopup(latLng)
+
+        //     }
+
+        // },
+
+        // tooltipImage: function(ev, imageSet, kimageSet, imageSets) {
+        //     // console.log('methods tooltipImage', ev, imageSet, kimageSet, imageSets)
+
+        //     let vo = this
+
+        //     //check, 因tooltip只有處理funSetTooltip, 故可先偵測先行跳出
+        //     if (!isfun(imageSet.funSetTooltip)) {
+        //         return
+        //     }
+
+        //     //obj
+        //     let obj = imageSet
+
+        //     //parseImageData
+        //     let { msg } = vo.parseImageData(ev, imageSet, kimageSet, imageSets)
+
+        //     //getCentroidMultiPolygon
+        //     let centerlatLng = getCentroidMultiPolygon(msg.latLngs) //bbb
+
+        //     //check
+        //     if (size(centerlatLng) !== 2) {
+        //         return
+        //     }
+
+        //     //h
+        //     let h = obj.funSetTooltip(msg)
+
+        //     //opt
+        //     let opt = {
+        //         maxWidth: 'auto',
+        //     }
+
+        //     //call openTooltip
+        //     vo.$refs.refTooltip.mapObject.bindTooltip(h, opt).openTooltip(centerlatLng)
+
+        // },
 
         parsePointData: function(ev, point, kpoint, pointSet, kpointSet, pointSets) {
 
