@@ -13,6 +13,9 @@ let opt = {
     <!-- vue2-leaflet已包入 -->
     <script _src="https://cdn.jsdelivr.net/npm/vue2-leaflet/dist/vue2-leaflet.min.js"></script>
 
+    <!-- lodash -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
     <!-- w-gis -->
     <script _src="https://cdn.jsdelivr.net/npm/w-gis@1.0.25/dist/w-gis.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/w-gis@1.0.25/dist/interp2.wk.umd.js"></script>

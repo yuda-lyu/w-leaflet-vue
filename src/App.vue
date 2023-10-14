@@ -102,6 +102,8 @@
 
         <AppPNTPointSetPointTooltip v-if="showSubCmp==='pointSet.point.tooltip'"></AppPNTPointSetPointTooltip>
 
+        <AppPNTPointSetLargeSet v-if="showSubCmp==='pointSet.largeSet'"></AppPNTPointSetLargeSet>
+
         <AppPGNPolygonSets v-if="showSubCmp==='polygonSets'"></AppPGNPolygonSets>
 
         <AppPGNPolygonSetChangeData v-if="showSubCmp==='polygonSet-changeData'"></AppPGNPolygonSetChangeData>
@@ -284,6 +286,7 @@ import AppPNTPointSetPointPopup from './AppPNTPointSetPointPopup.vue'
 import AppPNTDefPointSetsTooltip from './AppPNTDefPointSetsTooltip.vue'
 import AppPNTPointSetTooltip from './AppPNTPointSetTooltip.vue'
 import AppPNTPointSetPointTooltip from './AppPNTPointSetPointTooltip.vue'
+import AppPNTPointSetLargeSet from './AppPNTPointSetLargeSet.vue'
 import AppPGNPolygonSets from './AppPGNPolygonSets.vue'
 import AppPGNPolygonSetChangeData from './AppPGNPolygonSetChangeData.vue'
 import AppPGNPolygonSetOrder from './AppPGNPolygonSetOrder.vue'
@@ -392,6 +395,7 @@ export default {
         AppPNTDefPointSetsTooltip,
         AppPNTPointSetTooltip,
         AppPNTPointSetPointTooltip,
+        AppPNTPointSetLargeSet,
         AppPGNPolygonSets,
         AppPGNPolygonSetChangeData,
         AppPGNPolygonSetOrder,
@@ -525,6 +529,7 @@ export default {
                     'defPointSetsTooltip',
                     'pointSet.tooltip',
                     'pointSet.point.tooltip',
+                    'pointSet.largeSet',
                 ],
                 polygon: [
                     'polygonSets',
