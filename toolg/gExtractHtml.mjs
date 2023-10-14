@@ -43,15 +43,18 @@ function writeHtml(v) {
         <script src="../dist/w-leaflet-vue.umd.js"></script>
     
         <!-- lodash -->
-        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
 
+        <!-- wsemi -->
+        <script src="https://cdn.jsdelivr.net/npm/wsemi@latest/dist/wsemi.umd.min.js"></script>
+    
         <!-- w-gis -->
-        <script _src="https://cdn.jsdelivr.net/npm/w-gis@1.0.25/dist/w-gis.umd.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/w-gis@1.0.25/dist/interp2.wk.umd.js"></script>
+        <script _src="https://cdn.jsdelivr.net/npm/w-gis@latest/dist/w-gis.umd.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/w-gis@latest/dist/interp2.wk.umd.js"></script>
   
         <!-- data -->
-        <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.12/res/data/dataRain.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.12/res/data/dataRainClip.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/w-demores@latest/res/data/dataRain.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/w-demores@latest/res/data/dataRainClip.js"></script>
         <script>
             //save in window
             window.dataRain=dataRain

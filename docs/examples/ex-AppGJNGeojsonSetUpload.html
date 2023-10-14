@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppPBMPosition</title>
+    <title>example for AppGJNGeojsonSetUpload</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -87,14 +87,14 @@
 >
     <div id="app" style="padding:0px 30px;">
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">panelBaseMaps.position</div>
+            <div style="font-size:1.5rem;">geojsonSet-upload</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPBMPosition.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppGJNGeojsonSetUpload.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPBMPosition.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppGJNGeojsonSetUpload.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -105,20 +105,8 @@
                 <div>
                     <button
                         style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelBaseMaps.position='topleft'"
-                    >topleft(default)</button>
-                    <button
-                        style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelBaseMaps.position='topright'"
-                    >topright</button>
-                    <button
-                        style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelBaseMaps.position='bottomleft'"
-                    >bottomleft</button>
-                    <button
-                        style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelBaseMaps.position='bottomright'"
-                    >bottomright</button>
+                        @click="uploadGeojson"
+                    >upload geojson</button>
                 </div>
                 <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
             </div>
@@ -150,9 +138,51 @@
     data: function() {
       return {
         opt: {
-          panelBaseMaps: {
-            position: "topleft"
-          }
+          center: [25, 121.58],
+          zoom: 10,
+          geojsonSets: [
+            {
+              title: "geojsonSet A",
+              msg: "msg from geojsonSet A",
+              geojson: {
+                type: "FeatureCollection",
+                features: [
+                  {
+                    type: "Feature",
+                    properties: {
+                      style: {
+                        color: "rgba(255, 255, 255, 1)",
+                        weight: 1,
+                        fillColor: "rgba(255, 50, 100, 1)",
+                        fillOpacity: 0.2,
+                        stroke: "rgba(255, 255, 255, 1)",
+                        "stroke-width": 1,
+                        "stroke-opacity": 1,
+                        fill: "rgba(255, 255, 255, 1)",
+                        "fill-opacity": 0.2
+                      }
+                    },
+                    geometry: {
+                      type: "MultiPolygon",
+                      coordinates: [
+                        [
+                          [
+                            //add p1
+                            [121.41, 24.96],
+                            [121.47, 25.11],
+                            [121.69, 25.06],
+                            [121.61, 24.99]
+                          ]
+                        ]
+                      ]
+                    }
+                  }
+                ]
+              },
+              keyStyle: "properties.style",
+              visible: true
+            }
+          ]
         },
         action: []
       };
@@ -166,6 +196,45 @@
       showOptJson: function() {
         let vo = this;
         jv(vo.opt, document.querySelector("#optjson"), { expanded: true });
+      },
+      uploadGeojson: function() {
+        let vo = this;
+
+        let _ = window._;
+        let w = window.wsemi;
+
+        let kind = "geojson";
+        w.domShowInputAndGetFilesU8Arrs(kind)
+          .then(function(d) {
+            //get first file
+            let file = d[0];
+            // console.log('file', file)
+
+            //u8a
+            let u8a = file.u8a;
+            // console.log('get u8a', Object.prototype.toString.call(u8a), u8a.length)
+
+            //j
+            let j = w.u8arr2str(u8a);
+            // console.log('j', j)
+
+            //geojson
+            let geojson = JSON.parse(j);
+            // console.log('geojson', geojson)
+
+            //geojsonSet
+            let geojsonSet = _.cloneDeep(vo.opt.geojsonSets[0]);
+            geojsonSet.title = _.get(geojson, "name", "");
+            geojsonSet.msg = _.get(file, "name", "");
+            geojsonSet.geojson = geojson;
+            console.log("geojsonSet", geojsonSet);
+
+            //save
+            vo.opt.geojsonSets = [geojsonSet];
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
       }
     }
   });

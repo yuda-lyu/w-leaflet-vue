@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppPBMPosition</title>
+    <title>example for AppPNTPointSetLargeSet</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -87,14 +87,14 @@
 >
     <div id="app" style="padding:0px 30px;">
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">panelBaseMaps.position</div>
+            <div style="font-size:1.5rem;">pointSet.largeSet</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPBMPosition.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetLargeSet.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPBMPosition.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetLargeSet.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -102,24 +102,6 @@
 
         <div style="display:flex; padding-bottom:20px;">
             <div style="padding:0px 20px;">
-                <div>
-                    <button
-                        style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelBaseMaps.position='topleft'"
-                    >topleft(default)</button>
-                    <button
-                        style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelBaseMaps.position='topright'"
-                    >topright</button>
-                    <button
-                        style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelBaseMaps.position='bottomleft'"
-                    >bottomleft</button>
-                    <button
-                        style="margin:0px 3px 3px 0px;"
-                        @click="opt.panelBaseMaps.position='bottomright'"
-                    >bottomright</button>
-                </div>
                 <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
             </div>
 
@@ -150,16 +132,67 @@
     data: function() {
       return {
         opt: {
-          panelBaseMaps: {
-            position: "topleft"
-          }
+          center: [25.087, 121.54],
+          zoom: 11,
+          defPointSetsPopup: function(v) {
+            console.log("defPointSetsPopup", v);
+            let c = `
+                        <div style="padding:20px 20px 15px 15px;">
+                            <div style="color:#c1409d; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;">
+                                ${v.point.title}
+                            </div>
+                            <div style="color:#888; font-size:0.8rem;">
+                                <span style="color:#ef8f30;">${v.point.sbi} / ${v.point.tot} </span>
+                                <span>${v.point.msg}</span>
+                            </div>
+                        </div>
+                    `;
+            return c;
+          },
+          pointSets: []
         },
         action: []
       };
     },
     mounted: function() {
       let vo = this;
+
       vo.showOptJson();
+
+      let _ = window._;
+
+      fetch(
+        "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json"
+      )
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(res) {
+          console.log(res);
+
+          let points = _.map(res, v => {
+            let p = {
+              title: v.sna,
+              msg: v.ar,
+              latLng: [v.lat, v.lng],
+              sbi: v.sbi,
+              tot: v.tot
+            };
+            return p;
+          });
+
+          let pointSet = {
+            title: "YouBike2.0",
+            msg: "YouBike2.0臺北市公共自行車即時資訊",
+            points,
+            visible: true
+          };
+
+          vo.opt.pointSets = [pointSet];
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     },
     computed: {},
     methods: {

@@ -138,6 +138,8 @@
 
         <AppGJNGeojsonSetChangeData v-if="showSubCmp==='geojsonSet-changeData'"></AppGJNGeojsonSetChangeData>
 
+        <AppGJNGeojsonSetUpload v-if="showSubCmp==='geojsonSet-upload'"></AppGJNGeojsonSetUpload>
+
         <AppGJNGeojsonSetOrder v-if="showSubCmp==='geojsonSet.order'"></AppGJNGeojsonSetOrder>
 
         <AppGJNGeojsonSetLineColor v-if="showSubCmp==='geojsonSet.lineColor'"></AppGJNGeojsonSetLineColor>
@@ -304,6 +306,7 @@ import AppPGNDefPolygonSetsTooltip from './AppPGNDefPolygonSetsTooltip.vue'
 import AppPGNPolygonSetTooltip from './AppPGNPolygonSetTooltip.vue'
 import AppGJNGeojsonSets from './AppGJNGeojsonSets.vue'
 import AppGJNGeojsonSetChangeData from './AppGJNGeojsonSetChangeData.vue'
+import AppGJNGeojsonSetUpload from './AppGJNGeojsonSetUpload.vue'
 import AppGJNGeojsonSetOrder from './AppGJNGeojsonSetOrder.vue'
 import AppGJNGeojsonSetLineColor from './AppGJNGeojsonSetLineColor.vue'
 import AppGJNGeojsonSetLineColorHover from './AppGJNGeojsonSetLineColorHover.vue'
@@ -413,6 +416,7 @@ export default {
         AppPGNPolygonSetTooltip,
         AppGJNGeojsonSets,
         AppGJNGeojsonSetChangeData,
+        AppGJNGeojsonSetUpload,
         AppGJNGeojsonSetOrder,
         AppGJNGeojsonSetLineColor,
         AppGJNGeojsonSetLineColorHover,
@@ -551,6 +555,7 @@ export default {
                 geojson: [
                     'geojsonSets',
                     'geojsonSet-changeData',
+                    'geojsonSet-upload',
                     'geojsonSet.order',
                     'geojsonSet.lineColor',
                     'geojsonSet.lineColorHover',

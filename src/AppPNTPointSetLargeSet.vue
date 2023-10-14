@@ -74,6 +74,8 @@ export default {
 
         vo.showOptJson()
 
+        let _ = window._
+
         fetch('https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json')
             .then(function (response) {
                 return response.json()
@@ -101,6 +103,9 @@ export default {
 
                 vo.opt.pointSets = [pointSet]
 
+            })
+            .catch(function(err) {
+                console.log(err)
             })
 
     },
