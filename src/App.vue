@@ -222,6 +222,8 @@
 
         <AppIMGImageSets v-if="showSubCmp==='imageSets'"></AppIMGImageSets>
 
+        <AppIMGImageSetUpload v-if="showSubCmp==='imageSet-upload'"></AppIMGImageSetUpload>
+
         <AppPIMShow v-if="showSubCmp==='panelItems.show'"></AppPIMShow>
 
         <AppPIMPosition v-if="showSubCmp==='panelItems.position'"></AppPIMPosition>
@@ -348,6 +350,7 @@ import AppCTRContourSetTooltip from './AppCTRContourSetTooltip.vue'
 import AppCTRContourSetLargeSet from './AppCTRContourSetLargeSet.vue'
 import AppCTRContourSetInterp2 from './AppCTRContourSetInterp2.vue'
 import AppIMGImageSets from './AppIMGImageSets.vue'
+import AppIMGImageSetUpload from './AppIMGImageSetUpload.vue'
 import AppPIMShow from './AppPIMShow.vue'
 import AppPIMPosition from './AppPIMPosition.vue'
 import AppPIMWidth from './AppPIMWidth.vue'
@@ -458,6 +461,7 @@ export default {
         AppCTRContourSetLargeSet,
         AppCTRContourSetInterp2,
         AppIMGImageSets,
+        AppIMGImageSetUpload,
         AppPIMShow,
         AppPIMPosition,
         AppPIMWidth,
@@ -601,6 +605,7 @@ export default {
                 ],
                 image: [
                     'imageSets',
+                    'imageSet-upload',
                 ],
                 function: [
                     'function-getMapObject',
