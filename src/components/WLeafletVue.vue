@@ -413,6 +413,107 @@ function getDefBaseMaps() {
         //     visible: false,
         // },
 
+        // 山崩雲API服務供應平台
+        // https://landslide.geologycloud.tw/map
+
+        // 地質資料整合查詢平台
+        // https://geomap.gsmma.gov.tw/gwh/gsb97-1/sys8a/t3/index1.cfm
+
+        // {
+        //     name: '五萬分之一地質圖',
+        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/gm50000/GoogleMapsCompatible/{z}/{x}/{y}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '數值地形多向陰影圖',
+        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/Shadw20/GoogleMapsCompatible/{z}/{x}/{y}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '岩體強度分級',
+        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/EVGM_a1/GoogleMapsCompatible/{z}/{x}/{y}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '岩性組合分佈圖',
+        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/EVGM_all/GoogleMapsCompatible/{z}/{x}/{y}',
+        //     visible: false,
+        // },
+
+        // {
+        //     name: '山崩與地滑地質敏感區',
+        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/SensitiveArea/GoogleMapsCompatible/{z}/{x}/{y}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '落石地質災害潛勢圖',
+        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/EVGM_G01/GoogleMapsCompatible/{z}/{x}/{y}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '岩屑崩滑地質災害潛勢圖',
+        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/EVGM_G02/GoogleMapsCompatible/{z}/{x}/{y}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '岩體滑動地質災害潛勢圖',
+        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/EVGM_G04/GoogleMapsCompatible/{z}/{x}/{y}',
+        //     visible: false,
+        // },
+
+        // {
+        //     name: '五十萬之一地體構造圖',
+        //     url: 'https://geomap.gsmma.gov.tw/api/Tile/v1/getTile.cfm?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=500K_TECTONIC_MAP_1978&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '五十萬之一變質相圖',
+        //     url: 'https://geomap.gsmma.gov.tw/api/Tile/v1/getTile.cfm?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=500K_METAMORPHIC_FACIES_MAP_1994&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '五十萬之一附近海域沉積物分佈圖',
+        //     url: 'https://geomap.gsmma.gov.tw/api/Tile/v1/getTile.cfm?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=500K_OFFSHORE_SEDIMENT_MAP_1995&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '五十萬之一陸上砂資源分佈與品質圖',
+        //     url: 'https://geomap.gsmma.gov.tw/api/Tile/v1/getTile.cfm?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=500K_LAND_GRAVEL_MAP_1998&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '五十萬之一能源礦產及地下水資源分佈圖',
+        //     url: 'https://geomap.gsmma.gov.tw/api/Tile/v1/getTile.cfm?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=500K_ENERGY_GROUNDWATER_REOUSRCE_2006&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+        //     visible: false,
+        // },
+
+        // {
+        //     name: '臺灣通用電子地圖',
+        //     url: 'https://wmts.nlsc.gov.tw/wmts/EMAP/default/EPSG:3857/{z}/{y}/{x}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '臺灣地形陰影圖',
+        //     url: 'https://wmts.nlsc.gov.tw/wmts/MOI_HILLSHADE/default/EPSG:3857/{z}/{y}/{x}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '臺灣通用正射影像',
+        //     url: 'https://wmts.nlsc.gov.tw/wmts/PHOTO2/default/EPSG:3857/{z}/{y}/{x}',
+        //     visible: false,
+        // },
+
+        // {
+        //     name: '國家級特定風景區',
+        //     url: 'https://wmts.nlsc.gov.tw/wmts/Scenic/default/EPSG:3857/{z}/{y}/{x}',
+        //     visible: false,
+        // },
+        // {
+        //     name: '段籍圖',
+        //     url: 'https://wmts.nlsc.gov.tw/wmts/LANDSECT/default/EPSG:3857/{z}/{y}/{x}',
+        //     visible: false,
+        // },
+
     ]
     return defBaseMaps
 }
