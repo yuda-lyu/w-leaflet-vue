@@ -558,8 +558,8 @@ export default {
                 ],
                 geojson: [
                     'geojsonSets',
-                    'geojsonSet-changeData',
                     'geojsonSet-upload',
+                    'geojsonSet-changeData',
                     'geojsonSet.order',
                     'geojsonSet.lineColor',
                     'geojsonSet.lineColorHover',
