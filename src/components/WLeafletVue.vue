@@ -9,7 +9,10 @@
             ref="lmap"
             :zoom="zoom"
             :center="center"
-            :options="{zoomControl: false}"
+            :options="{
+                preferCanvas: true,
+                _zoomControl: false,
+            }"
             @update:zoom="updateZoom"
             @update:center="updateCenter"
             @mousemove="updateLatLng"
@@ -271,15 +274,33 @@
                 :visible.sync="pointSet.visible"
                 v-for="(pointSet,kpointSet) in pointSets"
             >
-                <l-marker
-                    :key="'point:'+kpoint"
-                    :lat-lng="point.latLng"
-                    :icon="point.icon"
-                    @click="(ev)=>{clickPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
-                    @mouseenter="(ev)=>{tooltipPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
-                    @mouseleave="closeTooltip"
+
+                <template
                     v-for="(point,kpoint) in pointSet.points"
-                ></l-marker>
+                >
+
+                    <l-marker
+                        :key="'point:'+kpoint"
+                        :lat-lng="point.latLng"
+                        :icon="point.icon"
+                        @click="(ev)=>{clickPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
+                        @mouseenter="(ev)=>{tooltipPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
+                        @mouseleave="closeTooltip"
+                        v-if="point.type==='icon'"
+                    ></l-marker>
+
+                    <l-circle-marker
+                        :key="'point:'+kpoint"
+                        :lat-lng="point.latLng"
+                        v-bind="point.style"
+                        @click="(ev)=>{clickPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
+                        @mouseenter="(ev)=>{tooltipPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
+                        @mouseleave="closeTooltip"
+                        v-if="point.type==='circle'"
+                    ></l-circle-marker>
+
+                </template>
+
             </l-layer-group>
 
         </l-map>
@@ -316,8 +337,8 @@ import debounce from 'wsemi/src/debounce.mjs'
 import getCentroidMultiPolygon from 'w-gis/src/getCentroidMultiPolygon.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
-import { Icon } from 'leaflet'
-import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LPolygon, LGeoJson, LImageOverlay } from 'vue2-leaflet'
+import L, { Icon } from 'leaflet'
+import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LCircleMarker, LPolygon, LGeoJson, LImageOverlay } from 'vue2-leaflet'
 import LContour from './LContour.vue'
 import Radios from './Radios.vue'
 import Checkboxs from './Checkboxs.vue'
@@ -552,6 +573,10 @@ function getDefBaseMaps() {
  * @vue-prop {String} [opt.pointSets[i].title=''] 輸入第i個點集合的標題字串，預設為''
  * @vue-prop {String} [opt.pointSets[i].msg=''] 輸入第i個點集合的說明字串，預設為''
  * @vue-prop {Number} [opt.pointSets[i].order=null] 輸入第i個點集合的排序用數字，預設null
+ * @vue-prop {String} [opt.pointSets[i].lineColor='rgba(255,255,255,1)'] 輸入第i個點集合的框線顏色字串，預設為'rgba(255,255,255,1)'
+ * @vue-prop {Number} [opt.pointSets[i].lineWidth=1] 輸入第i個點集合的框線寬度數字，預設為1
+ * @vue-prop {String} [opt.pointSets[i].fillColor='rgba(0,150,255,0.65)'] 輸入第i個點集合的填充顏色字串，預設為'rgba(0,150,255,0.65)'
+ * @vue-prop {Number} [opt.pointSets[i].size=10] 輸入第i個點集合的圖標尺寸數字，預設10
  * @vue-prop {String} [opt.pointSets[i].iconSrc=詳見程式碼] 輸入第i個點集合的顯示圖標來源字串，可使用base64格式或網址，預設為google map的點圖標，值詳見程式碼
  * @vue-prop {Array} [opt.pointSets[i].iconSize=[24,40]] 輸入第i個點集合的顯示圖標尺寸陣列，使用[寬,高]，長寬單位px，預設[24,40]
  * @vue-prop {Array} [opt.pointSets[i].iconAnchor=[iconSize[0]/2,iconSize[1]]] 輸入第i個點集合的顯示圖標的實際定位位置陣列，由圖標左上角代表實際定位點起算，往左移動為+x，往上移動為+y，x與y單位px，需給予[x,y]，預設[iconSize[0]/2,iconSize[1]]
@@ -560,6 +585,10 @@ function getDefBaseMaps() {
  * @vue-prop {Array} [opt.pointSets[i].points=[]] 輸入第i個點集合的各點數據陣列，各元素為物件或為緯經度陣列，也就是[{p1},{p2},...]或是[[p1lat,p1lng],[p2lat,p2lng],...]，預設為[]
  * @vue-prop {String} [opt.pointSets[i].points[j].title=''] 輸入第i個點集合的第j個點的標題字串，預設為''
  * @vue-prop {String} [opt.pointSets[i].points[j].msg=''] 輸入第i個點集合的第j個點的說明字串，預設為''
+ * @vue-prop {String} [opt.pointSets[i].points[j].lineColor='rgba(255,255,255,1)'] 輸入第i個點集合的第j個點的框線顏色字串，預設為'rgba(255,255,255,1)'
+ * @vue-prop {Number} [opt.pointSets[i].points[j].lineWidth=1] 輸入第i個點集合的第j個點的框線寬度數字，預設為1
+ * @vue-prop {String} [opt.pointSets[i].points[j].fillColor='rgba(0,150,255,0.65)'] 輸入第i個點集合的第j個點的填充顏色字串，預設為'rgba(0,150,255,0.65)'
+ * @vue-prop {Number} [opt.pointSets[i].points[j].size=10] 輸入第i個點集合的第j個點的圖標尺寸數字，預設10
  * @vue-prop {Array} [opt.pointSets[i].points[j].latLng=[]] 輸入第i個點集合的第j個點的緯經度座標陣列，也就是給予[lat,lng]，預設[]
  * @vue-prop {String} [opt.pointSets[i].points[j].iconSrc=詳見程式碼] 輸入第i個點集合的第j個點的顯示圖標來源字串，可使用base64格式或網址，預設為google map的點圖標，值詳見程式碼
  * @vue-prop {Array} [opt.pointSets[i].points[j].iconSize=[24,40]] 輸入第i個點集合的第j個點的顯示圖標尺寸陣列，使用[寬,高]，長寬單位px，預設[24,40]
@@ -648,6 +677,7 @@ export default {
         LControlZoom,
         LLayerGroup,
         LMarker,
+        LCircleMarker,
         LPolygon,
         LGeoJson,
         LImageOverlay,
@@ -663,6 +693,7 @@ export default {
     },
     data: function() {
         return {
+
             dbcChangePointSets: debounce(),
             dbcChangePolygonSets: debounce(),
             dbcChangeGeojsonSets: debounce(),
@@ -766,6 +797,11 @@ export default {
         }
     },
     computed: {
+
+        // renderer: function() {
+        //     return L.canvas({ padding: 0, tolerance: 0 })
+        // },
+
     },
     methods: {
 
@@ -830,9 +866,10 @@ export default {
             let iconSize = get(v, 'iconSize', null)
             let iconAnchor = get(v, 'iconAnchor', null)
             let popupAnchor = get(v, 'popupAnchor', null)
+            let tooltipAnchor = get(v, 'tooltipAnchor', null)
 
             //eff
-            let eff = isestr(iconSrc) && isarr(iconSize) && size(iconSize) === 2 && isarr(iconAnchor) && size(iconAnchor) === 2 // && isarr(popupAnchor) && size(popupAnchor) === 2
+            let eff = isestr(iconSrc) && isarr(iconSize) && size(iconSize) === 2 && isarr(iconAnchor) && size(iconAnchor) === 2 // && isarr(popupAnchor) && size(popupAnchor) === 2 && isarr(tooltipAnchor) && size(tooltipAnchor) === 2
 
             return {
                 eff,
@@ -840,6 +877,7 @@ export default {
                 iconSize,
                 iconAnchor,
                 popupAnchor,
+                tooltipAnchor,
             }
         },
 
@@ -857,7 +895,8 @@ export default {
                 r.iconSrc = defIconSrc
                 r.iconSize = [24, 40]
                 r.iconAnchor = [r.iconSize[0] / 2, r.iconSize[1]] //圖左上角相對座標
-                r.popupAnchor = [0, -r.iconSize[1] / 1.5]
+                r.popupAnchor = [0, -r.iconSize[1] / 1.5] //google預設icon
+                r.tooltipAnchor = [0, -r.iconSize[1] / 1.5] //google預設icon
             }
 
             //icon
@@ -866,6 +905,7 @@ export default {
                 iconSize: r.iconSize,
                 iconAnchor: r.iconAnchor,
                 popupAnchor: r.popupAnchor,
+                tooltipAnchor: r.tooltipAnchor,
             })
 
             return {
@@ -1344,9 +1384,24 @@ export default {
                 //funSetTooltip
                 let funSetTooltip = get(pointSet, 'tooltip', null)
 
-                //iconPointSet
-                let iconPointSet = vo.getIcon(pointSet).icon
-                // console.log('pointSet icon', iconPointSet)
+                //pointSetType
+                let pointSetType = get(pointSet, 'type', null)
+
+                //pointSetSize
+                let pointSetSize = get(pointSet, 'size', null)
+
+                //pointSetIconPointSet
+                let pointSetIconPointSet = vo.getIcon(pointSet).icon
+                // console.log('pointSetIconPointSet', pointSetIconPointSet)
+
+                //pointSetLineColor
+                let pointSetLineColor = get(pointSet, 'lineColor', null)
+
+                //pointSetLineWidth
+                let pointSetLineWidth = get(pointSet, 'lineWidth', null)
+
+                //pointSetFillColor
+                let pointSetFillColor = get(pointSet, 'fillColor', null)
 
                 //points
                 pointSet.points = map(pointSet.points, (point, kpoint) => {
@@ -1359,23 +1414,6 @@ export default {
                         point = p
                     }
 
-                    //default
-                    let icon = iconPointSet
-
-                    //getIconParam
-                    let r = vo.getIconParam(point)
-
-                    //若各點有提供icon則優先使用
-                    if (r.eff) {
-                        icon = new Icon({
-                            iconUrl: r.iconSrc,
-                            iconSize: r.iconSize,
-                            iconAnchor: r.iconAnchor,
-                            popupAnchor: r.popupAnchor,
-                        })
-                    }
-                    // console.log('point icon', icon)
-
                     //funClick
                     let funClick = get(point, 'click', null)
 
@@ -1385,15 +1423,113 @@ export default {
                     //funTooltip
                     let funTooltip = get(point, 'tooltip', null) || funSetTooltip || funSetsTooltip //僅提供一種tooltip, 若點有tooltip則優先使用
 
-                    return {
+                    //pointType
+                    let pointType = get(point, 'type', null)
+
+                    //type
+                    let type = pointType || pointSetType
+                    if (type !== 'icon' && type !== 'circle') {
+                        type = 'circle'
+                    }
+
+                    //pointSize
+                    let pointSize = get(point, 'size', null)
+
+                    //radius
+                    let radius = pointSize || pointSetSize
+                    if (!isNumber(radius)) {
+                        radius = 10
+                    }
+
+                    //pointLineColor
+                    let pointLineColor = get(point, 'point', null)
+
+                    //lineColor
+                    let lineColor = pointLineColor || pointSetLineColor
+                    if (!isestr(lineColor)) {
+                        lineColor = 'rgba(255,255,255,1)'
+                    }
+
+                    //pointLineWidth
+                    let pointLineWidth = get(pointSet, 'lineWidth', null)
+
+                    //lineWidth
+                    let lineWidth = pointLineWidth || pointSetLineWidth
+                    if (!isNumber(lineWidth)) {
+                        lineWidth = 1
+                    }
+
+                    //pointFillColor
+                    let pointFillColor = get(pointSet, 'fillColor', null)
+
+                    //fillColor
+                    let fillColor = pointFillColor || pointSetFillColor
+                    if (!isestr(fillColor)) {
+                        fillColor = 'rgba(0,150,255,0.65)'
+                    }
+
+                    //style
+                    let style = {
+                        radius,
+                        fillColor,
+                        fillOpacity: 1, //vue leaflet預設為0.2得還原
+                        color: lineColor,
+                        weight: lineWidth,
+                    }
+
+                    let pointTemp = {
                         ...point,
-                        icon,
+                        type,
                         funSetsClick,
                         funSetClick,
                         funClick,
                         funPopup,
                         funTooltip,
                     }
+                    if (type === 'icon') {
+
+                        //icon, 若各點有提供icon則優先使用
+                        let icon = null
+                        let r = vo.getIconParam(point)
+                        if (r.eff) {
+                            icon = new Icon({
+                                iconUrl: r.iconSrc,
+                                iconSize: r.iconSize,
+                                iconAnchor: r.iconAnchor,
+                                popupAnchor: r.popupAnchor,
+                                tooltipAnchor: r.tooltipAnchor,
+                            })
+                        }
+                        else {
+                            icon = pointSetIconPointSet
+                        }
+                        // console.log('point icon', icon)
+
+                        //use icon
+                        pointTemp.icon = icon
+
+                    }
+                    else {
+
+                        //use style
+                        pointTemp.style = style
+
+                        //icon,
+                        let icon = new Icon({
+                            iconUrl: '',
+                            iconSize: [0, 0],
+                            iconAnchor: [0, 0],
+                            popupAnchor: [0, -radius / 1.5],
+                            tooltipAnchor: [0, 0],
+                        })
+                        // console.log('icon', icon)
+
+                        //use icon
+                        pointTemp.icon = icon
+
+                    }
+
+                    return pointTemp
                 })
 
                 //title
@@ -2470,13 +2606,15 @@ export default {
                 let offset = null
                 if (!isearr(offset)) {
                     offset = get(obj, 'icon.options.popupAnchor', null) //由leaflet內部呼叫時, point或pointSet的popupAnchor已存入icon本身
+                    // console.log('offset1', offset, obj)
                 }
                 if (!isearr(offset)) {
                     offset = get(obj, 'popupAnchor', null) //若無, 由leaflet外部呼叫時, popupAnchor由point提供
+                    // console.log('offset2', offset, obj)
                 }
                 if (!isearr(offset)) {
                     offset = [0, -(40 / 1.5)] //若point沒有提供popupAnchor則代表使用原先icon與其popupAnchor
-                    // console.log('default offset', offset, obj)
+                    // console.log('offset3', offset, obj)
                 }
                 // console.log('offset', offset)
 
@@ -2517,17 +2655,19 @@ export default {
             //h
             let h = obj.funTooltip(msg)
 
-            //offset
+            //offset bbb
             let offset = null
             if (!isearr(offset)) {
-                offset = get(obj, 'icon.options.popupAnchor', null) //由leaflet內部呼叫時, point或pointSet的popupAnchor已存入icon本身
+                offset = get(obj, 'icon.options.tooltipAnchor', null) //由leaflet內部呼叫時, point或pointSet的popupAnchor已存入icon本身
+                // console.log('offset1', offset, obj)
             }
             if (!isearr(offset)) {
-                offset = get(obj, 'popupAnchor', null) //若無, 由leaflet外部呼叫時, popupAnchor由point提供
+                offset = get(obj, 'tooltipAnchor', null) //若無, 由leaflet外部呼叫時, popupAnchor由point提供
+                // console.log('offset2', offset, obj)
             }
             if (!isearr(offset)) {
                 offset = [0, -(40 / 1.5)] //若point沒有提供popupAnchor則代表使用原先icon與其popupAnchor
-                // console.log('default offset', offset, obj)
+                // console.log('offset3', offset)
             }
             // console.log('offset', offset)
 

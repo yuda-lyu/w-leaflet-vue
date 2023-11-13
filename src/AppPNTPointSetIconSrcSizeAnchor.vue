@@ -2,7 +2,7 @@
     <div>
 
         <div style="padding:20px;">
-            <div style="font-size:1.5rem;">pointSet.iconSrc,iconSize,iconAnchor,popupAnchor</div>
+            <div style="font-size:1.5rem;">pointSet.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor</div>
             <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetIconSrcSizeAnchor.html" target="_blank" class="item-link">example</a>
             <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetIconSrcSizeAnchor.html" target="_blank" class="item-link">code</a>
         </div>
@@ -50,11 +50,13 @@ export default {
                     {
                         title: 'pointSet A',
                         msg: 'msg from pointSet A',
+                        type: 'icon',
                         points: [
                             {
                                 title: 'point A-1',
                                 msg: 'msg from data A-1',
-                                latLng: [24.20, 121.27],
+                                // latLng: [24.20, 121.27],
+                                latLng: [24.6508143, 121.4716748],
                             },
                             {
                                 title: 'point A-2',
@@ -67,11 +69,13 @@ export default {
                         iconSize: [38, 95],
                         iconAnchor: [22, 94],
                         popupAnchor: [0, -80], //葉子上緣, 此範例用不到
+                        tooltipAnchor: [0, -80], //葉子上緣, 此範例用不到
                         visible: true,
                     },
                     {
                         title: 'pointSet B',
                         msg: 'msg from pointSet B',
+                        type: 'icon',
                         points: [
                             {
                                 title: 'point B-1',
@@ -89,6 +93,7 @@ export default {
                         // iconSize: [38, 95],
                         // iconAnchor: [22, 94],
                         // popupAnchor: [0, -80], //葉子上緣, 此範例用不到
+                        // tooltipAnchor: [0, -80], //葉子上緣, 此範例用不到
                         visible: false,
                     },
                 ],

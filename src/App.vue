@@ -80,9 +80,17 @@
 
         <AppPNTPointSetOrder v-if="showSubCmp==='pointSet.order'"></AppPNTPointSetOrder>
 
-        <AppPNTPointSetIconSrcSizeAnchor v-if="showSubCmp==='pointSet.iconSrc,iconSize,iconAnchor,popupAnchor'"></AppPNTPointSetIconSrcSizeAnchor>
+        <AppPNTPointSetLineColor v-if="showSubCmp==='pointSet.lineColor'"></AppPNTPointSetLineColor>
 
-        <AppPNTPointSetPointIconSrcSizeAnchor v-if="showSubCmp==='pointSet.point.iconSrc,iconSize,iconAnchor,popupAnchor'"></AppPNTPointSetPointIconSrcSizeAnchor>
+        <AppPNTPointSetLineWidth v-if="showSubCmp==='pointSet.lineWidth'"></AppPNTPointSetLineWidth>
+
+        <AppPNTPointSetFillColor v-if="showSubCmp==='pointSet.fillColor'"></AppPNTPointSetFillColor>
+
+        <AppPNTPointSetSize v-if="showSubCmp==='pointSet.size'"></AppPNTPointSetSize>
+
+        <AppPNTPointSetIconSrcSizeAnchor v-if="showSubCmp==='pointSet.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor'"></AppPNTPointSetIconSrcSizeAnchor>
+
+        <AppPNTPointSetPointIconSrcSizeAnchor v-if="showSubCmp==='pointSet.point.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor'"></AppPNTPointSetPointIconSrcSizeAnchor>
 
         <AppPNTDefPointSetsClick v-if="showSubCmp==='defPointSetsClick'"></AppPNTDefPointSetsClick>
 
@@ -279,6 +287,10 @@ import AppPNTPointSets from './AppPNTPointSets.vue'
 import AppPNTPointSetPointByArray from './AppPNTPointSetPointByArray.vue'
 import AppPNTPointSetChangeData from './AppPNTPointSetChangeData.vue'
 import AppPNTPointSetOrder from './AppPNTPointSetOrder.vue'
+import AppPNTPointSetLineColor from './AppPNTPointSetLineColor.vue'
+import AppPNTPointSetLineWidth from './AppPNTPointSetLineWidth.vue'
+import AppPNTPointSetFillColor from './AppPNTPointSetFillColor.vue'
+import AppPNTPointSetSize from './AppPNTPointSetSize.vue'
 import AppPNTPointSetIconSrcSizeAnchor from './AppPNTPointSetIconSrcSizeAnchor.vue'
 import AppPNTPointSetPointIconSrcSizeAnchor from './AppPNTPointSetPointIconSrcSizeAnchor.vue'
 import AppPNTDefPointSetsClick from './AppPNTDefPointSetsClick.vue'
@@ -390,6 +402,10 @@ export default {
         AppPNTPointSetPointByArray,
         AppPNTPointSetChangeData,
         AppPNTPointSetOrder,
+        AppPNTPointSetLineColor,
+        AppPNTPointSetLineWidth,
+        AppPNTPointSetFillColor,
+        AppPNTPointSetSize,
         AppPNTPointSetIconSrcSizeAnchor,
         AppPNTPointSetPointIconSrcSizeAnchor,
         AppPNTDefPointSetsClick,
@@ -526,8 +542,12 @@ export default {
                     'pointSet-pointByArray',
                     'pointSet-changeData',
                     'pointSet.order',
-                    'pointSet.iconSrc,iconSize,iconAnchor,popupAnchor',
-                    'pointSet.point.iconSrc,iconSize,iconAnchor,popupAnchor',
+                    'pointSet.lineColor',
+                    'pointSet.lineWidth',
+                    'pointSet.fillColor',
+                    'pointSet.size',
+                    'pointSet.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor',
+                    'pointSet.point.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor',
                     'defPointSetsClick',
                     'pointSet.click',
                     'pointSet.point.click',
