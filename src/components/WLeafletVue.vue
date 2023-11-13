@@ -1451,7 +1451,7 @@ export default {
                     }
 
                     //pointLineWidth
-                    let pointLineWidth = get(pointSet, 'lineWidth', null)
+                    let pointLineWidth = get(point, 'lineWidth', null)
 
                     //lineWidth
                     let lineWidth = pointLineWidth || pointSetLineWidth
@@ -1460,7 +1460,7 @@ export default {
                     }
 
                     //pointFillColor
-                    let pointFillColor = get(pointSet, 'fillColor', null)
+                    let pointFillColor = get(point, 'fillColor', null)
 
                     //fillColor
                     let fillColor = pointFillColor || pointSetFillColor
