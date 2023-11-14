@@ -115,8 +115,6 @@
                                         <div style="font-size:0.85rem; text-align:center;" v-html="contourSet.legendMsg"></div>
                                     </div>
 
-                                <div style="">
-
                                     <table style="border-collapse:collapse;">
                                         <tbody>
                                             <tr
@@ -156,8 +154,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
-                                </div>
 
                                 </div>
                             </div>
