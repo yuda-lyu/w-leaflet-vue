@@ -5,13 +5,14 @@
         @domresize="resize"
     >
 
+        <!-- 得要關閉zoomControl, 改由l-control-zoom處理才能改位置 -->
         <l-map
             ref="lmap"
             :zoom="zoom"
             :center="center"
             :options="{
                 preferCanvas: true,
-                _zoomControl: false,
+                zoomControl: false,
             }"
             @update:zoom="updateZoom"
             @update:center="updateCenter"
@@ -337,7 +338,7 @@ import debounce from 'wsemi/src/debounce.mjs'
 import getCentroidMultiPolygon from 'w-gis/src/getCentroidMultiPolygon.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
-import L, { Icon } from 'leaflet'
+import { Icon } from 'leaflet'
 import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LCircleMarker, LPolygon, LGeoJson, LImageOverlay } from 'vue2-leaflet'
 import LContour from './LContour.vue'
 import Radios from './Radios.vue'
