@@ -52,13 +52,21 @@ export default {
                     console.log('defPointSetsPopup', v)
                     let c = `
                         <div style="padding:20px 20px 15px 15px;">
+
                             <div style="color:#c1409d; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;">
                                 ${v.point.title}
                             </div>
-                            <div style="color:#888; font-size:0.8rem;">
-                                <span style="color:#ef8f30;">${v.point.sbi} / ${v.point.tot} </span>
-                                <span>${v.point.msg}</span>
+
+                            <div style="padding-top:5px;">
+                                <span style="color:#777; font-size:0.75rem;">目前 / 總共車輛: </span>
+                                <span style="color:#ef8f30; font-size:0.85rem;">${v.point.sbi} / ${v.point.tot}</span>
                             </div>
+
+                            <div style="padding-top:8px;">
+                                <span style="color:#777; font-size:0.75rem;">地址: </span>
+                                <span style="color:#777; font-size:0.75rem;">${v.point.msg}</span>
+                            </div>
+
                         </div>
                     `
                     return c

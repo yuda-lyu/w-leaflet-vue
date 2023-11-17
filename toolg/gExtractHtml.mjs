@@ -53,16 +53,11 @@ function writeHtml(v) {
         <script src="https://cdn.jsdelivr.net/npm/w-gis@latest/dist/interp2.wk.umd.js"></script>
   
         <!-- data -->
-        <script src="https://cdn.jsdelivr.net/npm/w-demores@latest/res/data/dataRain.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/w-demores@latest/res/data/dataRainClip.js"></script>
-        <script>
-            //save in window
-            window.dataRain=dataRain
-            window.dataRainClip=dataRainClip
-        </script>
-    
+        <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.23/res/data/dataRain.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.23/res/data/dataRainClip.js"></script>
+
         <!-- w-jsonview-tree -->
-        <script src="https://cdn.jsdelivr.net/npm/w-jsonview-tree/dist/w-jsonview-tree.umd.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/w-jsonview-tree@latest/dist/w-jsonview-tree.umd.js"></script>
         <script>
             let jv=window['w-jsonview-tree']
         </script>
