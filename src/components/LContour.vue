@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import map from 'lodash/map'
+import map from 'lodash-es/map'
 import isestr from 'wsemi/src/isestr.mjs'
 import isfun from 'wsemi/src/isfun.mjs'
 import oc from 'wsemi/src/color.mjs'
