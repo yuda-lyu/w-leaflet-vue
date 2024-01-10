@@ -8,6 +8,7 @@
             </a>
         </template>
 
+
         <div style="">
 
             <div style="padding:0px 80px 0px 10px; border-bottom:1px solid #ddd;">
@@ -40,227 +41,233 @@
 
         </div>
 
-        <AppBSCSize v-if="showSubCmp==='size'"></AppBSCSize>
 
-        <AppBSCCenter v-if="showSubCmp==='center'"></AppBSCCenter>
+        <div class="bkh">
 
-        <AppBSCZoom v-if="showSubCmp==='zoom'"></AppBSCZoom>
+            <AppBSCSize v-if="showSubCmp==='size'"></AppBSCSize>
 
-        <AppBSCPanelBackgroundColor v-if="showSubCmp==='panelBackgroundColor'"></AppBSCPanelBackgroundColor>
+            <AppBSCCenter v-if="showSubCmp==='center'"></AppBSCCenter>
 
-        <AppPBMShow v-if="showSubCmp==='panelBaseMaps.show'"></AppPBMShow>
+            <AppBSCZoom v-if="showSubCmp==='zoom'"></AppBSCZoom>
 
-        <AppPBMBaseMaps v-if="showSubCmp==='panelBaseMaps.baseMaps'"></AppPBMBaseMaps>
+            <AppBSCPanelBackgroundColor v-if="showSubCmp==='panelBackgroundColor'"></AppBSCPanelBackgroundColor>
 
-        <AppPBMPosition v-if="showSubCmp==='panelBaseMaps.position'"></AppPBMPosition>
+            <AppPBMShow v-if="showSubCmp==='panelBaseMaps.show'"></AppPBMShow>
 
-        <AppPLBShow v-if="showSubCmp==='panelLabels.show'"></AppPLBShow>
+            <AppPBMBaseMaps v-if="showSubCmp==='panelBaseMaps.baseMaps'"></AppPBMBaseMaps>
 
-        <AppPLBPosition v-if="showSubCmp==='panelLabels.position'"></AppPLBPosition>
+            <AppPBMPosition v-if="showSubCmp==='panelBaseMaps.position'"></AppPBMPosition>
 
-        <AppPLBTitle v-if="showSubCmp==='panelLabels.title'"></AppPLBTitle>
+            <AppPLBShow v-if="showSubCmp==='panelLabels.show'"></AppPLBShow>
 
-        <AppPLBLng v-if="showSubCmp==='panelLabels.lng'"></AppPLBLng>
+            <AppPLBPosition v-if="showSubCmp==='panelLabels.position'"></AppPLBPosition>
 
-        <AppPLBLat v-if="showSubCmp==='panelLabels.lat'"></AppPLBLat>
+            <AppPLBTitle v-if="showSubCmp==='panelLabels.title'"></AppPLBTitle>
 
-        <AppPLBZoom v-if="showSubCmp==='panelLabels.zoom'"></AppPLBZoom>
+            <AppPLBLng v-if="showSubCmp==='panelLabels.lng'"></AppPLBLng>
 
-        <AppPLBUseItems v-if="showSubCmp==='panelLabels.useItems'"></AppPLBUseItems>
+            <AppPLBLat v-if="showSubCmp==='panelLabels.lat'"></AppPLBLat>
 
-        <AppPZMShow v-if="showSubCmp==='panelZoom.show'"></AppPZMShow>
+            <AppPLBZoom v-if="showSubCmp==='panelLabels.zoom'"></AppPLBZoom>
 
-        <AppPZMPosition v-if="showSubCmp==='panelZoom.position'"></AppPZMPosition>
+            <AppPLBUseItems v-if="showSubCmp==='panelLabels.useItems'"></AppPLBUseItems>
 
-        <AppPNTPointSets v-if="showSubCmp==='pointSets'"></AppPNTPointSets>
+            <AppPZMShow v-if="showSubCmp==='panelZoom.show'"></AppPZMShow>
 
-        <AppPNTPointSetPointByArray v-if="showSubCmp==='pointSet-pointByArray'"></AppPNTPointSetPointByArray>
+            <AppPZMPosition v-if="showSubCmp==='panelZoom.position'"></AppPZMPosition>
 
-        <AppPNTPointSetChangeData v-if="showSubCmp==='pointSet-changeData'"></AppPNTPointSetChangeData>
+            <AppPNTPointSets v-if="showSubCmp==='pointSets'"></AppPNTPointSets>
 
-        <AppPNTPointSetOrder v-if="showSubCmp==='pointSet.order'"></AppPNTPointSetOrder>
+            <AppPNTPointSetPointByArray v-if="showSubCmp==='pointSet-pointByArray'"></AppPNTPointSetPointByArray>
 
-        <AppPNTPointSetLineColor v-if="showSubCmp==='pointSet.lineColor'"></AppPNTPointSetLineColor>
+            <AppPNTPointSetChangeData v-if="showSubCmp==='pointSet-changeData'"></AppPNTPointSetChangeData>
 
-        <AppPNTPointSetLineWidth v-if="showSubCmp==='pointSet.lineWidth'"></AppPNTPointSetLineWidth>
+            <AppPNTPointSetOrder v-if="showSubCmp==='pointSet.order'"></AppPNTPointSetOrder>
 
-        <AppPNTPointSetFillColor v-if="showSubCmp==='pointSet.fillColor'"></AppPNTPointSetFillColor>
+            <AppPNTPointSetLineColor v-if="showSubCmp==='pointSet.lineColor'"></AppPNTPointSetLineColor>
 
-        <AppPNTPointSetSize v-if="showSubCmp==='pointSet.size'"></AppPNTPointSetSize>
+            <AppPNTPointSetLineWidth v-if="showSubCmp==='pointSet.lineWidth'"></AppPNTPointSetLineWidth>
 
-        <AppPNTPointSetIconSrcSizeAnchor v-if="showSubCmp==='pointSet.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor'"></AppPNTPointSetIconSrcSizeAnchor>
+            <AppPNTPointSetFillColor v-if="showSubCmp==='pointSet.fillColor'"></AppPNTPointSetFillColor>
 
-        <AppPNTPointSetPointIconSrcSizeAnchor v-if="showSubCmp==='pointSet.point.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor'"></AppPNTPointSetPointIconSrcSizeAnchor>
+            <AppPNTPointSetSize v-if="showSubCmp==='pointSet.size'"></AppPNTPointSetSize>
 
-        <AppPNTDefPointSetsClick v-if="showSubCmp==='defPointSetsClick'"></AppPNTDefPointSetsClick>
+            <AppPNTPointSetIconSrcSizeAnchor v-if="showSubCmp==='pointSet.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor'"></AppPNTPointSetIconSrcSizeAnchor>
 
-        <AppPNTPointSetClick v-if="showSubCmp==='pointSet.click'"></AppPNTPointSetClick>
+            <AppPNTPointSetPointIconSrcSizeAnchor v-if="showSubCmp==='pointSet.point.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor'"></AppPNTPointSetPointIconSrcSizeAnchor>
 
-        <AppPNTPointSetPointClick v-if="showSubCmp==='pointSet.point.click'"></AppPNTPointSetPointClick>
+            <AppPNTDefPointSetsClick v-if="showSubCmp==='defPointSetsClick'"></AppPNTDefPointSetsClick>
 
-        <AppPNTDefPointSetsPopup v-if="showSubCmp==='defPointSetsPopup'"></AppPNTDefPointSetsPopup>
+            <AppPNTPointSetClick v-if="showSubCmp==='pointSet.click'"></AppPNTPointSetClick>
 
-        <AppPNTPointSetPopup v-if="showSubCmp==='pointSet.popup'"></AppPNTPointSetPopup>
+            <AppPNTPointSetPointClick v-if="showSubCmp==='pointSet.point.click'"></AppPNTPointSetPointClick>
 
-        <AppPNTPointSetPointPopup v-if="showSubCmp==='pointSet.point.popup'"></AppPNTPointSetPointPopup>
+            <AppPNTDefPointSetsPopup v-if="showSubCmp==='defPointSetsPopup'"></AppPNTDefPointSetsPopup>
 
-        <AppPNTDefPointSetsTooltip v-if="showSubCmp==='defPointSetsTooltip'"></AppPNTDefPointSetsTooltip>
+            <AppPNTPointSetPopup v-if="showSubCmp==='pointSet.popup'"></AppPNTPointSetPopup>
 
-        <AppPNTPointSetTooltip v-if="showSubCmp==='pointSet.tooltip'"></AppPNTPointSetTooltip>
+            <AppPNTPointSetPointPopup v-if="showSubCmp==='pointSet.point.popup'"></AppPNTPointSetPointPopup>
 
-        <AppPNTPointSetPointTooltip v-if="showSubCmp==='pointSet.point.tooltip'"></AppPNTPointSetPointTooltip>
+            <AppPNTDefPointSetsTooltip v-if="showSubCmp==='defPointSetsTooltip'"></AppPNTDefPointSetsTooltip>
 
-        <AppPNTPointSetLargeSet v-if="showSubCmp==='pointSet.largeSet'"></AppPNTPointSetLargeSet>
+            <AppPNTPointSetTooltip v-if="showSubCmp==='pointSet.tooltip'"></AppPNTPointSetTooltip>
 
-        <AppPGNPolygonSets v-if="showSubCmp==='polygonSets'"></AppPGNPolygonSets>
+            <AppPNTPointSetPointTooltip v-if="showSubCmp==='pointSet.point.tooltip'"></AppPNTPointSetPointTooltip>
 
-        <AppPGNPolygonSetChangeData v-if="showSubCmp==='polygonSet-changeData'"></AppPGNPolygonSetChangeData>
+            <AppPNTPointSetLargeSet v-if="showSubCmp==='pointSet.largeSet'"></AppPNTPointSetLargeSet>
 
-        <AppPGNPolygonSetOrder v-if="showSubCmp==='polygonSet.order'"></AppPGNPolygonSetOrder>
+            <AppPGNPolygonSets v-if="showSubCmp==='polygonSets'"></AppPGNPolygonSets>
 
-        <AppPGNPolygonSetLineColor v-if="showSubCmp==='polygonSet.lineColor'"></AppPGNPolygonSetLineColor>
+            <AppPGNPolygonSetChangeData v-if="showSubCmp==='polygonSet-changeData'"></AppPGNPolygonSetChangeData>
 
-        <AppPGNPolygonSetLineColorHover v-if="showSubCmp==='polygonSet.lineColorHover'"></AppPGNPolygonSetLineColorHover>
+            <AppPGNPolygonSetOrder v-if="showSubCmp==='polygonSet.order'"></AppPGNPolygonSetOrder>
 
-        <AppPGNPolygonSetLineWidth v-if="showSubCmp==='polygonSet.lineWidth'"></AppPGNPolygonSetLineWidth>
+            <AppPGNPolygonSetLineColor v-if="showSubCmp==='polygonSet.lineColor'"></AppPGNPolygonSetLineColor>
 
-        <AppPGNPolygonSetLineWidthHover v-if="showSubCmp==='polygonSet.lineWidthHover'"></AppPGNPolygonSetLineWidthHover>
+            <AppPGNPolygonSetLineColorHover v-if="showSubCmp==='polygonSet.lineColorHover'"></AppPGNPolygonSetLineColorHover>
 
-        <AppPGNPolygonSetFillColor v-if="showSubCmp==='polygonSet.fillColor'"></AppPGNPolygonSetFillColor>
+            <AppPGNPolygonSetLineWidth v-if="showSubCmp==='polygonSet.lineWidth'"></AppPGNPolygonSetLineWidth>
 
-        <AppPGNPolygonSetFillColorHover v-if="showSubCmp==='polygonSet.fillColorHover'"></AppPGNPolygonSetFillColorHover>
+            <AppPGNPolygonSetLineWidthHover v-if="showSubCmp==='polygonSet.lineWidthHover'"></AppPGNPolygonSetLineWidthHover>
 
-        <AppPGNDefPolygonSetsClick v-if="showSubCmp==='defPolygonSetsClick'"></AppPGNDefPolygonSetsClick>
+            <AppPGNPolygonSetFillColor v-if="showSubCmp==='polygonSet.fillColor'"></AppPGNPolygonSetFillColor>
 
-        <AppPGNPolygonSetClick v-if="showSubCmp==='polygonSet.click'"></AppPGNPolygonSetClick>
+            <AppPGNPolygonSetFillColorHover v-if="showSubCmp==='polygonSet.fillColorHover'"></AppPGNPolygonSetFillColorHover>
 
-        <AppPGNDefPolygonSetsPopup v-if="showSubCmp==='defPolygonSetsPopup'"></AppPGNDefPolygonSetsPopup>
+            <AppPGNDefPolygonSetsClick v-if="showSubCmp==='defPolygonSetsClick'"></AppPGNDefPolygonSetsClick>
 
-        <AppPGNPolygonSetPopup v-if="showSubCmp==='polygonSet.popup'"></AppPGNPolygonSetPopup>
+            <AppPGNPolygonSetClick v-if="showSubCmp==='polygonSet.click'"></AppPGNPolygonSetClick>
 
-        <AppPGNDefPolygonSetsTooltip v-if="showSubCmp==='defPolygonSetsTooltip'"></AppPGNDefPolygonSetsTooltip>
+            <AppPGNDefPolygonSetsPopup v-if="showSubCmp==='defPolygonSetsPopup'"></AppPGNDefPolygonSetsPopup>
 
-        <AppPGNPolygonSetTooltip v-if="showSubCmp==='polygonSet.tooltip'"></AppPGNPolygonSetTooltip>
+            <AppPGNPolygonSetPopup v-if="showSubCmp==='polygonSet.popup'"></AppPGNPolygonSetPopup>
 
-        <AppGJNGeojsonSets v-if="showSubCmp==='geojsonSets'"></AppGJNGeojsonSets>
+            <AppPGNDefPolygonSetsTooltip v-if="showSubCmp==='defPolygonSetsTooltip'"></AppPGNDefPolygonSetsTooltip>
 
-        <AppGJNGeojsonSetChangeData v-if="showSubCmp==='geojsonSet-changeData'"></AppGJNGeojsonSetChangeData>
+            <AppPGNPolygonSetTooltip v-if="showSubCmp==='polygonSet.tooltip'"></AppPGNPolygonSetTooltip>
 
-        <AppGJNGeojsonSetUpload v-if="showSubCmp==='geojsonSet-upload'"></AppGJNGeojsonSetUpload>
+            <AppGJNGeojsonSets v-if="showSubCmp==='geojsonSets'"></AppGJNGeojsonSets>
 
-        <AppGJNGeojsonSetOrder v-if="showSubCmp==='geojsonSet.order'"></AppGJNGeojsonSetOrder>
+            <AppGJNGeojsonSetChangeData v-if="showSubCmp==='geojsonSet-changeData'"></AppGJNGeojsonSetChangeData>
 
-        <AppGJNGeojsonSetLineColor v-if="showSubCmp==='geojsonSet.lineColor'"></AppGJNGeojsonSetLineColor>
+            <AppGJNGeojsonSetUpload v-if="showSubCmp==='geojsonSet-upload'"></AppGJNGeojsonSetUpload>
 
-        <AppGJNGeojsonSetLineColorHover v-if="showSubCmp==='geojsonSet.lineColorHover'"></AppGJNGeojsonSetLineColorHover>
+            <AppGJNGeojsonSetOrder v-if="showSubCmp==='geojsonSet.order'"></AppGJNGeojsonSetOrder>
 
-        <AppGJNGeojsonSetLineWidth v-if="showSubCmp==='geojsonSet.lineWidth'"></AppGJNGeojsonSetLineWidth>
+            <AppGJNGeojsonSetLineColor v-if="showSubCmp==='geojsonSet.lineColor'"></AppGJNGeojsonSetLineColor>
 
-        <AppGJNGeojsonSetLineWidthHover v-if="showSubCmp==='geojsonSet.lineWidthHover'"></AppGJNGeojsonSetLineWidthHover>
+            <AppGJNGeojsonSetLineColorHover v-if="showSubCmp==='geojsonSet.lineColorHover'"></AppGJNGeojsonSetLineColorHover>
 
-        <AppGJNGeojsonSetFillColor v-if="showSubCmp==='geojsonSet.fillColor'"></AppGJNGeojsonSetFillColor>
+            <AppGJNGeojsonSetLineWidth v-if="showSubCmp==='geojsonSet.lineWidth'"></AppGJNGeojsonSetLineWidth>
 
-        <AppGJNGeojsonSetFillColorHover v-if="showSubCmp==='geojsonSet.fillColorHover'"></AppGJNGeojsonSetFillColorHover>
+            <AppGJNGeojsonSetLineWidthHover v-if="showSubCmp==='geojsonSet.lineWidthHover'"></AppGJNGeojsonSetLineWidthHover>
 
-        <AppGJNDefGeojsonSetsClick v-if="showSubCmp==='defGeojsonSetsClick'"></AppGJNDefGeojsonSetsClick>
+            <AppGJNGeojsonSetFillColor v-if="showSubCmp==='geojsonSet.fillColor'"></AppGJNGeojsonSetFillColor>
 
-        <AppGJNGeojsonSetClick v-if="showSubCmp==='geojsonSet.click'"></AppGJNGeojsonSetClick>
+            <AppGJNGeojsonSetFillColorHover v-if="showSubCmp==='geojsonSet.fillColorHover'"></AppGJNGeojsonSetFillColorHover>
 
-        <AppGJNDefGeojsonSetsPopup v-if="showSubCmp==='defGeojsonSetsPopup'"></AppGJNDefGeojsonSetsPopup>
+            <AppGJNDefGeojsonSetsClick v-if="showSubCmp==='defGeojsonSetsClick'"></AppGJNDefGeojsonSetsClick>
 
-        <AppGJNGeojsonSetPopup v-if="showSubCmp==='geojsonSet.popup'"></AppGJNGeojsonSetPopup>
+            <AppGJNGeojsonSetClick v-if="showSubCmp==='geojsonSet.click'"></AppGJNGeojsonSetClick>
 
-        <AppGJNDefGeojsonSetsTooltip v-if="showSubCmp==='defGeojsonSetsTooltip'"></AppGJNDefGeojsonSetsTooltip>
+            <AppGJNDefGeojsonSetsPopup v-if="showSubCmp==='defGeojsonSetsPopup'"></AppGJNDefGeojsonSetsPopup>
 
-        <AppGJNGeojsonSetTooltip v-if="showSubCmp==='geojsonSet.tooltip'"></AppGJNGeojsonSetTooltip>
+            <AppGJNGeojsonSetPopup v-if="showSubCmp==='geojsonSet.popup'"></AppGJNGeojsonSetPopup>
 
-        <AppCTRContourSets v-if="showSubCmp==='contourSets'"></AppCTRContourSets>
+            <AppGJNDefGeojsonSetsTooltip v-if="showSubCmp==='defGeojsonSetsTooltip'"></AppGJNDefGeojsonSetsTooltip>
 
-        <AppCTRContourSetChangeData v-if="showSubCmp==='contourSet-changeData'"></AppCTRContourSetChangeData>
+            <AppGJNGeojsonSetTooltip v-if="showSubCmp==='geojsonSet.tooltip'"></AppGJNGeojsonSetTooltip>
 
-        <AppCTRContourSetThresholds v-if="showSubCmp==='contourSet.thresholds'"></AppCTRContourSetThresholds>
+            <AppCTRContourSets v-if="showSubCmp==='contourSets'"></AppCTRContourSets>
 
-        <AppCTRContourSetGetColor v-if="showSubCmp==='contourSet.getColor'"></AppCTRContourSetGetColor>
+            <AppCTRContourSetChangeData v-if="showSubCmp==='contourSet-changeData'"></AppCTRContourSetChangeData>
 
-        <AppCTRContourSetOrder v-if="showSubCmp==='contourSet.order'"></AppCTRContourSetOrder>
+            <AppCTRContourSetThresholds v-if="showSubCmp==='contourSet.thresholds'"></AppCTRContourSetThresholds>
 
-        <AppCTRContourSetGradient v-if="showSubCmp==='contourSet.gradient'"></AppCTRContourSetGradient>
+            <AppCTRContourSetGetColor v-if="showSubCmp==='contourSet.getColor'"></AppCTRContourSetGetColor>
 
-        <AppCTRContourSetLineColor v-if="showSubCmp==='contourSet.lineColor'"></AppCTRContourSetLineColor>
+            <AppCTRContourSetOrder v-if="showSubCmp==='contourSet.order'"></AppCTRContourSetOrder>
 
-        <AppCTRContourSetLineColorHover v-if="showSubCmp==='contourSet.lineColorHover'"></AppCTRContourSetLineColorHover>
+            <AppCTRContourSetGradient v-if="showSubCmp==='contourSet.gradient'"></AppCTRContourSetGradient>
 
-        <AppCTRContourSetLineWidth v-if="showSubCmp==='contourSet.lineWidth'"></AppCTRContourSetLineWidth>
+            <AppCTRContourSetLineColor v-if="showSubCmp==='contourSet.lineColor'"></AppCTRContourSetLineColor>
 
-        <AppCTRContourSetLineWidthHover v-if="showSubCmp==='contourSet.lineWidthHover'"></AppCTRContourSetLineWidthHover>
+            <AppCTRContourSetLineColorHover v-if="showSubCmp==='contourSet.lineColorHover'"></AppCTRContourSetLineColorHover>
 
-        <AppCTRContourSetFillOpacity v-if="showSubCmp==='contourSet.fillOpacity'"></AppCTRContourSetFillOpacity>
+            <AppCTRContourSetLineWidth v-if="showSubCmp==='contourSet.lineWidth'"></AppCTRContourSetLineWidth>
 
-        <AppCTRContourSetFillOpacityHover v-if="showSubCmp==='contourSet.fillOpacityHover'"></AppCTRContourSetFillOpacityHover>
+            <AppCTRContourSetLineWidthHover v-if="showSubCmp==='contourSet.lineWidthHover'"></AppCTRContourSetLineWidthHover>
 
-        <AppCTRContourSetChangeStyleWhenHover v-if="showSubCmp==='contourSet.changeStyleWhenHover'"></AppCTRContourSetChangeStyleWhenHover>
+            <AppCTRContourSetFillOpacity v-if="showSubCmp==='contourSet.fillOpacity'"></AppCTRContourSetFillOpacity>
 
-        <AppCTRContourSetLegendNumDig v-if="showSubCmp==='contourSet.legendNumDig'"></AppCTRContourSetLegendNumDig>
+            <AppCTRContourSetFillOpacityHover v-if="showSubCmp==='contourSet.fillOpacityHover'"></AppCTRContourSetFillOpacityHover>
 
-        <AppCTRContourSetLegendTextFormater v-if="showSubCmp==='contourSet.legendTextFormater'"></AppCTRContourSetLegendTextFormater>
+            <AppCTRContourSetChangeStyleWhenHover v-if="showSubCmp==='contourSet.changeStyleWhenHover'"></AppCTRContourSetChangeStyleWhenHover>
 
-        <AppCTRContourSetLegendTextExtra v-if="showSubCmp==='contourSet.legendTextExtra'"></AppCTRContourSetLegendTextExtra>
+            <AppCTRContourSetLegendNumDig v-if="showSubCmp==='contourSet.legendNumDig'"></AppCTRContourSetLegendNumDig>
 
-        <AppCTRContourSetPolygonClipOuter v-if="showSubCmp==='contourSet.polygonClipOuter'"></AppCTRContourSetPolygonClipOuter>
+            <AppCTRContourSetLegendTextFormater v-if="showSubCmp==='contourSet.legendTextFormater'"></AppCTRContourSetLegendTextFormater>
 
-        <AppCTRContourSetPolygonsClipInner v-if="showSubCmp==='contourSet.polygonsClipInner'"></AppCTRContourSetPolygonsClipInner>
+            <AppCTRContourSetLegendTextExtra v-if="showSubCmp==='contourSet.legendTextExtra'"></AppCTRContourSetLegendTextExtra>
 
-        <AppCTRContourSetPolygonsContainInner v-if="showSubCmp==='contourSet.polygonsContainInner'"></AppCTRContourSetPolygonsContainInner>
+            <AppCTRContourSetPolygonClipOuter v-if="showSubCmp==='contourSet.polygonClipOuter'"></AppCTRContourSetPolygonClipOuter>
 
-        <AppCTRDefContourSetsClick v-if="showSubCmp==='defContourSetsClick'"></AppCTRDefContourSetsClick>
+            <AppCTRContourSetPolygonsClipInner v-if="showSubCmp==='contourSet.polygonsClipInner'"></AppCTRContourSetPolygonsClipInner>
 
-        <AppCTRContourSetClick v-if="showSubCmp==='contourSet.click'"></AppCTRContourSetClick>
+            <AppCTRContourSetPolygonsContainInner v-if="showSubCmp==='contourSet.polygonsContainInner'"></AppCTRContourSetPolygonsContainInner>
 
-        <AppCTRDefContourSetsPopup v-if="showSubCmp==='defContourSetsPopup'"></AppCTRDefContourSetsPopup>
+            <AppCTRDefContourSetsClick v-if="showSubCmp==='defContourSetsClick'"></AppCTRDefContourSetsClick>
 
-        <AppCTRContourSetPopup v-if="showSubCmp==='contourSet.popup'"></AppCTRContourSetPopup>
+            <AppCTRContourSetClick v-if="showSubCmp==='contourSet.click'"></AppCTRContourSetClick>
 
-        <AppCTRDefContourSetsTooltip v-if="showSubCmp==='defContourSetsTooltip'"></AppCTRDefContourSetsTooltip>
+            <AppCTRDefContourSetsPopup v-if="showSubCmp==='defContourSetsPopup'"></AppCTRDefContourSetsPopup>
 
-        <AppCTRContourSetTooltip v-if="showSubCmp==='contourSet.tooltip'"></AppCTRContourSetTooltip>
+            <AppCTRContourSetPopup v-if="showSubCmp==='contourSet.popup'"></AppCTRContourSetPopup>
 
-        <AppCTRContourSetLargeSet v-if="showSubCmp==='contourSet.largeSet'"></AppCTRContourSetLargeSet>
+            <AppCTRDefContourSetsTooltip v-if="showSubCmp==='defContourSetsTooltip'"></AppCTRDefContourSetsTooltip>
 
-        <AppCTRContourSetInterp2 v-if="showSubCmp==='contourSet.interp2'"></AppCTRContourSetInterp2>
+            <AppCTRContourSetTooltip v-if="showSubCmp==='contourSet.tooltip'"></AppCTRContourSetTooltip>
 
-        <AppIMGImageSets v-if="showSubCmp==='imageSets'"></AppIMGImageSets>
+            <AppCTRContourSetLargeSet v-if="showSubCmp==='contourSet.largeSet'"></AppCTRContourSetLargeSet>
 
-        <AppIMGImageSetUpload v-if="showSubCmp==='imageSet-upload'"></AppIMGImageSetUpload>
+            <AppCTRContourSetInterp2 v-if="showSubCmp==='contourSet.interp2'"></AppCTRContourSetInterp2>
 
-        <AppPIMShow v-if="showSubCmp==='panelItems.show'"></AppPIMShow>
+            <AppIMGImageSets v-if="showSubCmp==='imageSets'"></AppIMGImageSets>
 
-        <AppPIMPosition v-if="showSubCmp==='panelItems.position'"></AppPIMPosition>
+            <AppIMGImageSetUpload v-if="showSubCmp==='imageSet-upload'"></AppIMGImageSetUpload>
 
-        <AppPIMWidth v-if="showSubCmp==='panelItems.width'"></AppPIMWidth>
+            <AppPIMShow v-if="showSubCmp==='panelItems.show'"></AppPIMShow>
 
-        <AppPIMMaxWidth v-if="showSubCmp==='panelItems.maxWidth'"></AppPIMMaxWidth>
+            <AppPIMPosition v-if="showSubCmp==='panelItems.position'"></AppPIMPosition>
 
-        <AppPIMMaxHeight v-if="showSubCmp==='panelItems.maxHeight'"></AppPIMMaxHeight>
+            <AppPIMWidth v-if="showSubCmp==='panelItems.width'"></AppPIMWidth>
 
-        <AppLGDShow v-if="showSubCmp==='panelLegends.show'"></AppLGDShow>
+            <AppPIMMaxWidth v-if="showSubCmp==='panelItems.maxWidth'"></AppPIMMaxWidth>
 
-        <AppLGDPosition v-if="showSubCmp==='panelLegends.position'"></AppLGDPosition>
+            <AppPIMMaxHeight v-if="showSubCmp==='panelItems.maxHeight'"></AppPIMMaxHeight>
 
-        <AppLGDWidth v-if="showSubCmp==='panelLegends.width'"></AppLGDWidth>
+            <AppLGDShow v-if="showSubCmp==='panelLegends.show'"></AppLGDShow>
 
-        <AppLGDMaxWidth v-if="showSubCmp==='panelLegends.maxWidth'"></AppLGDMaxWidth>
+            <AppLGDPosition v-if="showSubCmp==='panelLegends.position'"></AppLGDPosition>
 
-        <AppLGDMaxHeight v-if="showSubCmp==='panelLegends.maxHeight'"></AppLGDMaxHeight>
+            <AppLGDWidth v-if="showSubCmp==='panelLegends.width'"></AppLGDWidth>
 
-        <AppFunGetMapObject v-if="showSubCmp==='function-getMapObject'"></AppFunGetMapObject>
+            <AppLGDMaxWidth v-if="showSubCmp==='panelLegends.maxWidth'"></AppLGDMaxWidth>
 
-        <AppFunCenterTo v-if="showSubCmp==='function-centerTo'"></AppFunCenterTo>
+            <AppLGDMaxHeight v-if="showSubCmp==='panelLegends.maxHeight'"></AppLGDMaxHeight>
 
-        <AppFunPanTo v-if="showSubCmp==='function-panTo'"></AppFunPanTo>
+            <AppFunGetMapObject v-if="showSubCmp==='function-getMapObject'"></AppFunGetMapObject>
 
-        <AppFunPopupPoint v-if="showSubCmp==='function-popupPoint'"></AppFunPopupPoint>
+            <AppFunCenterTo v-if="showSubCmp==='function-centerTo'"></AppFunCenterTo>
 
-        <AppFunModifyItemsVisible v-if="showSubCmp==='function-modifyItemsVisible'"></AppFunModifyItemsVisible>
+            <AppFunPanTo v-if="showSubCmp==='function-panTo'"></AppFunPanTo>
+
+            <AppFunPopupPoint v-if="showSubCmp==='function-popupPoint'"></AppFunPopupPoint>
+
+            <AppFunModifyItemsVisible v-if="showSubCmp==='function-modifyItemsVisible'"></AppFunModifyItemsVisible>
+
+        </div>
+
 
     </div>
 </template>
@@ -695,7 +702,7 @@ export default {
 }
 .item-link {
     display: inline-block;
-    margin: 10px 10px 5px 0px;
+    margin: 10px 10px 0px 0px;
     padding: 5px 10px;
     font-size: 0.8rem;
     color: #fff;
@@ -703,17 +710,30 @@ export default {
     cursor: pointer;
     text-decoration: none;
 }
-.option-label {
-    position:absolute;
-    left:10px;
-    top:-33px;
-    padding:4px 20px 7px 20px;
-    border-left:1px solid #ddd;
-    border-top:1px solid #ddd;
-    border-right:1px solid #ddd;
-    border-bottom:1px solid #f6f6f6;
-    border-top-left-radius:15px;
-    border-top-right-radius:15px;
-    background:#f6f6f6;
+.bkh { /* 寬 */
+    padding:20px;
+}
+@media screen and (max-width:800px){ /* 中 */
+    .bkh {
+        padding:10px;
+    }
+}
+@media screen and (max-width:400px){ /* 窄 */
+    .bkh {
+        padding:5px;
+    }
+}
+.bkp { /* 寬 */
+    padding:0px 20px;
+}
+@media screen and (max-width:800px){ /* 中 */
+    .bkp {
+        padding:0px 10px;
+    }
+}
+@media screen and (max-width:400px){ /* 窄 */
+    .bkp {
+        padding:0px 5px;
+    }
 }
 </style>

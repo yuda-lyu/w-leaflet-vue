@@ -1,35 +1,36 @@
 <template>
     <div>
 
-        <div style="padding:20px;">
+        <div class="bkh">
             <div style="font-size:1.5rem;">panelLabels.show</div>
             <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPLBShow.html" target="_blank" class="item-link">example</a>
             <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPLBShow.html" target="_blank" class="item-link">code</a>
         </div>
 
-        <div style="display:flex; padding-bottom:20px;">
+        <div class="bkp">
 
-            <div style="padding:0px 20px;">
-                <div>
-                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelLabels.show=true">show(default)</button>
-                    <button style="margin:0px 3px 3px 0px;" @click="opt.panelLabels.show=false">hide</button>
-                </div>
-                <WLeafletVue
-                    style="width:800px; height:500px;"
-                    :opt="opt"
-                ></WLeafletVue>
+            <div>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelLabels.show=true">show(default)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelLabels.show=false">hide</button>
             </div>
 
-            <div style="width:600px; padding:0px 20px 0px 0px; position:relative;">
+            <div style="display:flex; padding-bottom:40px; overflow-x:auto;">
 
-                <div class="option-label">
-                    opt example
+                <div style="position:relative;">
+                    <WLeafletVue
+                        style="width:800px; height:500px;"
+                        :opt="opt"
+                    ></WLeafletVue>
                 </div>
 
-                <div style="border:1px solid #ddd;">
-                    <div style="padding-left:5px; overflow-y:auto; height:500px;">
-                        <div id="optjson" style="font-size:10pt;"></div>
+                <div style="width:600px; min-width:600px; padding:0px 20px;">
+
+                    <div style="border:1px solid #ddd;">
+                        <div style="padding-left:5px; overflow-y:auto; height:500px;">
+                            <div id="optjson" style="font-size:10pt;"></div>
+                        </div>
                     </div>
+
                 </div>
 
             </div>

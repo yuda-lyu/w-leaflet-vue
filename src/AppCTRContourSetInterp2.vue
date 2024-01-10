@@ -1,35 +1,32 @@
 <template>
     <div>
 
-        <div style="padding:20px;">
+        <div class="bkh">
             <div style="font-size:1.5rem;">contourSet.interp2</div>
             <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetInterp2.html" target="_blank" class="item-link">example</a>
             <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetInterp2.html" target="_blank" class="item-link">code</a>
         </div>
 
-        <div style="display:flex; padding-bottom:20px;">
+        <div class="bkp">
 
-            <div style="padding:0px 20px;">
+            <div style="display:flex; padding-bottom:40px; overflow-x:auto;">
 
-                <div>{{msg}}</div>
-
-                <WLeafletVue
-                    style="width:800px; height:500px;"
-                    :opt="opt"
-                ></WLeafletVue>
-
-            </div>
-
-            <div style="width:600px; padding:0px 20px 0px 0px; position:relative;">
-
-                <div class="option-label">
-                    opt example
+                <div style="position:relative;">
+                    <div>{{msg}}</div>
+                    <WLeafletVue
+                        style="width:800px; height:500px;"
+                        :opt="opt"
+                    ></WLeafletVue>
                 </div>
 
-                <div style="border:1px solid #ddd;">
-                    <div style="padding-left:5px; overflow-y:auto; height:500px;">
-                        <div id="optjson" style="font-size:10pt;"></div>
+                <div style="width:600px; min-width:600px; padding:0px 20px;">
+
+                    <div style="border:1px solid #ddd;">
+                        <div style="padding-left:5px; overflow-y:auto; height:500px;">
+                            <div id="optjson" style="font-size:10pt;"></div>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
@@ -117,7 +114,7 @@ export default {
                 let ymax = 122.04
                 for (let x = xmin; x <= xmax; x += 0.025) {
                     for (let y = ymin; y <= ymax; y += 0.025) {
-                        pis.push({ x: x, y: y })
+                        pis.push({ x, y })
                     }
                 }
                 console.log('pis(matrix)', JSON.parse(JSON.stringify(pis)))

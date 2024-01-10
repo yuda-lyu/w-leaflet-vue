@@ -27,7 +27,7 @@ npm i w-leaflet-vue
 ### In a browser(UMD module):
 > **Note:** w-leaflet-vue is mainly dependent on `vue`.
 
-> **Note:** umd file includes with `lodash` and `wsemi`, by using tree-shaking for dead-code elimination.
+> **Note:** umd file includes with `lodash-es` and `wsemi`, by using tree-shaking for dead-code elimination.
 
 [Optional] Add script with nomodule for IE11.
 ```alias
@@ -39,5 +39,5 @@ npm i w-leaflet-vue
 ```
 [Necessary] Add script for w-leaflet-vue.
 ```alias
-<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.49/dist/w-leaflet-vue.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.50/dist/w-leaflet-vue.umd.js"></script>
 ```

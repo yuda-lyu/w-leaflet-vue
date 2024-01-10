@@ -1,50 +1,51 @@
 <template>
     <div>
 
-        <div style="padding:20px;">
+        <div class="bkh">
             <div style="font-size:1.5rem;">function-panTo</div>
             <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppFunPanTo.html" target="_blank" class="item-link">example</a>
             <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppFunPanTo.html" target="_blank" class="item-link">code</a>
         </div>
 
-        <div style="display:flex; padding-bottom:20px;">
+        <div class="bkp">
 
-            <div style="padding:0px 20px;">
-                <div>
-                    <button style="margin:0px 3px 3px 0px;" @click="panTo()">panTo()</button>
-                    <button style="margin:0px 3px 3px 0px;" @click="panToSX()">panTo(shift x)</button>
-                    <button style="margin:0px 3px 3px 0px;" @click="panToSXY()">panTo(shift x,y)</button>
-                    <button style="margin:0px 3px 3px 0px;" @click="panToSXYFun()">panTo(shift x,y,funLatLng)</button>
+            <div>
+                <button style="margin:0px 3px 3px 0px;" @click="panTo()">panTo()</button>
+                <button style="margin:0px 3px 3px 0px;" @click="panToSX()">panTo(shift x)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="panToSXY()">panTo(shift x,y)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="panToSXYFun()">panTo(shift x,y,funLatLng)</button>
+            </div>
+
+            <div style="display:flex; padding-bottom:40px; overflow-x:auto;">
+
+                <div style="position:relative;">
+
+                    <div style="position:relative; width:800px; height:500px;">
+
+                        <WLeafletVue
+                            ref="wlf"
+                            style="width:800px; height:500px;"
+                            :opt="opt"
+                        ></WLeafletVue>
+
+                        <div style="position:absolute; left:5px; top:5px; z-index:1000; width:190px; height:490px; background:rgba(255,255,255,0.3);">
+                            <div style="padding:10px; color:#fff;">
+                                Menu area
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div style="position:relative; width:800px; height:500px;">
+                <div style="width:600px; min-width:600px; padding:0px 20px;">
 
-                    <WLeafletVue
-                        ref="wlf"
-                        style="width:800px; height:500px;"
-                        :opt="opt"
-                    ></WLeafletVue>
-
-                    <div style="position:absolute; left:5px; top:5px; z-index:1000; width:190px; height:490px; background:rgba(255,255,255,0.3);">
-                        <div style="padding:10px; color:#fff;">
-                            Menu area
+                    <div style="border:1px solid #ddd;">
+                        <div style="padding-left:5px; overflow-y:auto; height:500px;">
+                            <div id="optjson" style="font-size:10pt;"></div>
                         </div>
                     </div>
 
-                </div>
-
-            </div>
-
-            <div style="width:600px; padding:0px 20px 0px 0px; position:relative;">
-
-                <div class="option-label">
-                    opt example
-                </div>
-
-                <div style="border:1px solid #ddd;">
-                    <div style="padding-left:5px; overflow-y:auto; height:500px;">
-                        <div id="optjson" style="font-size:10pt;"></div>
-                    </div>
                 </div>
 
             </div>
