@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.49/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.50/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -62,26 +62,55 @@
     </script>
 
     <style>
-  .option-label {
-    position: absolute;
-    left: 10px;
-    top: -33px;
-    padding: 4px 20px 7px 20px;
-    border-left: 1px solid #ddd;
-    border-top: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #f6f6f6;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    background: #f6f6f6;
+  .item-link {
+    display: inline-block;
+    margin: 10px 10px 0px 0px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    color: #fff;
+    background-color: #443a65;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .bkh {
+    /* 寬 */
+    padding: 20px;
+  }
+  @media screen and (max-width: 800px) {
+    /* 中 */
+    .bkh {
+      padding: 10px;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    /* 窄 */
+    .bkh {
+      padding: 5px;
+    }
+  }
+  .bkp {
+    /* 寬 */
+    padding: 0px 20px;
+  }
+  @media screen and (max-width: 800px) {
+    /* 中 */
+    .bkp {
+      padding: 0px 10px;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    /* 窄 */
+    .bkp {
+      padding: 0px 5px;
+    }
   }
     </style>
 </head>
 <body
     style="font-family:'Microsoft JhengHei','Avenir','Helvetica'; padding:0px; margin:0px;"
 >
-    <div id="app" style="padding:0px 30px;">
-        <div style="padding:20px;">
+    <div id="app" class="bkh" style>
+        <div class="bkh">
             <div style="font-size:1.5rem;">polygonSet.lineWidth</div>
             <a
                 href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPGNPolygonSetLineWidth.html"
@@ -95,21 +124,22 @@
             >code</a>
         </div>
 
-        <div style="display:flex; padding-bottom:20px;">
-            <div style="padding:0px 20px;">
-                <w-leaflet-vue style="width:800px; height:500px;" :opt="opt"></w-leaflet-vue>
-            </div>
+        <div class="bkp">
+            <div style="display:flex; padding-bottom:40px; overflow-x:auto;">
+                <div style="position:relative;">
+                    <w-leaflet-vue
+                        style="width:800px; height:500px;"
+                        :opt="opt"
+                    ></w-leaflet-vue>
+                </div>
 
-            <div
-                style="width:600px; padding:0px 20px 0px 0px; position:relative;"
-            >
-                <div class="option-label">opt example</div>
-
-                <div style="border:1px solid #ddd;">
-                    <div
-                        style="padding-left:5px; overflow-y:auto; height:500px;"
-                    >
-                        <div id="optjson" style="font-size:10pt;"></div>
+                <div style="width:600px; min-width:600px; padding:0px 20px;">
+                    <div style="border:1px solid #ddd;">
+                        <div
+                            style="padding-left:5px; overflow-y:auto; height:500px;"
+                        >
+                            <div id="optjson" style="font-size:10pt;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
