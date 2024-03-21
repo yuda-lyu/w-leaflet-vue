@@ -7,6 +7,7 @@ A wrapper for vue2-leaflet.
 [![license](https://img.shields.io/npm/l/w-leaflet-vue.svg?style=flat)](https://npmjs.org/package/w-leaflet-vue) 
 [![gzip file size](http://img.badgesize.io/yuda-lyu/w-leaflet-vue/master/dist/w-leaflet-vue.umd.js.svg?compression=gzip)](https://github.com/yuda-lyu/w-leaflet-vue)
 [![npm download](https://img.shields.io/npm/dt/w-leaflet-vue.svg)](https://npmjs.org/package/w-leaflet-vue) 
+[![npm download](https://img.shields.io/npm/dm/w-leaflet-vue.svg)](https://npmjs.org/package/w-leaflet-vue) 
 [![jsdelivr download](https://img.shields.io/jsdelivr/npm/hm/w-leaflet-vue.svg)](https://www.jsdelivr.com/package/npm/w-leaflet-vue)
 
 ## Documentation
@@ -39,5 +40,5 @@ npm i w-leaflet-vue
 ```
 [Necessary] Add script for w-leaflet-vue.
 ```alias
-<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.50/dist/w-leaflet-vue.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.51/dist/w-leaflet-vue.umd.js"></script>
 ```
