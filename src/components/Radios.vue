@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import each from 'lodash-es/each'
-import cloneDeep from 'lodash-es/cloneDeep'
+import each from 'lodash-es/each.js'
+import cloneDeep from 'lodash-es/cloneDeep.js'
 
 
 export default {

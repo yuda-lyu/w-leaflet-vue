@@ -273,7 +273,7 @@
 </template>
 
 <script>
-import get from 'lodash-es/get'
+import get from 'lodash-es/get.js'
 import AppBSCSize from './AppBSCSize.vue'
 import AppBSCCenter from './AppBSCCenter.vue'
 import AppBSCZoom from './AppBSCZoom.vue'
