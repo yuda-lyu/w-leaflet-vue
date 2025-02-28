@@ -123,8 +123,7 @@ export default {
             let _ = window._
             let w = window.wsemi
 
-            let kind = 'geojson'
-            w.domShowInputAndGetFilesU8Arrs(kind)
+            w.domShowInputAndGetFilesU8Arrs({ kind: 'geojson' })
                 .then(function(d) {
 
                     //get first file

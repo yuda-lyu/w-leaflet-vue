@@ -5,7 +5,6 @@ A wrapper for vue2-leaflet.
 [![language](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://github.com/vuejs/vue) 
 [![npm version](http://img.shields.io/npm/v/w-leaflet-vue.svg?style=flat)](https://npmjs.org/package/w-leaflet-vue) 
 [![license](https://img.shields.io/npm/l/w-leaflet-vue.svg?style=flat)](https://npmjs.org/package/w-leaflet-vue) 
-[![gzip file size](http://img.badgesize.io/yuda-lyu/w-leaflet-vue/master/dist/w-leaflet-vue.umd.js.svg?compression=gzip)](https://github.com/yuda-lyu/w-leaflet-vue)
 [![npm download](https://img.shields.io/npm/dt/w-leaflet-vue.svg)](https://npmjs.org/package/w-leaflet-vue) 
 [![npm download](https://img.shields.io/npm/dm/w-leaflet-vue.svg)](https://npmjs.org/package/w-leaflet-vue) 
 [![jsdelivr download](https://img.shields.io/jsdelivr/npm/hm/w-leaflet-vue.svg)](https://www.jsdelivr.com/package/npm/w-leaflet-vue)

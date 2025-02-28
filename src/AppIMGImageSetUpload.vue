@@ -95,8 +95,7 @@ export default {
             let _ = window._
             let w = window.wsemi
 
-            let kind = 'json'
-            w.domShowInputAndGetFilesU8Arrs(kind)
+            w.domShowInputAndGetFilesU8Arrs({ kind: 'json' })
                 .then(function(d) {
 
                     //get first file
