@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.52/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.53/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -128,11 +128,11 @@
             <div>
                 <button
                     style="margin:0px 3px 3px 0px;"
-                    @click="opt.panelLegends.maxHeight=null"
+                    @click="opt.panelLegends.maxHeight=null;opt.panelLegends.stopWheel=false"
                 >null(default)</button>
                 <button
                     style="margin:0px 3px 3px 0px;"
-                    @click="opt.panelLegends.maxHeight=150"
+                    @click="opt.panelLegends.maxHeight=150;opt.panelLegends.stopWheel=true"
                 >150</button>
             </div>
 
