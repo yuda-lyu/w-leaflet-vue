@@ -10,8 +10,8 @@
         <div class="bkp">
 
             <div>
-                <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.maxHeight=null">null(default)</button>
-                <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.maxHeight=100">100</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.maxHeight=null;opt.panelItems.stopWheel=false">null(default)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.maxHeight=100;opt.panelItems.stopWheel=true">100</button>
             </div>
 
             <div style="display:flex; padding-bottom:40px; overflow-x:auto;">
@@ -54,6 +54,7 @@ export default {
                 panelItems: {
                     position: 'topleft',
                     maxHeight: null,
+                    stopWheel: false,
                 },
                 pointSets: [
                     {

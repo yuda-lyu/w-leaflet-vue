@@ -11,7 +11,7 @@
 
             <div>
                 <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.width=null">null(default)</button>
-                <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.width=100">100</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.width=150">150</button>
             </div>
 
             <div style="display:flex; padding-bottom:40px; overflow-x:auto;">

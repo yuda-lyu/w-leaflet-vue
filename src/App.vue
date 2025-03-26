@@ -58,6 +58,12 @@
 
             <AppPBMPosition v-if="showSubCmp==='panelBaseMaps.position'"></AppPBMPosition>
 
+            <AppPBMWidth v-if="showSubCmp==='panelBaseMaps.width'"></AppPBMWidth>
+
+            <AppPBMMaxWidth v-if="showSubCmp==='panelBaseMaps.maxWidth'"></AppPBMMaxWidth>
+
+            <AppPBMMaxHeight v-if="showSubCmp==='panelBaseMaps.maxHeight'"></AppPBMMaxHeight>
+
             <AppPLBShow v-if="showSubCmp==='panelLabels.show'"></AppPLBShow>
 
             <AppPLBPosition v-if="showSubCmp==='panelLabels.position'"></AppPLBPosition>
@@ -281,6 +287,9 @@ import AppBSCPanelBackgroundColor from './AppBSCPanelBackgroundColor.vue'
 import AppPBMShow from './AppPBMShow.vue'
 import AppPBMBaseMaps from './AppPBMBaseMaps.vue'
 import AppPBMPosition from './AppPBMPosition.vue'
+import AppPBMWidth from './AppPBMWidth.vue'
+import AppPBMMaxWidth from './AppPBMMaxWidth.vue'
+import AppPBMMaxHeight from './AppPBMMaxHeight.vue'
 import AppPLBShow from './AppPLBShow.vue'
 import AppPLBPosition from './AppPLBPosition.vue'
 import AppPLBTitle from './AppPLBTitle.vue'
@@ -396,6 +405,9 @@ export default {
         AppPBMShow,
         AppPBMBaseMaps,
         AppPBMPosition,
+        AppPBMWidth,
+        AppPBMMaxWidth,
+        AppPBMMaxHeight,
         AppPLBShow,
         AppPLBPosition,
         AppPLBTitle,
@@ -516,6 +528,9 @@ export default {
                     'panelBaseMaps.show',
                     'panelBaseMaps.baseMaps',
                     'panelBaseMaps.position',
+                    'panelBaseMaps.width',
+                    'panelBaseMaps.maxWidth',
+                    'panelBaseMaps.maxHeight',
                 ],
                 panelLabels: [
                     'panelLabels.show',

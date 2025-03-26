@@ -34,11 +34,16 @@
                     class="clsPanel"
                     :style="{background:panelBackgroundColor}"
                 >
-                    <Radios
-                        :items.sync="panelBaseMaps.baseMaps"
-                        :keyValue="'visible'"
-                        :keyTitle="'name'"
-                    ></Radios>
+                    <div
+                        :style="{overflow:'auto',...panelBaseMaps.style}"
+                        @wheel="handleWheelPanelBaseMaps"
+                    >
+                        <Radios
+                            :items.sync="panelBaseMaps.baseMaps"
+                            :keyValue="'visible'"
+                            :keyTitle="'name'"
+                        ></Radios>
+                    </div>
                 </div>
             </l-control>
 
@@ -47,8 +52,14 @@
                 :position="panelItems.position"
                 v-if="panelItems.show && items.length>0"
             >
-                <div class="clsPanel" :style="{background:panelBackgroundColor}">
-                    <div :style="{overflowY:'auto',...panelItems.style}">
+                <div
+                    class="clsPanel"
+                    :style="{background:panelBackgroundColor}"
+                >
+                    <div
+                        :style="{overflow:'auto',...panelItems.style}"
+                        @wheel="handleWheelPanelItems"
+                    >
                         <Checkboxs
                             :style="``"
                             :items.sync="items"
@@ -62,8 +73,11 @@
 
             <!-- 滑鼠座標顯示區 -->
             <l-control :position="panelLabels.position" v-if="panelLabels.show">
-                <div class="clsPanel" :style="{background:panelBackgroundColor}">
-                    <div :style="{overflowY:'auto',...panelLabels.style}">
+                <div
+                    class="clsPanel"
+                    :style="{background:panelBackgroundColor}"
+                >
+                    <div :style="{overflow:'auto',...panelLabels.style}">
 
                         <template v-if="panelLabels.title!==''">
 
@@ -97,8 +111,14 @@
 
             <!-- 圖例區 -->
             <l-control :position="panelLegends.position" v-if="panelLegends.show && countVisible(contourSets)>0">
-                <div class="clsPanel" :style="{background:panelBackgroundColor}">
-                    <div :style="{display:'flex',alignItems:'flex-start',overflowX:'auto',overflowY:'auto',...panelLegends.style}">
+                <div
+                    class="clsPanel"
+                    :style="{background:panelBackgroundColor}"
+                >
+                    <div
+                        :style="{display:'flex',alignItems:'flex-start',overflow:'auto',...panelLegends.style}"
+                        @wheel="handleWheelPanelLegends"
+                    >
 
                         <template
                             v-for="(contourSet,kcontourSet) in contourSets"
@@ -532,6 +552,94 @@ function getDefBaseMaps() {
         //     visible: false,
         // },
 
+        //中研院
+
+        // {
+        //     name: '1987-臺灣地形圖',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=TM100K_1987-png-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1956-臺灣地形圖',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=TM50K_1956-jpg-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '美軍航照影像(1945/6/17攝影)',
+        //     url: '//gis.sinica.edu.tw/taipei/file-exists.php?img=Taipei_aerialphoto_1945-jpg-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1945-美軍繪製臺灣城市地圖',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=AMCityPlan_1945-png-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1944-美軍地形圖',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=AM50K_1944-png-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1942-日治二萬五千分之一地形圖(昭和修正版)',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM25K_1942-png-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1939-日治臺灣全圖(第五版)',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM300K_1939-png-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1934-日治臺灣全圖(第三版)',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM300K_1934-jpg-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1932-二十萬分一帝國圖(臺灣部份)',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM200K_1932-png-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1924-日治地形圖(陸地測量部)',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM50K_1924_new-png-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1921-日治臺灣堡圖(大正版)',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM20K_1921-jpg-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1921-日治地形圖',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM25K_1921-png-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1920-日治地形圖(總督府土木局)',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM50K_1920-png-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1916-日治蕃地地形圖',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM50K_1916-jpg-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1905-日治臺灣圖',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM100K_1905-png-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1904-日治臺灣堡圖(明治版)',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM20K_1904-jpg-{z}-{x}-{y}',
+        //     visible: false
+        // },
+        // {
+        //     name: '1899-日治臺灣全圖',
+        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM400K_1899-png-{z}-{x}-{y}',
+        //     visible: false
+        // }
+
     ]
     return defBaseMaps
 }
@@ -545,6 +653,11 @@ function getDefBaseMaps() {
  * @vue-prop {Boolean} [opt.panelBaseMaps.show=true] 輸入底圖選擇區是否顯示布林值，預設true
  * @vue-prop {Array} [opt.panelBaseMaps.baseMaps=詳見程式碼] 輸入底圖選擇清單陣列，各元素為底圖設定物件，需提供欄位為name(底圖名稱字串)、url(底圖連結字串)、visible(是否顯示布林值)，預設值詳見程式碼的defBaseMaps預設值
  * @vue-prop {String} [opt.panelBaseMaps.position='topleft'] 輸入底圖選擇區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topleft'
+ * @vue-prop {Number} [opt.panelBaseMaps.width=null] 輸入底圖選擇區寬度數字，單位px，預設null
+ * @vue-prop {Number} [opt.panelBaseMaps.maxWidth=null] 輸入底圖選擇區最大寬度數字，單位px，預設null
+ * @vue-prop {Number} [opt.panelBaseMaps.height=null] 輸入底圖選擇區高度數字，單位px，預設null
+ * @vue-prop {Number} [opt.panelBaseMaps.maxHeight=300] 輸入底圖選擇區最大高度數字，單位px，預設300
+ * @vue-prop {Boolean} [opt.panelBaseMaps.stopWheel=false] 輸入底圖選擇區當過高出現垂直捲軸時，是否可接收捲軸布林值，預設false
  * @vue-prop {Boolean} [opt.panelLabels.show=true] 輸入地圖資訊區是否顯示布林值，預設true
  * @vue-prop {String} [opt.panelLabels.position='topright'] 輸入地圖資訊區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topright'
  * @vue-prop {String} [opt.panelLabels.title=''] 輸入地圖資訊區內標題字串，預設''
@@ -552,7 +665,9 @@ function getDefBaseMaps() {
  * @vue-prop {String} [opt.panelLabels.lat='Latitude'] 輸入地圖資訊區內標注緯度字串，預設'Latitude'
  * @vue-prop {String} [opt.panelLabels.zoom='Zoom'] 輸入地圖資訊區內標注顯示層級字串，預設'Zoom'
  * @vue-prop {Array} [opt.panelLabels.useItems=['lng','lat','zoom']] 輸入地圖資訊區內呈現項目陣列，各元素給字串，'lng'代表經度，'lat'代表緯度，'zoom'代表顯示層級，預設['lng','lat','zoom']
+ * @vue-prop {Number} [opt.panelLabels.width=null] 輸入地圖資訊區寬度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelLabels.maxWidth=null] 輸入地圖資訊區最大寬度數字，單位px，預設null
+ * @vue-prop {Number} [opt.panelLabels.height=null] 輸入地圖資訊區高度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelLabels.maxHeight=null] 輸入地圖資訊區最大高度數字，單位px，預設null
  * @vue-prop {Boolean} [opt.panelZoom.show=true] 輸入縮放按鈕區是否顯示布林值，預設true
  * @vue-prop {String} [opt.panelZoom.position='bottomleft'] 輸入縮放按鈕區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomleft'
@@ -560,11 +675,14 @@ function getDefBaseMaps() {
  * @vue-prop {String} [opt.panelItems.position='topleft'] 輸入圖層顯隱切換區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topleft'
  * @vue-prop {Number} [opt.panelItems.width=null] 輸入圖層顯隱切換區寬度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelItems.maxWidth=null] 輸入圖層顯隱切換區最大寬度數字，單位px，預設null
+ * @vue-prop {Number} [opt.panelItems.height=null] 輸入圖層顯隱切換區高度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelItems.maxHeight=null] 輸入圖層顯隱切換區最大高度數字，單位px，預設null
+ * @vue-prop {Boolean} [opt.panelItems.stopWheel=false] 輸入圖層顯隱切換區當過高出現垂直捲軸時，是否可接收捲軸布林值，預設false
  * @vue-prop {Boolean} [opt.panelLegends.show=true] 輸入圖例區是否顯示布林值，預設true
  * @vue-prop {String} [opt.panelLegends.position='bottomright'] 輸入圖例區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomright'
  * @vue-prop {Number} [opt.panelLegends.width=null] 輸入圖例區寬度數字，單位px，預設null
- * @vue-prop {Number} [opt.panelLegends.maxWidth=null] 輸入圖例區最大寬度數字，單位px，預設null
+ * @vue-prop {Number} [opt.panelLegends.maxWidth=300] 輸入圖例區最大寬度數字，單位px，預設300
+ * @vue-prop {Number} [opt.panelLegends.height=null] 輸入圖例區高度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelLegends.maxHeight=null] 輸入圖例區最大高度數字，單位px，預設null
  * @vue-prop {Array} [opt.pointSets=[]] 輸入點集合陣列，各元素為物件，預設[]
  * @vue-prop {String} [opt.pointSets[i].title=''] 輸入第i個點集合的標題字串，預設為''
@@ -703,10 +821,15 @@ export default {
             zoom: null,
             panelBackgroundColor: '',
             panelZoom: {},
+            panelZoomTemp: {},
             panelBaseMaps: {},
+            panelBaseMapsTemp: {},
             panelItems: {},
+            panelItemsTemp: {},
             panelLabels: {},
+            panelLabelsTemp: {},
             panelLegends: {},
+            panelLegendsTemp: {},
             showLoc: {
                 lat: '',
                 lng: '',
@@ -815,6 +938,45 @@ export default {
             if (iseobj(mapObject)) {
                 mapObject.invalidateSize()
                 // console.log('invalidateSize')
+            }
+
+        },
+
+        handleWheelPanelBaseMaps: function(e) {
+            // console.log('methods handleWheelPanelBaseMaps', e)
+
+            let vo = this
+
+            //禁止滾輪事件
+            if (vo.panelBaseMaps.stopWheel) {
+                e.stopPropagation()
+                // e.preventDefault()
+            }
+
+        },
+
+        handleWheelPanelItems: function(e) {
+            // console.log('methods handleWheelPanelItems', e)
+
+            let vo = this
+
+            //禁止滾輪事件
+            if (vo.panelItems.stopWheel) {
+                e.stopPropagation()
+                // e.preventDefault()
+            }
+
+        },
+
+        handleWheelPanelLegends: function(e) {
+            // console.log('methods handleWheelPanelLegends', e)
+
+            let vo = this
+
+            //禁止滾輪事件
+            if (vo.panelLegends.stopWheel) {
+                e.stopPropagation()
+                // e.preventDefault()
             }
 
         },
@@ -979,6 +1141,8 @@ export default {
                 show: true,
                 position: 'topleft',
                 baseMaps: [],
+                // maxHeight: 300,
+                stopWheel: false,
             }
 
             //panelBaseMaps
@@ -986,7 +1150,7 @@ export default {
             if (!isobj(panelBaseMaps)) {
                 panelBaseMaps = {}
             }
-            panelBaseMaps = {
+            panelBaseMaps = { //merge
                 ...defPanelBaseMaps,
                 ...panelBaseMaps,
             }
@@ -999,17 +1163,25 @@ export default {
                 }
             }
             panelBaseMaps = cloneDeep(panelBaseMaps) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然更新baseMaps時就會觸發外部opt記憶體變更而被watch到, 進而導致無限觸發事件
+            panelBaseMaps.style = {}
+            if (isNumber(panelBaseMaps.width)) {
+                panelBaseMaps.style.width = `${panelBaseMaps.width}px`
+            }
+            if (isNumber(panelBaseMaps.maxWidth)) {
+                panelBaseMaps.style.maxWidth = `${panelBaseMaps.maxWidth}px`
+            }
+            if (isNumber(panelBaseMaps.height)) {
+                panelBaseMaps.style.height = `${panelBaseMaps.height}px`
+            }
+            if (isNumber(panelBaseMaps.maxHeight)) {
+                panelBaseMaps.style.maxHeight = `${panelBaseMaps.maxHeight}px`
+            }
             // console.log('panelBaseMaps', panelBaseMaps)
 
             //check
-            if (!isEqual(vo.panelBaseMapsTemp, panelBaseMaps)) { //判斷純外部給資料是否有變更, baseMaps會因切換底圖而有變更, 故若外部設定數據有變更才重新複寫
-
-                //update
+            if (!isEqual(vo.panelBaseMapsTemp, panelBaseMaps)) { //判斷外部給資料是否有變更
                 vo.panelBaseMaps = panelBaseMaps
-
-                //update panelBaseMapsTemp
                 vo.panelBaseMapsTemp = cloneDeep(panelBaseMaps)
-
             }
 
             //defPanelZoom
@@ -1023,9 +1195,18 @@ export default {
             if (!isobj(panelZoom)) {
                 panelZoom = {}
             }
-            vo.panelZoom = {
+            panelZoom = { //merge
                 ...defPanelZoom,
                 ...panelZoom,
+            }
+            //cloneDeep
+            //style
+            // console.log('panelZoom', panelZoom)
+
+            //check
+            if (!isEqual(vo.panelZoomTemp, panelZoom)) { //判斷外部給資料是否有變更
+                vo.panelZoom = panelZoom
+                vo.panelZoomTemp = cloneDeep(panelZoom)
             }
 
             //panelLabels
@@ -1042,27 +1223,46 @@ export default {
             if (!isobj(panelLabels)) {
                 panelLabels = {}
             }
+            panelLabels = { //merge
+                ...defPanelLabels,
+                ...panelLabels,
+            }
             panelLabels = cloneDeep(panelLabels) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然添加style就會影響外部opt記憶體變更
             panelLabels.style = {}
+            if (isNumber(panelLabels.width)) {
+                panelLabels.style.width = `${panelLabels.width}px`
+            }
             if (isNumber(panelLabels.maxWidth)) {
                 panelLabels.style.maxWidth = `${panelLabels.maxWidth}px`
+            }
+            if (isNumber(panelLabels.height)) {
+                panelLabels.style.height = `${panelLabels.height}px`
             }
             if (isNumber(panelLabels.maxHeight)) {
                 panelLabels.style.maxHeight = `${panelLabels.maxHeight}px`
             }
-            vo.panelLabels = {
-                ...defPanelLabels,
-                ...panelLabels,
+            // console.log('panelLabels', panelLabels)
+
+            //check
+            if (!isEqual(vo.panelLabelsTemp, panelLabels)) { //判斷外部給資料是否有變更
+                vo.panelLabels = panelLabels
+                vo.panelLabelsTemp = cloneDeep(panelLabels)
             }
 
             //panelItems
             let defPanelItems = {
                 show: true,
                 position: 'topleft',
+                // maxHeight: 300,
+                stopWheel: false,
             }
             let panelItems = get(vo, 'opt.panelItems', null)
             if (!isobj(panelItems)) {
                 panelItems = {}
+            }
+            panelItems = { //merge
+                ...defPanelItems,
+                ...panelItems,
             }
             panelItems = cloneDeep(panelItems) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然添加style就會影響外部opt記憶體變更
             panelItems.style = {}
@@ -1072,12 +1272,18 @@ export default {
             if (isNumber(panelItems.maxWidth)) {
                 panelItems.style.maxWidth = `${panelItems.maxWidth}px`
             }
+            if (isNumber(panelItems.height)) {
+                panelItems.style.height = `${panelItems.height}px`
+            }
             if (isNumber(panelItems.maxHeight)) {
                 panelItems.style.maxHeight = `${panelItems.maxHeight}px`
             }
-            vo.panelItems = {
-                ...defPanelItems,
-                ...panelItems,
+            // console.log('panelItems', panelItems)
+
+            //check
+            if (!isEqual(vo.panelItemsTemp, panelItems)) { //判斷外部給資料是否有變更
+                vo.panelItems = panelItems
+                vo.panelItemsTemp = cloneDeep(panelItems)
             }
 
             //panelLegends
@@ -1085,10 +1291,15 @@ export default {
                 show: true,
                 position: 'bottomright',
                 maxWidth: 300,
+                stopWheel: false,
             }
             let panelLegends = get(vo, 'opt.panelLegends', null)
             if (!isobj(panelLegends)) {
                 panelLegends = {}
+            }
+            panelLegends = { //merge
+                ...defPanelLegends,
+                ...panelLegends,
             }
             panelLegends = cloneDeep(panelLegends) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然添加style就會影響外部opt記憶體變更
             panelLegends.style = {}
@@ -1098,12 +1309,18 @@ export default {
             if (isNumber(panelLegends.maxWidth)) {
                 panelLegends.style.maxWidth = `${panelLegends.maxWidth}px`
             }
+            if (isNumber(panelLegends.height)) {
+                panelLegends.style.height = `${panelLegends.height}px`
+            }
             if (isNumber(panelLegends.maxHeight)) {
                 panelLegends.style.maxHeight = `${panelLegends.maxHeight}px`
             }
-            vo.panelLegends = {
-                ...defPanelLegends,
-                ...panelLegends,
+            // console.log('panelLegends', panelLegends)
+
+            //check
+            if (!isEqual(vo.panelLegendsTemp, panelLegends)) { //判斷外部給資料是否有變更
+                vo.panelLegends = panelLegends
+                vo.panelLegendsTemp = cloneDeep(panelLegends)
             }
 
             //changeItemsDebounce
@@ -2405,7 +2622,7 @@ export default {
         //         ev,
         //         lat: get(latLng, 0, null),
         //         lng: get(latLng, 1, null),
-        //         latLngs: imageSet.latLngs, //bbb
+        //         latLngs: imageSet.latLngs,
         //         imageSet,
         //         kimageSet,
         //         imageSets,
@@ -2470,7 +2687,7 @@ export default {
         //     let { msg } = vo.parseImageData(ev, imageSet, kimageSet, imageSets)
 
         //     //getCentroidMultiPolygon
-        //     let centerlatLng = getCentroidMultiPolygon(msg.latLngs) //bbb
+        //     let centerlatLng = getCentroidMultiPolygon(msg.latLngs)
 
         //     //check
         //     if (size(centerlatLng) !== 2) {
@@ -2652,7 +2869,7 @@ export default {
             //h
             let h = obj.funTooltip(msg)
 
-            //offset bbb
+            //offset
             let offset = null
             if (!isearr(offset)) {
                 offset = get(obj, 'icon.options.tooltipAnchor', null) //由leaflet內部呼叫時, point或pointSet的popupAnchor已存入icon本身

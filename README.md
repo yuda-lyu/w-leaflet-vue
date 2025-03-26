@@ -19,16 +19,11 @@ To view some examples for more understanding, visit examples:
 
 ## Installation
 ### Using npm(ES6 module):
-> **Note:** w-leaflet-vue is mainly dependent on `leaflet`, `vue2-leaflet`, `w-gis` and `wsemi`.
 ```alias
 npm i w-leaflet-vue
 ```
 
 ### In a browser(UMD module):
-> **Note:** w-leaflet-vue is mainly dependent on `vue`.
-
-> **Note:** umd file includes with `lodash-es` and `wsemi`, by using tree-shaking for dead-code elimination.
-
 [Optional] Add script with nomodule for IE11.
 ```alias
 <script nomodule src="https://cdn.jsdelivr.net/npm/@babel/polyfill/dist/polyfill.min.js"></script>
@@ -39,5 +34,5 @@ npm i w-leaflet-vue
 ```
 [Necessary] Add script for w-leaflet-vue.
 ```alias
-<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.52/dist/w-leaflet-vue.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.53/dist/w-leaflet-vue.umd.js"></script>
 ```

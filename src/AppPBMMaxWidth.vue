@@ -2,7 +2,7 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">panelItems.maxWidth</div>
+            <div style="font-size:1.5rem;">panelBaseMaps.maxWidth</div>
             <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPIMMaxWidth.html" target="_blank" class="item-link">example</a>
             <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPIMMaxWidth.html" target="_blank" class="item-link">code</a>
         </div>
@@ -10,8 +10,8 @@
         <div class="bkp">
 
             <div>
-                <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.maxWidth=null">null(default)</button>
-                <button style="margin:0px 3px 3px 0px;" @click="opt.panelItems.maxWidth=100">100</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelBaseMaps.maxWidth=null">null(default)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelBaseMaps.maxWidth=100">100</button>
             </div>
 
             <div style="display:flex; padding-bottom:40px; overflow-x:auto;">
@@ -51,47 +51,10 @@ export default {
     data: function() {
         return {
             'opt': {
-                panelItems: {
-                    position: 'topleft',
+                panelBaseMaps: {
                     maxWidth: null,
                     stopWheel: false,
                 },
-                pointSets: [
-                    {
-                        title: 'pointSet A',
-                        msg: 'msg from pointSet A',
-                        points: [
-                            {
-                                title: 'point A-1',
-                                msg: 'msg from data A-1',
-                                latLng: [24.20, 121.27],
-                            },
-                            {
-                                title: 'point A-2',
-                                msg: 'msg from data A-2',
-                                latLng: [23.90, 120.97],
-                            },
-                        ],
-                        visible: true,
-                    },
-                    {
-                        title: 'pointSet B',
-                        msg: 'msg from pointSet B',
-                        points: [
-                            {
-                                title: 'point B-1',
-                                msg: 'msg from data B-1',
-                                latLng: [23.30, 120.57],
-                            },
-                            {
-                                title: 'point B-2',
-                                msg: 'msg from data B-2',
-                                latLng: [23.00, 120.87],
-                            },
-                        ],
-                        visible: false,
-                    },
-                ],
             },
             'action': [
             ],

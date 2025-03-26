@@ -10,8 +10,8 @@
         <div class="bkp">
 
             <div>
-                <button style="margin:0px 3px 3px 0px;" @click="opt.panelLegends.maxHeight=null">null(default)</button>
-                <button style="margin:0px 3px 3px 0px;" @click="opt.panelLegends.maxHeight=150">150</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelLegends.maxHeight=null;opt.panelLegends.stopWheel=false">null(default)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelLegends.maxHeight=150;opt.panelLegends.stopWheel=true">150</button>
             </div>
 
             <div style="display:flex; padding-bottom:40px; overflow-x:auto;">
