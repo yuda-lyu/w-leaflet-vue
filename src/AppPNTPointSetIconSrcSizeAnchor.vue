@@ -57,11 +57,19 @@ export default {
                                 msg: 'msg from data A-1',
                                 // latLng: [24.20, 121.27],
                                 latLng: [24.6508143, 121.4716748],
+                                zIndexOffset: 100, //位於上方
+                                // click: function click(msg) {
+                                //     console.log('click', msg)
+                                // },
                             },
                             {
                                 title: 'point A-2',
                                 msg: 'msg from data A-2',
                                 latLng: [23.90, 120.97],
+                                zIndexOffset: 0, //位於下方
+                                // click: function click(msg) {
+                                //     console.log('click', msg)
+                                // },
                             },
                         ],
                         //red

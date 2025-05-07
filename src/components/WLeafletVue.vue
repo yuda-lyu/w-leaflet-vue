@@ -296,16 +296,19 @@
                     v-for="(point,kpoint) in pointSet.points"
                 >
 
+                    <!-- 沒有指定zIndexOffset時, l-marker會因為重繪而更換z-index, 不能保證數據順序為展示順據 -->
                     <l-marker
                         :key="'point:'+kpoint"
                         :lat-lng="point.latLng"
                         :icon="point.icon"
+                        :zIndexOffset="point.zIndexOffset"
                         @click="(ev)=>{clickPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
                         @mouseenter="(ev)=>{tooltipPoint(ev,point,kpoint,pointSet,kpointSet,pointSets)}"
                         @mouseleave="closeTooltip"
                         v-if="point.type==='icon'"
                     ></l-marker>
 
+                    <!-- l-circle-marker不支援zIndexOffset -->
                     <l-circle-marker
                         :key="'point:'+kpoint"
                         :lat-lng="point.latLng"
@@ -637,8 +640,8 @@ function getDefBaseMaps() {
         // {
         //     name: '1899-日治臺灣全圖',
         //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM400K_1899-png-{z}-{x}-{y}',
-        //     visible: false
-        // }
+        //     visible: false,
+        // },
 
     ]
     return defBaseMaps
@@ -1717,7 +1720,6 @@ export default {
                         else {
                             icon = pointSetIconPointSet
                         }
-                        // console.log('point icon', icon)
 
                         //use icon
                         pointTemp.icon = icon

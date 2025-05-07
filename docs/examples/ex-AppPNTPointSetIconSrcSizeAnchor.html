@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.53/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.54/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -169,12 +169,20 @@
                   title: "point A-1",
                   msg: "msg from data A-1",
                   // latLng: [24.20, 121.27],
-                  latLng: [24.6508143, 121.4716748]
+                  latLng: [24.6508143, 121.4716748],
+                  zIndexOffset: 100 //位於上方
+                  // click: function click(msg) {
+                  //     console.log('click', msg)
+                  // },
                 },
                 {
                   title: "point A-2",
                   msg: "msg from data A-2",
-                  latLng: [23.9, 120.97]
+                  latLng: [23.9, 120.97],
+                  zIndexOffset: 0 //位於下方
+                  // click: function click(msg) {
+                  //     console.log('click', msg)
+                  // },
                 }
               ],
               //red

@@ -63,6 +63,10 @@ export default {
                                 iconAnchor: [22, 94],
                                 popupAnchor: [0, -80], //葉子上緣, 此範例用不到
                                 tooltipAnchor: [0, -80], //葉子上緣, 此範例用不到
+                                zIndexOffset: 300, //重疊時位於橘色上方
+                                // click: function click(msg) {
+                                //     console.log('click', msg)
+                                // },
                             },
                             {
                                 title: 'point A-2',
@@ -74,6 +78,10 @@ export default {
                                 // iconAnchor: [22, 94],
                                 // popupAnchor: [0, -80], //葉子上緣, 此範例用不到
                                 // tooltipAnchor: [0, -80], //葉子上緣, 此範例用不到
+                                zIndexOffset: 200, //重疊時位於紅色下方
+                                // click: function click(msg) {
+                                //     console.log('click', msg)
+                                // },
                             },
                             {
                                 title: 'point A-3',
@@ -85,6 +93,10 @@ export default {
                                 // iconAnchor: [22, 94],
                                 // popupAnchor: [0, -80], //葉子上緣, 此範例用不到
                                 // tooltipAnchor: [0, -80], //葉子上緣, 此範例用不到
+                                zIndexOffset: 200, //重疊時位於紅色下方
+                                // click: function click(msg) {
+                                //     console.log('click', msg)
+                                // },
                             },
                         ],
                         //pointSet default, orange
