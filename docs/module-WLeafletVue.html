@@ -101,7 +101,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入底圖選擇區是否顯示布林值，預設true</td>
+        <td>輸入是否顯示底圖選擇區布林值，預設true</td>
     </tr><tr>
         <td><code>opt.panelBaseMaps.baseMaps</code></td>
         <td>Array</td>
@@ -149,7 +149,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入地圖資訊區是否顯示布林值，預設true</td>
+        <td>輸入是否顯示地圖資訊區布林值，預設true</td>
     </tr><tr>
         <td><code>opt.panelLabels.position</code></td>
         <td>String</td>
@@ -211,17 +211,47 @@
         <td>No</td>
         <td>輸入地圖資訊區最大高度數字，單位px，預設null</td>
     </tr><tr>
+        <td><code>opt.panelCompassRose.show</code></td>
+        <td>Boolean</td>
+        <td><code>false</code></td>
+        <td>No</td>
+        <td>輸入是否顯示玫瑰羅盤區布林值，預設false</td>
+    </tr><tr>
+        <td><code>opt.panelCompassRose.position</code></td>
+        <td>String</td>
+        <td><code>'topright'</code></td>
+        <td>No</td>
+        <td>輸入玫瑰羅盤區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topright'</td>
+    </tr><tr>
+        <td><code>opt.panelCompassRose.size</code></td>
+        <td>Number</td>
+        <td><code>155</code></td>
+        <td>No</td>
+        <td>輸入玫瑰羅盤區尺寸(長寬)數字，單位px，預設155</td>
+    </tr><tr>
         <td><code>opt.panelZoom.show</code></td>
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入縮放按鈕區是否顯示布林值，預設true</td>
+        <td>輸入是否顯示縮放按鈕區布林值，預設true</td>
     </tr><tr>
         <td><code>opt.panelZoom.position</code></td>
         <td>String</td>
         <td><code>'bottomleft'</code></td>
         <td>No</td>
         <td>輸入縮放按鈕區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomleft'</td>
+    </tr><tr>
+        <td><code>opt.panelScale.show</code></td>
+        <td>Boolean</td>
+        <td><code>true</code></td>
+        <td>No</td>
+        <td>輸入是否顯示比例尺區布林值，預設true</td>
+    </tr><tr>
+        <td><code>opt.panelScale.position</code></td>
+        <td>String</td>
+        <td><code>'bottomleft'</code></td>
+        <td>No</td>
+        <td>輸入比例尺區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomleft'</td>
     </tr><tr>
         <td><code>opt.panelItems.show</code></td>
         <td>Boolean</td>
@@ -231,9 +261,9 @@
     </tr><tr>
         <td><code>opt.panelItems.position</code></td>
         <td>String</td>
-        <td><code>'topleft'</code></td>
+        <td><code>'bottomright'</code></td>
         <td>No</td>
-        <td>輸入圖層顯隱切換區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topleft'</td>
+        <td>輸入圖層顯隱切換區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomright'</td>
     </tr><tr>
         <td><code>opt.panelItems.width</code></td>
         <td>Number</td>
@@ -269,7 +299,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入圖例區是否顯示布林值，預設true</td>
+        <td>輸入是否顯示圖例區布林值，預設true</td>
     </tr><tr>
         <td><code>opt.panelLegends.position</code></td>
         <td>String</td>
@@ -377,7 +407,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入第i個點集合的是否顯示布林值，預設為true</td>
+        <td>輸入是否顯示第i個點集合布林值，預設為true</td>
     </tr><tr>
         <td><code>opt.pointSets[i].points</code></td>
         <td>Array</td>
@@ -611,7 +641,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入第i個多邊形集合的是否顯示布林值，預設為true</td>
+        <td>輸入是否顯示第i個多邊形集合布林值，預設為true</td>
     </tr><tr>
         <td><code>opt.geojsonSets</code></td>
         <td>Array</td>
@@ -719,7 +749,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入第i個geojson集合的是否顯示布林值，預設為true</td>
+        <td>輸入是否顯示第i個geojson集合布林值，預設為true</td>
     </tr><tr>
         <td><code>opt.contourSets</code></td>
         <td>Array</td>
@@ -875,7 +905,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入第i個等值線集合的是否顯示布林值，預設為true</td>
+        <td>輸入是否顯示第i個等值線集合布林值，預設為true</td>
     </tr></tbody>
 </table>
 
@@ -971,7 +1001,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入底圖選擇區是否顯示布林值，預設true</td>
+        <td>輸入是否顯示底圖選擇區布林值，預設true</td>
     </tr><tr>
         <td><code>opt.panelBaseMaps.baseMaps</code></td>
         <td>Array</td>
@@ -1019,7 +1049,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入地圖資訊區是否顯示布林值，預設true</td>
+        <td>輸入是否顯示地圖資訊區布林值，預設true</td>
     </tr><tr>
         <td><code>opt.panelLabels.position</code></td>
         <td>String</td>
@@ -1081,17 +1111,47 @@
         <td>No</td>
         <td>輸入地圖資訊區最大高度數字，單位px，預設null</td>
     </tr><tr>
+        <td><code>opt.panelCompassRose.show</code></td>
+        <td>Boolean</td>
+        <td><code>false</code></td>
+        <td>No</td>
+        <td>輸入是否顯示玫瑰羅盤區布林值，預設false</td>
+    </tr><tr>
+        <td><code>opt.panelCompassRose.position</code></td>
+        <td>String</td>
+        <td><code>'topright'</code></td>
+        <td>No</td>
+        <td>輸入玫瑰羅盤區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topright'</td>
+    </tr><tr>
+        <td><code>opt.panelCompassRose.size</code></td>
+        <td>Number</td>
+        <td><code>155</code></td>
+        <td>No</td>
+        <td>輸入玫瑰羅盤區尺寸(長寬)數字，單位px，預設155</td>
+    </tr><tr>
         <td><code>opt.panelZoom.show</code></td>
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入縮放按鈕區是否顯示布林值，預設true</td>
+        <td>輸入是否顯示縮放按鈕區布林值，預設true</td>
     </tr><tr>
         <td><code>opt.panelZoom.position</code></td>
         <td>String</td>
         <td><code>'bottomleft'</code></td>
         <td>No</td>
         <td>輸入縮放按鈕區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomleft'</td>
+    </tr><tr>
+        <td><code>opt.panelScale.show</code></td>
+        <td>Boolean</td>
+        <td><code>true</code></td>
+        <td>No</td>
+        <td>輸入是否顯示比例尺區布林值，預設true</td>
+    </tr><tr>
+        <td><code>opt.panelScale.position</code></td>
+        <td>String</td>
+        <td><code>'bottomleft'</code></td>
+        <td>No</td>
+        <td>輸入比例尺區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomleft'</td>
     </tr><tr>
         <td><code>opt.panelItems.show</code></td>
         <td>Boolean</td>
@@ -1101,9 +1161,9 @@
     </tr><tr>
         <td><code>opt.panelItems.position</code></td>
         <td>String</td>
-        <td><code>'topleft'</code></td>
+        <td><code>'bottomright'</code></td>
         <td>No</td>
-        <td>輸入圖層顯隱切換區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topleft'</td>
+        <td>輸入圖層顯隱切換區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomright'</td>
     </tr><tr>
         <td><code>opt.panelItems.width</code></td>
         <td>Number</td>
@@ -1139,7 +1199,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入圖例區是否顯示布林值，預設true</td>
+        <td>輸入是否顯示圖例區布林值，預設true</td>
     </tr><tr>
         <td><code>opt.panelLegends.position</code></td>
         <td>String</td>
@@ -1247,7 +1307,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入第i個點集合的是否顯示布林值，預設為true</td>
+        <td>輸入是否顯示第i個點集合布林值，預設為true</td>
     </tr><tr>
         <td><code>opt.pointSets[i].points</code></td>
         <td>Array</td>
@@ -1481,7 +1541,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入第i個多邊形集合的是否顯示布林值，預設為true</td>
+        <td>輸入是否顯示第i個多邊形集合布林值，預設為true</td>
     </tr><tr>
         <td><code>opt.geojsonSets</code></td>
         <td>Array</td>
@@ -1589,7 +1649,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入第i個geojson集合的是否顯示布林值，預設為true</td>
+        <td>輸入是否顯示第i個geojson集合布林值，預設為true</td>
     </tr><tr>
         <td><code>opt.contourSets</code></td>
         <td>Array</td>
@@ -1745,7 +1805,7 @@
         <td>Boolean</td>
         <td><code>true</code></td>
         <td>No</td>
-        <td>輸入第i個等值線集合的是否顯示布林值，預設為true</td>
+        <td>輸入是否顯示第i個等值線集合布林值，預設為true</td>
     </tr></tbody>
 </table>
 
@@ -1799,7 +1859,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Wed May 07 2025 21:28:20 GMT+0800 (台北標準時間) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Thu May 22 2025 21:52:02 GMT+0800 (台北標準時間) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

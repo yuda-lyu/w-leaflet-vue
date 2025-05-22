@@ -1,9 +1,10 @@
 <template>
     <div
-        style="display:inline-block;"
+        style="display:inline-block; position:relative;"
         v-domresize
         @domresize="resize"
     >
+
 
         <!-- 得要關閉zoomControl, 改由l-control-zoom處理才能改位置 -->
         <l-map
@@ -19,11 +20,34 @@
             @mousemove="updateLatLng"
         >
 
+            <!-- 四向箭頭 -->
+            <l-control
+                :position="panelCompassRose.position"
+                v-if="panelCompassRose.show"
+            >
+                <div
+                    class="clsPanel"
+                    :style="{background:panelBackgroundColor}"
+                >
+                    <img
+                        :style="`width:${panelCompassRose.size}px; height:${panelCompassRose.size}px;`"
+                        :src="iconCompassRose"
+                    />
+                </div>
+            </l-control>
+
             <!-- 縮放按鈕 -->
             <l-control-zoom
                 :position="panelZoom.position"
                 v-if="panelZoom.show"
             ></l-control-zoom>
+
+            <!-- 比例尺 -->
+            <l-control-scale
+                :position="panelScale.position"
+                :imperial="false"
+                v-if="panelScale.show"
+            ></l-control-scale>
 
             <!-- 控制底圖圖層 -->
             <l-control
@@ -72,7 +96,10 @@
             </l-control>
 
             <!-- 滑鼠座標顯示區 -->
-            <l-control :position="panelLabels.position" v-if="panelLabels.show">
+            <l-control
+                :position="panelLabels.position"
+                v-if="panelLabels.show"
+            >
                 <div
                     class="clsPanel"
                     :style="{background:panelBackgroundColor}"
@@ -110,7 +137,10 @@
             </l-control>
 
             <!-- 圖例區 -->
-            <l-control :position="panelLegends.position" v-if="panelLegends.show && countVisible(contourSets)>0">
+            <l-control
+                :position="panelLegends.position"
+                v-if="panelLegends.show && countVisible(contourSets)>0"
+            >
                 <div
                     class="clsPanel"
                     :style="{background:panelBackgroundColor}"
@@ -358,10 +388,13 @@ import getCentroidMultiPolygon from 'w-gis/src/getCentroidMultiPolygon.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
 import { Icon } from 'leaflet'
-import { LMap, LTileLayer, LControl, LControlZoom, LLayerGroup, LMarker, LCircleMarker, LPolygon, LGeoJson, LImageOverlay } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl, LControlZoom, LControlScale, LLayerGroup, LMarker, LCircleMarker, LPolygon, LGeoJson, LImageOverlay } from 'vue2-leaflet'
 import LContour from './LContour.vue'
 import Radios from './Radios.vue'
 import Checkboxs from './Checkboxs.vue'
+
+
+let iconCompassRose = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNTY2Ni42NjcgNTMwMCI+PHBhdGggZD0iTTEyOTI5IDIyNjE0LjhjMjk2LjQgMTg1Ni41IDExNzguNyAzNTIwLjEgMjQ1MS42IDQ3OTMgMTI4OSAxMjg5IDI5ODAuMSAyMTc4LjIgNDg2OC44IDI0NjMuMWwtMjgyLjctMTUzMi42Yy0xMzcxLjctMzA3LjktMjU5Ni4zLTEwMDEuOC0zNTU2LjgtMTk1OS45LTk0Mi05NDItMTYyNi43LTIxNDEuNC0xOTQxLjUtMzQ4MXpNMjAyNDkuNCAxMjU3NGMtMTg4OC43IDI4NC45LTM1NzkuOCAxMTc0LjEtNDg2OC44IDI0NjMuMS0xMjk4LjIgMTMwMC41LTIxOTIgMzAwNS4zLTI0NzAgNDkxMC4xbDE1MzAuMi0yODAuM2MzMDEtMTM4Ny44IDk5OS41LTI2MzAuOCAxOTY5LjEtMzYwMC41IDk2MC41LTk1OC4xIDIxODUuMS0xNjUyIDM1NTYuOC0xOTU3LjZ6bTk5NzQuMiA3NDA3LjdjLTI3MS4xLTE5MTguNi0xMTY3LjItMzYzNy4yLTI0NzIuMy00OTQ0LjYtMTI5MS4zLTEyODktMjk4MC4xLTIxNzguMi00ODY4LjgtMjQ2My4xbDI4MC4zIDE1MzQuOGMxMzcxLjcgMzA1LjYgMjU5OC43IDk5OS41IDM1NTkuMSAxOTU3LjYgOTc2LjUgOTc4LjkgMTY3Ny4zIDIyMzEuMSAxOTc2IDM2MzV6bS03MzQxLjEgOTg4OS4yYzE4ODguNy0yODQuOSAzNTc3LjUtMTE3NC4xIDQ4NjguOC0yNDYzLjEgMTI3OS44LTEyNzkuOCAyMTY0LjQtMjk1NC44IDI0NTYuMi00ODI1LjFsLTE1MzcuMSAyODAuM2MtMzEwLjIgMTM1NS42LTk5OS41IDI1NjYuNS0xOTQ4LjUgMzUxNS40LTk2MC40IDk1OC4xLTIxODcuNCAxNjUyLTM1NTkuMSAxOTU5LjlsLTI4MC4zIDE1MzIuNiIgc3R5bGU9ImZpbGw6IzAwMDtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6bm9uemVybztzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJtMjYzNjEuMiAyNjAyMC0zMzA4LjctNDc5Ny42IDMzMDguNy00Nzk3LjUtNDc5NS4zIDMzMTAuOS00Nzk3LjUtMzMxMC45IDMzMTAuOSA0Nzk3LjUtMzMxMC45IDQ3OTcuNiA0Nzk3LjUtMzMxMSA0Nzk1LjMgMzMxMSIgc3R5bGU9ImZpbGw6IzAwMDtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJtMjU3MjQuNyAyNTM4MS4yLTQxNTguOC00MTU4Ljh2MTIzNi4yek0yNTcyNC43IDE3MDYzLjZsLTQxNTguOCA0MTU4LjhoMTIzNi4yeiIgc3R5bGU9ImZpbGw6I2ZmZjtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJtMjU3MjQuNyAyNTM4MS4yLTQxNTguOC00MTU4LjhoMTIzNi4yek0yNTcyNC43IDE3MDYzLjZsLTQxNTguOCA0MTU4Ljh2LTEyMzYuMXpNMTc0MDcuMSAxNzA2My42bDQxNTguOCA0MTU4LjhoLTEyMzguNHpNMTc0MDcuMSAyNTM4MS4ybDQxNTguOC00MTU4Ljh2MTIzNi4yeiIgc3R5bGU9ImZpbGw6IzAwMDtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJtMTc0MDcuMSAxNzA2My42IDQxNTguOCA0MTU4Ljh2LTEyMzYuMXpNMTc0MDcuMSAyNTM4MS4ybDQxNTguOC00MTU4LjhoLTEyMzguNHoiIHN0eWxlPSJmaWxsOiNmZmY7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOm5vbmUiIHRyYW5zZm9ybT0ibWF0cml4KC4xNiAwIDAgLS4xNiAtNjAwIDYxMDApIi8+PHBhdGggZD0ibTIxNTY1LjkgMzQ5MjMuNSAyMTIzLjEtMTE1NzggMTE1NzgtMjEyMy4xLTExNTc4LTIxMjMtMjEyMy4xLTExNTc4LTIxMjUuMyAxMTU3OC0xMTU3NS43MiAyMTIzIDExNTc1LjcyIDIxMjMuMSAyMTI1LjMgMTE1NzgiIHN0eWxlPSJmaWxsOiMwMDA7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOm5vbmUiIHRyYW5zZm9ybT0ibWF0cml4KC4xNiAwIDAgLS4xNiAtNjAwIDYxMDApIi8+PHBhdGggZD0iTTIxNTY1LjkgMzMxMDEuNHYtMTE4NzlMMTk3OTkgMjI5ODkuM1pNMzM0NDQuOSAyMTIyMi40aC0xMTg3OWwxNzY2LjkgMTc2Ni45eiIgc3R5bGU9ImZpbGw6I2ZmZjtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJNMjE1NjUuOSAzMzEwMS40di0xMTg3OWwxNzY2LjkgMTc2Ni45ek0zMzQ0NC45IDIxMjIyLjRoLTExODc5bDE3NjYuOS0xNzY2Ljl6TTIxNTY1LjkgOTM0My40djExODc5TDE5Nzk5IDE5NDU1LjVaTTk2ODYuOTQgMjEyMjIuNEgyMTU2NS45TDE5Nzk5IDIyOTg5LjNaIiBzdHlsZT0iZmlsbDojMDAwO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpldmVub2RkO3N0cm9rZTpub25lIiB0cmFuc2Zvcm09Im1hdHJpeCguMTYgMCAwIC0uMTYgLTYwMCA2MTAwKSIvPjxwYXRoIGQ9Ik0yMTU2NS45IDkzNDMuNHYxMTg3OWwxNzY2LjktMTc2Ni45ek05Njg2Ljk0IDIxMjIyLjRIMjE1NjUuOUwxOTc5OSAxOTQ1NS41WiIgc3R5bGU9ImZpbGw6I2ZmZjtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJtNzAzNy43MiAyMTA5OC40IDE5OS45IDg3Ny43aDMzMy4xNmwtMzY5LjkzLTE1MDcuM2gtMjk2LjRsLTIwNi43OSA3ODMuNS0yMTUuOTgtNzgzLjVoLTI5Ni40bC0zNjcuNjMgMTUwNy4zaDMzMy4xN2wxOTcuNTktODc3LjcgMjI5Ljc3IDg3Ny43aDIzMi4wN2wyMjcuNDctODc3LjdNMjE1OTEuMiA2MzMzLjVjLTYuOSAwLTExLjUgMC0xNi4xIDIuM2wtOS4yIDIuM2MtODAuNCAxMS41LTE2MC44IDI5LjgtMjM2LjYgNTUuMS03MS4zIDI1LjMtMTMxIDcxLjItMTc5LjMgMTMxLTU3LjQgNzMuNS03My41IDE3Mi4zLTczLjUgMjY0LjIgMCA4OS42IDE4LjQgMTc2LjkgNjYuNyAyNTIuOCA0OC4yIDc1LjggMTE0LjggMTI4LjYgMTk1LjMgMTYzLjEgOTEuOSAzOS4xIDE5MyA1Mi44IDI5MS44IDUyLjggNTIuOCAwIDEwNS43LTQuNiAxNTguNS0xOC4zIDUyLjktMTEuNSAxMDUuNy0yNy42IDE1NC01MC42IDUyLjgtMjMgMTAxLTUyLjggMTQ5LjMtODcuM2w1MC41LTM2LjgtMTgzLjgtMjU3LjMtNTIuOCAzNi44Yy00My43IDMyLjEtODkuNiA1OS43LTE0MC4yIDgwLjQtNDMuNiAxNi4xLTg5LjYgMjMtMTM1LjUgMjMtNTkuOCAwLTEzMy4zLTYuOS0xODMuOC00My43LTM2LjgtMjcuNi01MC42LTYyLTUwLjYtMTA4di0yLjNjMC0yMyA0LjYtNDguMiAyMC43LTY2LjYgMjAuNy0yMC43IDQ4LjItMzQuNSA3NS44LTQzLjcgNTAuNS0xNi4xIDEwOC0yNy41IDE2MC44LTM5aDIuM2M0LjYtMi4zIDkuMi0yLjMgMTMuOC0yLjMgMC0yLjMgMi4zLTIuMyA0LjYtMi4zIDQuNiAwIDkuMiAwIDEzLjgtMi4zIDc1LjgtMTYuMSAxNTEuNy0zNC41IDIyMC42LTY0LjQgNjguOS0yNy41IDEyNi40LTc1LjggMTY3LjctMTM1LjUgNTIuOS03MS4zIDY4LjktMTYzLjIgNjguOS0yNTAuNXYtMi4zYzAtODkuNi0yMC42LTE3Ni45LTY4LjktMjUwLjQtNTAuNS03NS44LTEyMS44LTEyNi40LTIwMi4yLTE2MC45LTk0LjItMzktMTk3LjYtNTIuOC0yOTguNy01Mi44LTY4LjkgMC0xMzUuNSA2LjktMjAyLjIgMjAuNy02NC4zIDEzLjgtMTI0IDM0LjQtMTgxLjUgNjItNTcuNCAyNy42LTExMC4zIDYyLjEtMTU4LjUgMTAzLjRsLTQ4LjMgNDEuNCAyMDIuMiAyNDUuOCA1MC42LTQxLjNjNDMuNi0zOS4xIDk2LjUtNzEuMyAxNTEuNi05MS45IDU5LjgtMjAuNyAxMjEuOC0yOS45IDE4Ni4xLTI5LjkgNjQuNCAwIDE0Mi41IDkuMiAxOTcuNiA0NS45IDM2LjggMjUuMyA1Mi45IDU3LjUgNTIuOSAxMDMuNCAwIDI1LjMtMi4zIDUyLjktMjAuNyA3My42LTE4LjQgMjAuNi00My43IDM0LjQtNjguOSA0My42LTQ2IDE2LjEtOTYuNSAyNy42LTE0NC44IDM2LjhNMzU5ODguNSAyMTY2NS45di0yOTEuOGg1ODguMnYtMzEyLjVoLTU4OC4yVjIwNzc5aDY5My45di0zMTAuMmgtMTAxNS42djE1MDcuM2gxMDE1LjZ2LTMxMC4yaC02OTMuOU0yMTgyMSAzNTkwNC42djg3NS40aDMxNy4xdi0xNTA3LjNoLTI3NS44bC01NTEuNCA4NjEuN3YtODYxLjdoLTMxOS40VjM2NzgwaDI3My40bDU1Ni4xLTg3NS40IiBzdHlsZT0iZmlsbDojMDAwO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpldmVub2RkO3N0cm9rZTpub25lIiB0cmFuc2Zvcm09Im1hdHJpeCguMTYgMCAwIC0uMTYgLTYwMCA2MTAwKSIvPjwvc3ZnPg==`
 
 
 function getDefBaseMaps() {
@@ -653,7 +686,7 @@ function getDefBaseMaps() {
  * @vue-prop {Array} [opt.center=[23.5, 121.1]] 輸入地圖顯示中點陣列，陣列為WGS84[緯度,經度]，預設[23.5, 121.1]
  * @vue-prop {Number} [opt.zoom=7] 輸入地圖顯示層級整數，預設7
  * @vue-prop {Object} [opt.panelBackgroundColor='rgba(255,255,255,0.95)'] 輸入各顯示資訊區背景顏色字串，預設'rgba(255,255,255,0.95)'
- * @vue-prop {Boolean} [opt.panelBaseMaps.show=true] 輸入底圖選擇區是否顯示布林值，預設true
+ * @vue-prop {Boolean} [opt.panelBaseMaps.show=true] 輸入是否顯示底圖選擇區布林值，預設true
  * @vue-prop {Array} [opt.panelBaseMaps.baseMaps=詳見程式碼] 輸入底圖選擇清單陣列，各元素為底圖設定物件，需提供欄位為name(底圖名稱字串)、url(底圖連結字串)、visible(是否顯示布林值)，預設值詳見程式碼的defBaseMaps預設值
  * @vue-prop {String} [opt.panelBaseMaps.position='topleft'] 輸入底圖選擇區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topleft'
  * @vue-prop {Number} [opt.panelBaseMaps.width=null] 輸入底圖選擇區寬度數字，單位px，預設null
@@ -661,7 +694,7 @@ function getDefBaseMaps() {
  * @vue-prop {Number} [opt.panelBaseMaps.height=null] 輸入底圖選擇區高度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelBaseMaps.maxHeight=300] 輸入底圖選擇區最大高度數字，單位px，預設300
  * @vue-prop {Boolean} [opt.panelBaseMaps.stopWheel=false] 輸入底圖選擇區當過高出現垂直捲軸時，是否可接收捲軸布林值，預設false
- * @vue-prop {Boolean} [opt.panelLabels.show=true] 輸入地圖資訊區是否顯示布林值，預設true
+ * @vue-prop {Boolean} [opt.panelLabels.show=true] 輸入是否顯示地圖資訊區布林值，預設true
  * @vue-prop {String} [opt.panelLabels.position='topright'] 輸入地圖資訊區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topright'
  * @vue-prop {String} [opt.panelLabels.title=''] 輸入地圖資訊區內標題字串，預設''
  * @vue-prop {String} [opt.panelLabels.lng='Longitude'] 輸入地圖資訊區內標注經度字串，預設'Longitude'
@@ -672,16 +705,21 @@ function getDefBaseMaps() {
  * @vue-prop {Number} [opt.panelLabels.maxWidth=null] 輸入地圖資訊區最大寬度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelLabels.height=null] 輸入地圖資訊區高度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelLabels.maxHeight=null] 輸入地圖資訊區最大高度數字，單位px，預設null
- * @vue-prop {Boolean} [opt.panelZoom.show=true] 輸入縮放按鈕區是否顯示布林值，預設true
+ * @vue-prop {Boolean} [opt.panelCompassRose.show=false] 輸入是否顯示玫瑰羅盤區布林值，預設false
+ * @vue-prop {String} [opt.panelCompassRose.position='topright'] 輸入玫瑰羅盤區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topright'
+ * @vue-prop {Number} [opt.panelCompassRose.size=155] 輸入玫瑰羅盤區尺寸(長寬)數字，單位px，預設155
+ * @vue-prop {Boolean} [opt.panelZoom.show=true] 輸入是否顯示縮放按鈕區布林值，預設true
  * @vue-prop {String} [opt.panelZoom.position='bottomleft'] 輸入縮放按鈕區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomleft'
+ * @vue-prop {Boolean} [opt.panelScale.show=true] 輸入是否顯示比例尺區布林值，預設true
+ * @vue-prop {String} [opt.panelScale.position='bottomleft'] 輸入比例尺區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomleft'
  * @vue-prop {Boolean} [opt.panelItems.show=true] 輸入圖層顯隱切換區是否顯示布林值，預設true
- * @vue-prop {String} [opt.panelItems.position='topleft'] 輸入圖層顯隱切換區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topleft'
+ * @vue-prop {String} [opt.panelItems.position='bottomright'] 輸入圖層顯隱切換區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomright'
  * @vue-prop {Number} [opt.panelItems.width=null] 輸入圖層顯隱切換區寬度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelItems.maxWidth=null] 輸入圖層顯隱切換區最大寬度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelItems.height=null] 輸入圖層顯隱切換區高度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelItems.maxHeight=null] 輸入圖層顯隱切換區最大高度數字，單位px，預設null
  * @vue-prop {Boolean} [opt.panelItems.stopWheel=false] 輸入圖層顯隱切換區當過高出現垂直捲軸時，是否可接收捲軸布林值，預設false
- * @vue-prop {Boolean} [opt.panelLegends.show=true] 輸入圖例區是否顯示布林值，預設true
+ * @vue-prop {Boolean} [opt.panelLegends.show=true] 輸入是否顯示圖例區布林值，預設true
  * @vue-prop {String} [opt.panelLegends.position='bottomright'] 輸入圖例區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomright'
  * @vue-prop {Number} [opt.panelLegends.width=null] 輸入圖例區寬度數字，單位px，預設null
  * @vue-prop {Number} [opt.panelLegends.maxWidth=300] 輸入圖例區最大寬度數字，單位px，預設300
@@ -699,7 +737,7 @@ function getDefBaseMaps() {
  * @vue-prop {Array} [opt.pointSets[i].iconSize=[24,40]] 輸入第i個點集合的顯示圖標尺寸陣列，使用[寬,高]，長寬單位px，預設[24,40]
  * @vue-prop {Array} [opt.pointSets[i].iconAnchor=[iconSize[0]/2,iconSize[1]]] 輸入第i個點集合的顯示圖標的實際定位位置陣列，由圖標左上角代表實際定位點起算，往左移動為+x，往上移動為+y，x與y單位px，需給予[x,y]，預設[iconSize[0]/2,iconSize[1]]
  * @vue-prop {Array} [opt.pointSets[i].popupAnchor=[0,-iconSize[1]/1.5]] 輸入第i個點集合的顯示popup或tooltip時的指向位置陣列，由實際定位點起算，往右移動為+x，往下移動為+y，x與y單位px，需給予[x,y]，預設[0,-iconSize[1]/1.5]
- * @vue-prop {Boolean} [opt.pointSets[i].visible=true] 輸入第i個點集合的是否顯示布林值，預設為true
+ * @vue-prop {Boolean} [opt.pointSets[i].visible=true] 輸入是否顯示第i個點集合布林值，預設為true
  * @vue-prop {Array} [opt.pointSets[i].points=[]] 輸入第i個點集合的各點數據陣列，各元素為物件或為緯經度陣列，也就是[{p1},{p2},...]或是[[p1lat,p1lng],[p2lat,p2lng],...]，預設為[]
  * @vue-prop {String} [opt.pointSets[i].points[j].title=''] 輸入第i個點集合的第j個點的標題字串，預設為''
  * @vue-prop {String} [opt.pointSets[i].points[j].msg=''] 輸入第i個點集合的第j個點的說明字串，預設為''
@@ -738,7 +776,7 @@ function getDefBaseMaps() {
  * @vue-prop {Function} [opt.polygonSets[i].popup=function(){}] 輸入第i個多邊形集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  * @vue-prop {Function} [opt.defPolygonSetsTooltip=function(){}] 輸入全域多邊形集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  * @vue-prop {Function} [opt.polygonSets[i].tooltip=function(){}] 輸入第i個多邊形集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
- * @vue-prop {Boolean} [opt.polygonSets[i].visible=true] 輸入第i個多邊形集合的是否顯示布林值，預設為true
+ * @vue-prop {Boolean} [opt.polygonSets[i].visible=true] 輸入是否顯示第i個多邊形集合布林值，預設為true
  * @vue-prop {Array} [opt.geojsonSets=[]] 輸入geojson集合陣列，各元素為物件，預設[]
  * @vue-prop {String} [opt.geojsonSets[i].title=''] 輸入第i個geojson集合的標題字串，預設為''
  * @vue-prop {String} [opt.geojsonSets[i].msg=''] 輸入第i個geojson集合的說明字串，預設為''
@@ -756,7 +794,7 @@ function getDefBaseMaps() {
  * @vue-prop {Function} [opt.geojsonSets[i].popup=function(){}] 輸入第i個geojson集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  * @vue-prop {Function} [opt.defGeojsonSetsTooltip=function(){}] 輸入全域geojson集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  * @vue-prop {Function} [opt.geojsonSets[i].tooltip=function(){}] 輸入第i個geojson集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
- * @vue-prop {Boolean} [opt.geojsonSets[i].visible=true] 輸入第i個geojson集合的是否顯示布林值，預設為true
+ * @vue-prop {Boolean} [opt.geojsonSets[i].visible=true] 輸入是否顯示第i個geojson集合布林值，預設為true
  * @vue-prop {Array} [opt.contourSets=[]] 輸入等值線集合陣列，各元素為物件，預設[]
  * @vue-prop {Number} [opt.contourSets[i].order=null] 輸入第i個等值線集合的排序用數字，預設null
  * @vue-prop {Object} [opt.contourSets[i].gradient=詳見程式碼] 輸入第i個等值線集合的色階(color map)設定物件，鍵範圍0至1，值為對應之顏色，於各鍵之間則採用內插取色，預設值詳見程式碼
@@ -782,7 +820,7 @@ function getDefBaseMaps() {
  * @vue-prop {Function} [opt.contourSets[i].popup=function(){}] 輸入第i個等值線集合的popup內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  * @vue-prop {Function} [opt.defContourSetsTooltip=function(){}] 輸入全域等值線集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
  * @vue-prop {Function} [opt.contourSets[i].tooltip=function(){}] 輸入第i個等值線集合的tooltip內容產生函數，可基於傳入資料回傳顯示文字或html內容，預設為function(){}
- * @vue-prop {Boolean} [opt.contourSets[i].visible=true] 輸入第i個等值線集合的是否顯示布林值，預設為true
+ * @vue-prop {Boolean} [opt.contourSets[i].visible=true] 輸入是否顯示第i個等值線集合布林值，預設為true
  */
 export default {
     directives: {
@@ -793,6 +831,7 @@ export default {
         LTileLayer,
         LControl,
         LControlZoom,
+        LControlScale,
         LLayerGroup,
         LMarker,
         LCircleMarker,
@@ -811,6 +850,7 @@ export default {
     },
     data: function() {
         return {
+            iconCompassRose,
 
             dbcChangePointSets: debounce(),
             dbcChangePolygonSets: debounce(),
@@ -823,8 +863,12 @@ export default {
             center: [],
             zoom: null,
             panelBackgroundColor: '',
+            panelCompassRose: {},
+            panelCompassRoseTemp: {},
             panelZoom: {},
             panelZoomTemp: {},
+            panelScale: {},
+            panelScaleTemp: {},
             panelBaseMaps: {},
             panelBaseMapsTemp: {},
             panelItems: {},
@@ -1187,6 +1231,32 @@ export default {
                 vo.panelBaseMapsTemp = cloneDeep(panelBaseMaps)
             }
 
+            //defPanelCompassRose
+            let defPanelCompassRose = {
+                show: false,
+                position: 'topright',
+                size: 155,
+            }
+
+            //panelCompassRose
+            let panelCompassRose = get(vo, 'opt.panelCompassRose', null)
+            if (!isobj(panelCompassRose)) {
+                panelCompassRose = {}
+            }
+            panelCompassRose = { //merge
+                ...defPanelCompassRose,
+                ...panelCompassRose,
+            }
+            //cloneDeep
+            //style
+            // console.log('panelCompassRose', panelCompassRose)
+
+            //check
+            if (!isEqual(vo.panelCompassRoseTemp, panelCompassRose)) { //判斷外部給資料是否有變更
+                vo.panelCompassRose = panelCompassRose
+                vo.panelCompassRoseTemp = cloneDeep(panelCompassRose)
+            }
+
             //defPanelZoom
             let defPanelZoom = {
                 show: true,
@@ -1210,6 +1280,31 @@ export default {
             if (!isEqual(vo.panelZoomTemp, panelZoom)) { //判斷外部給資料是否有變更
                 vo.panelZoom = panelZoom
                 vo.panelZoomTemp = cloneDeep(panelZoom)
+            }
+
+            //defPanelScale
+            let defPanelScale = {
+                show: true,
+                position: 'bottomright',
+            }
+
+            //panelScale
+            let panelScale = get(vo, 'opt.panelScale', null)
+            if (!isobj(panelScale)) {
+                panelScale = {}
+            }
+            panelScale = { //merge
+                ...defPanelScale,
+                ...panelScale,
+            }
+            //cloneDeep
+            //style
+            // console.log('panelScale', panelScale)
+
+            //check
+            if (!isEqual(vo.panelScaleTemp, panelScale)) { //判斷外部給資料是否有變更
+                vo.panelScale = panelScale
+                vo.panelScaleTemp = cloneDeep(panelScale)
             }
 
             //panelLabels
@@ -3301,6 +3396,7 @@ export default {
 </script>
 
 <style scoped>
+
 .clsPanel {
     padding:4px 5px;
     box-shadow:0 0 15px rgba(0,0,0,0.2);
@@ -3308,10 +3404,33 @@ export default {
     font-size: 0.8rem;
     font-family:'Microsoft JhengHei','Avenir','Helvetica';
 }
+
 ::v-deep .leaflet-popup-content {
     margin:0px;
 }
 ::v-deep .leaflet-popup-content-wrapper {
     border-radius:5px;
 }
+
+::v-deep .leaflet-control-scale {
+    background-color: transparent;
+    padding: 0px;
+    border-radius: 0px;
+    border: 0px;
+    border-bottom: 1px solid #fff;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+::v-deep .leaflet-control-scale-line {
+    padding: 4px 5px 2px 5px;
+    text-shadow: 1px 1px 1px #000;
+    font-size: 0.75rem;
+    color: #fff;
+    background-color: rgba(150,150,150,0.5);
+    border: 0px;
+    border-bottom: 2px solid #666;
+    border-left: 2px solid #666;
+    border-right: 2px solid #666;
+}
+
 </style>

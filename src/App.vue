@@ -64,6 +64,16 @@
 
             <AppPBMMaxHeight v-if="showSubCmp==='panelBaseMaps.maxHeight'"></AppPBMMaxHeight>
 
+            <AppPSCShow v-if="showSubCmp==='panelScale.show'"></AppPSCShow>
+
+            <AppPSCPosition v-if="showSubCmp==='panelScale.position'"></AppPSCPosition>
+
+            <AppPCRShow v-if="showSubCmp==='panelCompassRose.show'"></AppPCRShow>
+
+            <AppPCRPosition v-if="showSubCmp==='panelCompassRose.position'"></AppPCRPosition>
+
+            <AppPCRSize v-if="showSubCmp==='panelCompassRose.size'"></AppPCRSize>
+
             <AppPLBShow v-if="showSubCmp==='panelLabels.show'"></AppPLBShow>
 
             <AppPLBPosition v-if="showSubCmp==='panelLabels.position'"></AppPLBPosition>
@@ -290,6 +300,11 @@ import AppPBMPosition from './AppPBMPosition.vue'
 import AppPBMWidth from './AppPBMWidth.vue'
 import AppPBMMaxWidth from './AppPBMMaxWidth.vue'
 import AppPBMMaxHeight from './AppPBMMaxHeight.vue'
+import AppPSCShow from './AppPSCShow.vue'
+import AppPSCPosition from './AppPSCPosition.vue'
+import AppPCRShow from './AppPCRShow.vue'
+import AppPCRPosition from './AppPCRPosition.vue'
+import AppPCRSize from './AppPCRSize.vue'
 import AppPLBShow from './AppPLBShow.vue'
 import AppPLBPosition from './AppPLBPosition.vue'
 import AppPLBTitle from './AppPLBTitle.vue'
@@ -408,6 +423,11 @@ export default {
         AppPBMWidth,
         AppPBMMaxWidth,
         AppPBMMaxHeight,
+        AppPSCShow,
+        AppPSCPosition,
+        AppPCRShow,
+        AppPCRPosition,
+        AppPCRSize,
         AppPLBShow,
         AppPLBPosition,
         AppPLBTitle,
@@ -531,6 +551,15 @@ export default {
                     'panelBaseMaps.width',
                     'panelBaseMaps.maxWidth',
                     'panelBaseMaps.maxHeight',
+                ],
+                panelScale: [
+                    'panelScale.show',
+                    'panelScale.position',
+                ],
+                panelCompassRose: [
+                    'panelCompassRose.show',
+                    'panelCompassRose.position',
+                    'panelCompassRose.size',
                 ],
                 panelLabels: [
                     'panelLabels.show',

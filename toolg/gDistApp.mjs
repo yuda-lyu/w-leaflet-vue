@@ -24,8 +24,8 @@ let opt = {
     <script src="https://cdn.jsdelivr.net/npm/w-gis@latest/dist/interp2.wk.umd.js"></script>
 
     <!-- data -->
-    <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.23/res/data/dataRain.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.23/res/data/dataRainClip.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.27/res/data/dataRain.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-demores@1.0.27/res/data/dataRainClip.js"></script>
 
     `,
     newVue: ``,
