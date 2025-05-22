@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppCTRContourSetLegendTextFormater</title>
+    <title>example for AppPCRPosition</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -111,20 +111,39 @@
 >
     <div id="app" class="bkh" style>
         <div class="bkh">
-            <div style="font-size:1.5rem;">contourSet.legendTextFormater</div>
+            <div style="font-size:1.5rem;">panelCompassRose.position</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetLegendTextFormater.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPCRPosition.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetLegendTextFormater.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPCRPosition.html"
                 target="_blank"
                 class="item-link"
             >code</a>
         </div>
 
         <div class="bkp">
+            <div>
+                <button
+                    style="margin:0px 3px 3px 0px;"
+                    @click="opt.panelCompassRose.position='topleft'"
+                >topleft</button>
+                <button
+                    style="margin:0px 3px 3px 0px;"
+                    @click="opt.panelCompassRose.position='topright'"
+                >topright(default)</button>
+                <button
+                    style="margin:0px 3px 3px 0px;"
+                    @click="opt.panelCompassRose.position='bottomleft'"
+                >bottomleft</button>
+                <button
+                    style="margin:0px 3px 3px 0px;"
+                    @click="opt.panelCompassRose.position='bottomright'"
+                >bottomright</button>
+            </div>
+
             <div style="display:flex; padding-bottom:40px; overflow-x:auto;">
                 <div style="position:relative;">
                     <w-leaflet-vue
@@ -157,45 +176,10 @@
     data: function() {
       return {
         opt: {
-          center: [24.4, 121.239],
-          zoom: 9,
-          contourSets: [
-            {
-              title: "contourSet A",
-              msg: "msg from contourSet A",
-              points: [
-                [24.325, 120.786, 4],
-                [23.944, 120.968, 15],
-                [24.884, 121.234, 20],
-                [24.579, 121.345, 62],
-                [24.664, 121.761, 35],
-                [23.803, 121.397, 30]
-              ],
-              legendTextFormater: function(msg) {
-                console.log("contourSet A: legendTextFormater", msg);
-                let low = msg.low;
-                let up = msg.up;
-                let v = (low + up) / 2;
-                if (v <= 25) {
-                  low = `<div style="color:#439c30;">${low}</div>`;
-                  up = `<div style="color:#439c30;">${up}</div>`;
-                } else if (v <= 50) {
-                  low = `<div style="color:#91830b;">${low}</div>`;
-                  up = `<div style="color:#91830b;">${up}</div>`;
-                } else {
-                  low = `<div style="color:#f26;">${low}</div>`;
-                  up = `<div style="color:#f26;">${up}</div>`;
-                }
-                let delimiter = `<div style="color:#888;">⊶</div>`;
-                return {
-                  low,
-                  up,
-                  delimiter
-                };
-              },
-              visible: true
-            }
-          ]
+          panelCompassRose: {
+            show: true,
+            position: "topright"
+          }
         },
         action: []
       };
