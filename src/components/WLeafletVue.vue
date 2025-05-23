@@ -14,11 +14,17 @@
             :options="{
                 preferCanvas: true,
                 zoomControl: false,
+                attributionControl: false,
             }"
             @update:zoom="updateZoom"
             @update:center="updateCenter"
             @mousemove="updateLatLng"
         >
+
+            <!-- 貢獻 -->
+            <l-control-attribution
+                position="bottomleft"
+            ></l-control-attribution>
 
             <!-- 四向箭頭 -->
             <l-control
@@ -36,18 +42,18 @@
                 </div>
             </l-control>
 
-            <!-- 縮放按鈕 -->
-            <l-control-zoom
-                :position="panelZoom.position"
-                v-if="panelZoom.show"
-            ></l-control-zoom>
-
             <!-- 比例尺 -->
             <l-control-scale
                 :position="panelScale.position"
                 :imperial="false"
                 v-if="panelScale.show"
             ></l-control-scale>
+
+            <!-- 縮放按鈕 -->
+            <l-control-zoom
+                :position="panelZoom.position"
+                v-if="panelZoom.show"
+            ></l-control-zoom>
 
             <!-- 控制底圖圖層 -->
             <l-control
@@ -388,7 +394,7 @@ import getCentroidMultiPolygon from 'w-gis/src/getCentroidMultiPolygon.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
 import { Icon } from 'leaflet'
-import { LMap, LTileLayer, LControl, LControlZoom, LControlScale, LLayerGroup, LMarker, LCircleMarker, LPolygon, LGeoJson, LImageOverlay } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl, LControlAttribution, LControlZoom, LControlScale, LLayerGroup, LMarker, LCircleMarker, LPolygon, LGeoJson, LImageOverlay } from 'vue2-leaflet'
 import LContour from './LContour.vue'
 import Radios from './Radios.vue'
 import Checkboxs from './Checkboxs.vue'
@@ -830,6 +836,7 @@ export default {
         LMap,
         LTileLayer,
         LControl,
+        LControlAttribution,
         LControlZoom,
         LControlScale,
         LLayerGroup,
@@ -3431,6 +3438,10 @@ export default {
     border-bottom: 2px solid #666;
     border-left: 2px solid #666;
     border-right: 2px solid #666;
+}
+
+::v-deep .leaflet-control-scale.leaflet-control {
+    position: relative;
 }
 
 </style>
