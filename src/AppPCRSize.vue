@@ -10,7 +10,7 @@
         <div class="bkp">
 
             <div>
-                <button style="margin:0px 3px 3px 0px;" @click="opt.panelCompassRose.size=155">155(default)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelCompassRose.size=120">120(default)</button>
                 <button style="margin:0px 3px 3px 0px;" @click="opt.panelCompassRose.size=100">100</button>
             </div>
 
@@ -51,9 +51,12 @@ export default {
     data: function() {
         return {
             'opt': {
+                panelLabels: {
+                    show: false,
+                },
                 panelCompassRose: {
                     show: true,
-                    size: 155,
+                    size: 120,
                 },
             },
             'action': [

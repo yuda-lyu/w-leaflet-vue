@@ -33,11 +33,14 @@
             >
                 <div
                     class="clsPanel"
-                    :style="{background:panelBackgroundColor}"
+                    :style="{
+                        background:panelCompassRose.withPanel?panelBackgroundColor:'transparent',
+                        boxShadow:panelCompassRose.withPanel?'0 0 15px rgba(0,0,0,0.2)':'none',
+                    }"
                 >
                     <img
                         :style="`width:${panelCompassRose.size}px; height:${panelCompassRose.size}px;`"
-                        :src="iconCompassRose"
+                        :src="useIconCompassRose"
                     />
                 </div>
             </l-control>
@@ -398,293 +401,8 @@ import { LMap, LTileLayer, LControl, LControlAttribution, LControlZoom, LControl
 import LContour from './LContour.vue'
 import Radios from './Radios.vue'
 import Checkboxs from './Checkboxs.vue'
-
-
-let iconCompassRose = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNTY2Ni42NjcgNTMwMCI+PHBhdGggZD0iTTEyOTI5IDIyNjE0LjhjMjk2LjQgMTg1Ni41IDExNzguNyAzNTIwLjEgMjQ1MS42IDQ3OTMgMTI4OSAxMjg5IDI5ODAuMSAyMTc4LjIgNDg2OC44IDI0NjMuMWwtMjgyLjctMTUzMi42Yy0xMzcxLjctMzA3LjktMjU5Ni4zLTEwMDEuOC0zNTU2LjgtMTk1OS45LTk0Mi05NDItMTYyNi43LTIxNDEuNC0xOTQxLjUtMzQ4MXpNMjAyNDkuNCAxMjU3NGMtMTg4OC43IDI4NC45LTM1NzkuOCAxMTc0LjEtNDg2OC44IDI0NjMuMS0xMjk4LjIgMTMwMC41LTIxOTIgMzAwNS4zLTI0NzAgNDkxMC4xbDE1MzAuMi0yODAuM2MzMDEtMTM4Ny44IDk5OS41LTI2MzAuOCAxOTY5LjEtMzYwMC41IDk2MC41LTk1OC4xIDIxODUuMS0xNjUyIDM1NTYuOC0xOTU3LjZ6bTk5NzQuMiA3NDA3LjdjLTI3MS4xLTE5MTguNi0xMTY3LjItMzYzNy4yLTI0NzIuMy00OTQ0LjYtMTI5MS4zLTEyODktMjk4MC4xLTIxNzguMi00ODY4LjgtMjQ2My4xbDI4MC4zIDE1MzQuOGMxMzcxLjcgMzA1LjYgMjU5OC43IDk5OS41IDM1NTkuMSAxOTU3LjYgOTc2LjUgOTc4LjkgMTY3Ny4zIDIyMzEuMSAxOTc2IDM2MzV6bS03MzQxLjEgOTg4OS4yYzE4ODguNy0yODQuOSAzNTc3LjUtMTE3NC4xIDQ4NjguOC0yNDYzLjEgMTI3OS44LTEyNzkuOCAyMTY0LjQtMjk1NC44IDI0NTYuMi00ODI1LjFsLTE1MzcuMSAyODAuM2MtMzEwLjIgMTM1NS42LTk5OS41IDI1NjYuNS0xOTQ4LjUgMzUxNS40LTk2MC40IDk1OC4xLTIxODcuNCAxNjUyLTM1NTkuMSAxOTU5LjlsLTI4MC4zIDE1MzIuNiIgc3R5bGU9ImZpbGw6IzAwMDtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6bm9uemVybztzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJtMjYzNjEuMiAyNjAyMC0zMzA4LjctNDc5Ny42IDMzMDguNy00Nzk3LjUtNDc5NS4zIDMzMTAuOS00Nzk3LjUtMzMxMC45IDMzMTAuOSA0Nzk3LjUtMzMxMC45IDQ3OTcuNiA0Nzk3LjUtMzMxMSA0Nzk1LjMgMzMxMSIgc3R5bGU9ImZpbGw6IzAwMDtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJtMjU3MjQuNyAyNTM4MS4yLTQxNTguOC00MTU4Ljh2MTIzNi4yek0yNTcyNC43IDE3MDYzLjZsLTQxNTguOCA0MTU4LjhoMTIzNi4yeiIgc3R5bGU9ImZpbGw6I2ZmZjtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJtMjU3MjQuNyAyNTM4MS4yLTQxNTguOC00MTU4LjhoMTIzNi4yek0yNTcyNC43IDE3MDYzLjZsLTQxNTguOCA0MTU4Ljh2LTEyMzYuMXpNMTc0MDcuMSAxNzA2My42bDQxNTguOCA0MTU4LjhoLTEyMzguNHpNMTc0MDcuMSAyNTM4MS4ybDQxNTguOC00MTU4Ljh2MTIzNi4yeiIgc3R5bGU9ImZpbGw6IzAwMDtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJtMTc0MDcuMSAxNzA2My42IDQxNTguOCA0MTU4Ljh2LTEyMzYuMXpNMTc0MDcuMSAyNTM4MS4ybDQxNTguOC00MTU4LjhoLTEyMzguNHoiIHN0eWxlPSJmaWxsOiNmZmY7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOm5vbmUiIHRyYW5zZm9ybT0ibWF0cml4KC4xNiAwIDAgLS4xNiAtNjAwIDYxMDApIi8+PHBhdGggZD0ibTIxNTY1LjkgMzQ5MjMuNSAyMTIzLjEtMTE1NzggMTE1NzgtMjEyMy4xLTExNTc4LTIxMjMtMjEyMy4xLTExNTc4LTIxMjUuMyAxMTU3OC0xMTU3NS43MiAyMTIzIDExNTc1LjcyIDIxMjMuMSAyMTI1LjMgMTE1NzgiIHN0eWxlPSJmaWxsOiMwMDA7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOm5vbmUiIHRyYW5zZm9ybT0ibWF0cml4KC4xNiAwIDAgLS4xNiAtNjAwIDYxMDApIi8+PHBhdGggZD0iTTIxNTY1LjkgMzMxMDEuNHYtMTE4NzlMMTk3OTkgMjI5ODkuM1pNMzM0NDQuOSAyMTIyMi40aC0xMTg3OWwxNzY2LjkgMTc2Ni45eiIgc3R5bGU9ImZpbGw6I2ZmZjtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJNMjE1NjUuOSAzMzEwMS40di0xMTg3OWwxNzY2LjkgMTc2Ni45ek0zMzQ0NC45IDIxMjIyLjRoLTExODc5bDE3NjYuOS0xNzY2Ljl6TTIxNTY1LjkgOTM0My40djExODc5TDE5Nzk5IDE5NDU1LjVaTTk2ODYuOTQgMjEyMjIuNEgyMTU2NS45TDE5Nzk5IDIyOTg5LjNaIiBzdHlsZT0iZmlsbDojMDAwO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpldmVub2RkO3N0cm9rZTpub25lIiB0cmFuc2Zvcm09Im1hdHJpeCguMTYgMCAwIC0uMTYgLTYwMCA2MTAwKSIvPjxwYXRoIGQ9Ik0yMTU2NS45IDkzNDMuNHYxMTg3OWwxNzY2LjktMTc2Ni45ek05Njg2Ljk0IDIxMjIyLjRIMjE1NjUuOUwxOTc5OSAxOTQ1NS41WiIgc3R5bGU9ImZpbGw6I2ZmZjtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6bm9uZSIgdHJhbnNmb3JtPSJtYXRyaXgoLjE2IDAgMCAtLjE2IC02MDAgNjEwMCkiLz48cGF0aCBkPSJtNzAzNy43MiAyMTA5OC40IDE5OS45IDg3Ny43aDMzMy4xNmwtMzY5LjkzLTE1MDcuM2gtMjk2LjRsLTIwNi43OSA3ODMuNS0yMTUuOTgtNzgzLjVoLTI5Ni40bC0zNjcuNjMgMTUwNy4zaDMzMy4xN2wxOTcuNTktODc3LjcgMjI5Ljc3IDg3Ny43aDIzMi4wN2wyMjcuNDctODc3LjdNMjE1OTEuMiA2MzMzLjVjLTYuOSAwLTExLjUgMC0xNi4xIDIuM2wtOS4yIDIuM2MtODAuNCAxMS41LTE2MC44IDI5LjgtMjM2LjYgNTUuMS03MS4zIDI1LjMtMTMxIDcxLjItMTc5LjMgMTMxLTU3LjQgNzMuNS03My41IDE3Mi4zLTczLjUgMjY0LjIgMCA4OS42IDE4LjQgMTc2LjkgNjYuNyAyNTIuOCA0OC4yIDc1LjggMTE0LjggMTI4LjYgMTk1LjMgMTYzLjEgOTEuOSAzOS4xIDE5MyA1Mi44IDI5MS44IDUyLjggNTIuOCAwIDEwNS43LTQuNiAxNTguNS0xOC4zIDUyLjktMTEuNSAxMDUuNy0yNy42IDE1NC01MC42IDUyLjgtMjMgMTAxLTUyLjggMTQ5LjMtODcuM2w1MC41LTM2LjgtMTgzLjgtMjU3LjMtNTIuOCAzNi44Yy00My43IDMyLjEtODkuNiA1OS43LTE0MC4yIDgwLjQtNDMuNiAxNi4xLTg5LjYgMjMtMTM1LjUgMjMtNTkuOCAwLTEzMy4zLTYuOS0xODMuOC00My43LTM2LjgtMjcuNi01MC42LTYyLTUwLjYtMTA4di0yLjNjMC0yMyA0LjYtNDguMiAyMC43LTY2LjYgMjAuNy0yMC43IDQ4LjItMzQuNSA3NS44LTQzLjcgNTAuNS0xNi4xIDEwOC0yNy41IDE2MC44LTM5aDIuM2M0LjYtMi4zIDkuMi0yLjMgMTMuOC0yLjMgMC0yLjMgMi4zLTIuMyA0LjYtMi4zIDQuNiAwIDkuMiAwIDEzLjgtMi4zIDc1LjgtMTYuMSAxNTEuNy0zNC41IDIyMC42LTY0LjQgNjguOS0yNy41IDEyNi40LTc1LjggMTY3LjctMTM1LjUgNTIuOS03MS4zIDY4LjktMTYzLjIgNjguOS0yNTAuNXYtMi4zYzAtODkuNi0yMC42LTE3Ni45LTY4LjktMjUwLjQtNTAuNS03NS44LTEyMS44LTEyNi40LTIwMi4yLTE2MC45LTk0LjItMzktMTk3LjYtNTIuOC0yOTguNy01Mi44LTY4LjkgMC0xMzUuNSA2LjktMjAyLjIgMjAuNy02NC4zIDEzLjgtMTI0IDM0LjQtMTgxLjUgNjItNTcuNCAyNy42LTExMC4zIDYyLjEtMTU4LjUgMTAzLjRsLTQ4LjMgNDEuNCAyMDIuMiAyNDUuOCA1MC42LTQxLjNjNDMuNi0zOS4xIDk2LjUtNzEuMyAxNTEuNi05MS45IDU5LjgtMjAuNyAxMjEuOC0yOS45IDE4Ni4xLTI5LjkgNjQuNCAwIDE0Mi41IDkuMiAxOTcuNiA0NS45IDM2LjggMjUuMyA1Mi45IDU3LjUgNTIuOSAxMDMuNCAwIDI1LjMtMi4zIDUyLjktMjAuNyA3My42LTE4LjQgMjAuNi00My43IDM0LjQtNjguOSA0My42LTQ2IDE2LjEtOTYuNSAyNy42LTE0NC44IDM2LjhNMzU5ODguNSAyMTY2NS45di0yOTEuOGg1ODguMnYtMzEyLjVoLTU4OC4yVjIwNzc5aDY5My45di0zMTAuMmgtMTAxNS42djE1MDcuM2gxMDE1LjZ2LTMxMC4yaC02OTMuOU0yMTgyMSAzNTkwNC42djg3NS40aDMxNy4xdi0xNTA3LjNoLTI3NS44bC01NTEuNCA4NjEuN3YtODYxLjdoLTMxOS40VjM2NzgwaDI3My40bDU1Ni4xLTg3NS40IiBzdHlsZT0iZmlsbDojMDAwO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpldmVub2RkO3N0cm9rZTpub25lIiB0cmFuc2Zvcm09Im1hdHJpeCguMTYgMCAwIC0uMTYgLTYwMCA2MTAwKSIvPjwvc3ZnPg==`
-
-
-function getDefBaseMaps() {
-    //用函數產生數據, 避免跨組件污染
-    let defBaseMaps = [
-        {
-            name: 'Mapbox',
-            //api.mapbox.com/v4/mapbox.satellite
-            //api.mapbox.com/v4/mapbox.mapbox-streets-v8
-            //api.mapbox.com/v4/mapbox.terrain-rgb
-            //api.mapbox.com/v4/mapbox.mapbox-traffic-v1
-            url: '//api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2VtaXNwaGVyZSIsImEiOiJja2s1anBrZzMwN3NkMndsOGt6MHo5ajI5In0._vUKnQ57n7UcWsWgOPIEgQ',
-            visible: true,
-        },
-        {
-            name: 'OpenStreetMap',
-            // url: '//{s}.tile.osm.org/{z}/{x}/{y}.png', //同樣位址
-            url: '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            visible: false,
-        },
-        {
-            name: 'OpenTopoMap',
-            url: '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-            visible: false,
-        },
-
-        //使用google.cn圖資
-        {
-            name: 'GoogleStreets',
-            url: '//www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}',
-            visible: false,
-        },
-        {
-            name: 'GoogleSatellite',
-            url: '//www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}',
-            visible: false,
-        },
-        {
-            name: 'GoogleHybrid',
-            url: '//www.google.cn/maps/vt?lyrs=s,h@189&gl=cn&x={x}&y={y}&z={z}',
-            visible: false,
-        },
-
-        //google要申請tokne才能用
-        // {
-        //     name: 'googleStreets',
-        //     url: 'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
-        //     visible: false,
-        // },
-        // {
-        //     name: 'googleHybrid',
-        //     url: 'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
-        //     visible: false,
-        // },
-        // {
-        //     name: 'googleSat',
-        //     url: 'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-        //     visible: false,
-        // },
-        // {
-        //     name: 'googleTerrain',
-        //     url: 'http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
-        //     visible: false,
-        // },
-
-        //TGOS要申請token才能用
-        // {
-        //     name: 'TGOS福衛二號影像',
-        //     url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=F2IMAGE_W-png-{z}-{x}-{y}',
-        //     visible: false,
-        // },
-        // {
-        //     name: 'TGOS福衛二號混合圖',
-        //     url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=ROADMAP_W-png-{z}-{x}-{y}',
-        //     visible: false,
-        // },
-        // {
-        //     name: 'TGOS電子地圖',
-        //     url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=TGOSMAP_W-png-{z}-{x}-{y}',
-        //     visible: false,
-        // },
-        // {
-        //     name: 'TGOS地形暈渲圖',
-        //     url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=HILLSHADE_W-png-{z}-{x}-{y}',
-        //     visible: false,
-        // },
-        // {
-        //     name: 'TGOS地形暈渲混合圖',
-        //     url: 'http://gis.sinica.edu.tw/tgos/file-exists.php?img=HILLSHADEMIX_W-png-{z}-{x}-{y}',
-        //     visible: false,
-        // },
-
-        // 山崩雲API服務供應平台
-        // https://landslide.geologycloud.tw/map
-
-        // 地質資料整合查詢平台
-        // https://geomap.gsmma.gov.tw/gwh/gsb97-1/sys8a/t3/index1.cfm
-
-        // {
-        //     name: '五萬分之一地質圖',
-        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/gm50000/GoogleMapsCompatible/{z}/{x}/{y}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '數值地形多向陰影圖',
-        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/Shadw20/GoogleMapsCompatible/{z}/{x}/{y}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '岩體強度分級',
-        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/EVGM_a1/GoogleMapsCompatible/{z}/{x}/{y}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '岩性組合分佈圖',
-        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/EVGM_all/GoogleMapsCompatible/{z}/{x}/{y}',
-        //     visible: false,
-        // },
-
-        // {
-        //     name: '山崩與地滑地質敏感區',
-        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/SensitiveArea/GoogleMapsCompatible/{z}/{x}/{y}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '落石地質災害潛勢圖',
-        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/EVGM_G01/GoogleMapsCompatible/{z}/{x}/{y}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '岩屑崩滑地質災害潛勢圖',
-        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/EVGM_G02/GoogleMapsCompatible/{z}/{x}/{y}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '岩體滑動地質災害潛勢圖',
-        //     url: 'https://landslide.geologycloud.tw/jlwmts/jetlink/EVGM_G04/GoogleMapsCompatible/{z}/{x}/{y}',
-        //     visible: false,
-        // },
-
-        // {
-        //     name: '五十萬之一地體構造圖',
-        //     url: 'https://geomap.gsmma.gov.tw/api/Tile/v1/getTile.cfm?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=500K_TECTONIC_MAP_1978&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '五十萬之一變質相圖',
-        //     url: 'https://geomap.gsmma.gov.tw/api/Tile/v1/getTile.cfm?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=500K_METAMORPHIC_FACIES_MAP_1994&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '五十萬之一附近海域沉積物分佈圖',
-        //     url: 'https://geomap.gsmma.gov.tw/api/Tile/v1/getTile.cfm?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=500K_OFFSHORE_SEDIMENT_MAP_1995&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '五十萬之一陸上砂資源分佈與品質圖',
-        //     url: 'https://geomap.gsmma.gov.tw/api/Tile/v1/getTile.cfm?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=500K_LAND_GRAVEL_MAP_1998&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '五十萬之一能源礦產及地下水資源分佈圖',
-        //     url: 'https://geomap.gsmma.gov.tw/api/Tile/v1/getTile.cfm?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=500K_ENERGY_GROUNDWATER_REOUSRCE_2006&STYLE=default&FORMAT=image/png&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
-        //     visible: false,
-        // },
-
-        // {
-        //     name: '臺灣通用電子地圖',
-        //     url: 'https://wmts.nlsc.gov.tw/wmts/EMAP/default/EPSG:3857/{z}/{y}/{x}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '臺灣地形陰影圖',
-        //     url: 'https://wmts.nlsc.gov.tw/wmts/MOI_HILLSHADE/default/EPSG:3857/{z}/{y}/{x}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '臺灣通用正射影像',
-        //     url: 'https://wmts.nlsc.gov.tw/wmts/PHOTO2/default/EPSG:3857/{z}/{y}/{x}',
-        //     visible: false,
-        // },
-
-        // {
-        //     name: '國家級特定風景區',
-        //     url: 'https://wmts.nlsc.gov.tw/wmts/Scenic/default/EPSG:3857/{z}/{y}/{x}',
-        //     visible: false,
-        // },
-        // {
-        //     name: '段籍圖',
-        //     url: 'https://wmts.nlsc.gov.tw/wmts/LANDSECT/default/EPSG:3857/{z}/{y}/{x}',
-        //     visible: false,
-        // },
-
-        //中研院
-
-        // {
-        //     name: '1987-臺灣地形圖',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=TM100K_1987-png-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1956-臺灣地形圖',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=TM50K_1956-jpg-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '美軍航照影像(1945/6/17攝影)',
-        //     url: '//gis.sinica.edu.tw/taipei/file-exists.php?img=Taipei_aerialphoto_1945-jpg-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1945-美軍繪製臺灣城市地圖',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=AMCityPlan_1945-png-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1944-美軍地形圖',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=AM50K_1944-png-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1942-日治二萬五千分之一地形圖(昭和修正版)',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM25K_1942-png-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1939-日治臺灣全圖(第五版)',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM300K_1939-png-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1934-日治臺灣全圖(第三版)',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM300K_1934-jpg-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1932-二十萬分一帝國圖(臺灣部份)',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM200K_1932-png-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1924-日治地形圖(陸地測量部)',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM50K_1924_new-png-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1921-日治臺灣堡圖(大正版)',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM20K_1921-jpg-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1921-日治地形圖',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM25K_1921-png-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1920-日治地形圖(總督府土木局)',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM50K_1920-png-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1916-日治蕃地地形圖',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM50K_1916-jpg-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1905-日治臺灣圖',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM100K_1905-png-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1904-日治臺灣堡圖(明治版)',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM20K_1904-jpg-{z}-{x}-{y}',
-        //     visible: false
-        // },
-        // {
-        //     name: '1899-日治臺灣全圖',
-        //     url: '//gis.sinica.edu.tw/tileserver/file-exists.php?img=JM400K_1899-png-{z}-{x}-{y}',
-        //     visible: false,
-        // },
-
-    ]
-    return defBaseMaps
-}
+import uiRes from '../uiRes.mjs'
+import defBaseMaps from '../defBaseMaps.mjs'
 
 
 /**
@@ -713,7 +431,11 @@ function getDefBaseMaps() {
  * @vue-prop {Number} [opt.panelLabels.maxHeight=null] 輸入地圖資訊區最大高度數字，單位px，預設null
  * @vue-prop {Boolean} [opt.panelCompassRose.show=false] 輸入是否顯示玫瑰羅盤區布林值，預設false
  * @vue-prop {String} [opt.panelCompassRose.position='topright'] 輸入玫瑰羅盤區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'topright'
- * @vue-prop {Number} [opt.panelCompassRose.size=155] 輸入玫瑰羅盤區尺寸(長寬)數字，單位px，預設155
+ * @vue-prop {Number} [opt.panelCompassRose.size=120] 輸入玫瑰羅盤區尺寸(長寬)數字，單位px，預設120
+ * @vue-prop {Boolean} [opt.panelCompassRose.withPanel=false] 輸入是否顯示玫瑰羅盤區底部面板布林值，預設false
+ * @vue-prop {String} [opt.panelCompassRose.iconSrcLight=詳見程式碼] 輸入淺色系玫瑰羅盤圖標來源字串，可使用base64格式或網址，預設值詳見程式碼
+ * @vue-prop {String} [opt.panelCompassRose.iconSrcDark=詳見程式碼] 輸入深色係玫瑰羅盤圖標來源字串，可使用base64格式或網址，預設值詳見程式碼
+ * @vue-prop {String} [opt.panelCompassRose.iconSrc=null] 輸入玫瑰羅盤圖標來源字串，若有則直接使用，若為null，此時withPanel為true時使用iconSrcDark，若withPanel為false，再自動依照底圖colorShade決定，colorShade為空字串或'light'時使用iconSrcDark，若為'dark'則使用iconSrcLight。預設null
  * @vue-prop {Boolean} [opt.panelZoom.show=true] 輸入是否顯示縮放按鈕區布林值，預設true
  * @vue-prop {String} [opt.panelZoom.position='bottomleft'] 輸入縮放按鈕區位置字串，可選'topleft'、'topright'、'bottomleft'、'bottomright'，預設'bottomleft'
  * @vue-prop {Boolean} [opt.panelScale.show=true] 輸入是否顯示比例尺區布林值，預設true
@@ -739,7 +461,7 @@ function getDefBaseMaps() {
  * @vue-prop {Number} [opt.pointSets[i].lineWidth=1] 輸入第i個點集合的框線寬度數字，預設為1
  * @vue-prop {String} [opt.pointSets[i].fillColor='rgba(0,150,255,0.65)'] 輸入第i個點集合的填充顏色字串，預設為'rgba(0,150,255,0.65)'
  * @vue-prop {Number} [opt.pointSets[i].size=10] 輸入第i個點集合的圖標尺寸數字，預設10
- * @vue-prop {String} [opt.pointSets[i].iconSrc=詳見程式碼] 輸入第i個點集合的顯示圖標來源字串，可使用base64格式或網址，預設為google map的點圖標，值詳見程式碼
+ * @vue-prop {String} [opt.pointSets[i].iconSrc=詳見程式碼] 輸入第i個點集合的顯示圖標來源字串，可使用base64格式或網址，預設為google map的點圖標，預設值詳見程式碼
  * @vue-prop {Array} [opt.pointSets[i].iconSize=[24,40]] 輸入第i個點集合的顯示圖標尺寸陣列，使用[寬,高]，長寬單位px，預設[24,40]
  * @vue-prop {Array} [opt.pointSets[i].iconAnchor=[iconSize[0]/2,iconSize[1]]] 輸入第i個點集合的顯示圖標的實際定位位置陣列，由圖標左上角代表實際定位點起算，往左移動為+x，往上移動為+y，x與y單位px，需給予[x,y]，預設[iconSize[0]/2,iconSize[1]]
  * @vue-prop {Array} [opt.pointSets[i].popupAnchor=[0,-iconSize[1]/1.5]] 輸入第i個點集合的顯示popup或tooltip時的指向位置陣列，由實際定位點起算，往右移動為+x，往下移動為+y，x與y單位px，需給予[x,y]，預設[0,-iconSize[1]/1.5]
@@ -752,7 +474,7 @@ function getDefBaseMaps() {
  * @vue-prop {String} [opt.pointSets[i].points[j].fillColor='rgba(0,150,255,0.65)'] 輸入第i個點集合的第j個點的填充顏色字串，預設為'rgba(0,150,255,0.65)'
  * @vue-prop {Number} [opt.pointSets[i].points[j].size=10] 輸入第i個點集合的第j個點的圖標尺寸數字，預設10
  * @vue-prop {Array} [opt.pointSets[i].points[j].latLng=[]] 輸入第i個點集合的第j個點的緯經度座標陣列，也就是給予[lat,lng]，預設[]
- * @vue-prop {String} [opt.pointSets[i].points[j].iconSrc=詳見程式碼] 輸入第i個點集合的第j個點的顯示圖標來源字串，可使用base64格式或網址，預設為google map的點圖標，值詳見程式碼
+ * @vue-prop {String} [opt.pointSets[i].points[j].iconSrc=詳見程式碼] 輸入第i個點集合的第j個點的顯示圖標來源字串，可使用base64格式或網址，預設為google map的點圖標，預設值詳見程式碼
  * @vue-prop {Array} [opt.pointSets[i].points[j].iconSize=[24,40]] 輸入第i個點集合的第j個點的顯示圖標尺寸陣列，使用[寬,高]，長寬單位px，預設[24,40]
  * @vue-prop {Array} [opt.pointSets[i].points[j].iconAnchor=[iconSize[0]/2,iconSize[1]]] 輸入第i個點集合的第j個點的顯示圖標的實際定位位置陣列，由圖標左上角代表實際定位點起算，往左移動為+x，往上移動為+y，x與y單位px，需給予[x,y]，預設[iconSize[0]/2,iconSize[1]]
  * @vue-prop {Array} [opt.pointSets[i].points[j].popupAnchor=[0,-iconSize[1]/1.5]] 輸入第i個點集合的第j個點的顯示popup或tooltip時的指向位置陣列，由實際定位點起算，往右移動為+x，往下移動為+y，x與y單位px，需給予[x,y]，預設[0,-iconSize[1]/1.5]
@@ -857,7 +579,6 @@ export default {
     },
     data: function() {
         return {
-            iconCompassRose,
 
             dbcChangePointSets: debounce(),
             dbcChangePolygonSets: debounce(),
@@ -972,9 +693,55 @@ export default {
     },
     computed: {
 
-        // renderer: function() {
-        //     return L.canvas({ padding: 0, tolerance: 0 })
-        // },
+        baseMapColorShade: function() {
+            let vo = this
+
+            //baseMaps
+            let baseMaps = get(vo, 'panelBaseMaps.baseMaps', [])
+
+            //colorShade
+            let colorShade = ''
+            each(baseMaps, (v) => {
+                if (v.visible && isestr(v.colorShade)) {
+                    colorShade = v.colorShade
+                    return false //跳出
+                }
+            })
+            // console.log('baseMapColorShade', colorShade)
+
+            return colorShade
+        },
+
+        useIconCompassRose: function() {
+            let vo = this
+
+            //iconSrc
+            if (isestr(vo.panelCompassRose.iconSrc)) {
+                return vo.panelCompassRose.iconSrc
+            }
+
+            //withPanel
+            if (vo.panelCompassRose.withPanel) {
+                if (isestr(vo.panelCompassRose.iconSrcDark)) {
+                    return vo.panelCompassRose.iconSrcDark
+                }
+                throw new Error(`invalid panelCompassRose.iconSrcDark`)
+            }
+
+            //baseMapColorShade
+            if (vo.baseMapColorShade === 'dark') {
+                if (isestr(vo.panelCompassRose.iconSrcLight)) {
+                    return vo.panelCompassRose.iconSrcLight
+                }
+                throw new Error(`invalid panelCompassRose.iconSrcLight`)
+            }
+            else {
+                if (isestr(vo.panelCompassRose.iconSrcDark)) {
+                    return vo.panelCompassRose.iconSrcDark
+                }
+                throw new Error(`invalid panelCompassRose.iconSrcDark`)
+            }
+        },
 
     },
     methods: {
@@ -1104,7 +871,7 @@ export default {
 
             //check
             if (!r.eff) {
-                let defIconSrc = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAApCAYAAADAk4LOAAAFgUlEQVR4Aa1XA5BjWRTN2oW17d3YaZtr2962HUzbDNpjszW24mRt28p47v7zq/bXZtrp/lWnXr337j3nPCe85NcypgSFdugCpW5YoDAMRaIMqRi6aKq5E3YqDQO3qAwjVWrD8Ncq/RBpykd8oZUb/kaJutow8r1aP9II0WmLKLIsJyv1w/kqw9Ch2MYdB++12Onxee/QMwvf4/Dk/Lfp/i4nxTXtOoQ4pW5Aj7wpici1A9erdAN2OH64x8OSP9j3Ft3b7aWkTg/Fm91siTra0f9on5sQr9INejH6CUUUpavjFNq1B+Oadhxmnfa8RfEmN8VNAsQhPqF55xHkMzz3jSmChWU6f7/XZKNH+9+hBLOHYozuKQPxyMPUKkrX/K0uWnfFaJGS1QPRtZsOPtr3NsW0uyh6NNCOkU3Yz+bXbT3I8G3xE5EXLXtCXbbqwCO9zPQYPRTZ5vIDXD7U+w7rFDEoUUf7ibHIR4y6bLVPXrz8JVZEql13trxwue/uDivd3fkWRbS6/IA2bID4uk0UpF1N8qLlbBlXs4Ee7HLTfV1j54APvODnSfOWBqtKVvjgLKzF5YdEk5ewRkGlK0i33Eofffc7HT56jD7/6U+qH3Cx7SBLNntH5YIPvODnyfIXZYRVDPqgHtLs5ABHD3YzLuespb7t79FY34DjMwrVrcTuwlT55YMPvOBnRrJ4VXTdNnYug5ucHLBjEpt30701A3Ts+HEa73u6dT3FNWwflY86eMHPk+Yu+i6pzUpRrW7SNDg5JHR4KapmM5Wv2E8Tfcb1HoqqHMHU+uWDD7zg54mz5/2BSnizi9T1Dg4QQXLToGNCkb6tb1NU+QAlGr1++eADrzhn/u8Q2YZhQVlZ5+CAOtqfbhmaUCS1ezNFVm2imDbPmPng5wmz+gwh+oHDce0eUtQ6OGDIyR0uUhUsoO3vfDmmgOezH0mZN59x7MBi++WDL1g/eEiU3avlidO671bkLfwbw5XV2P8Pzo0ydy4t2/0eu33xYSOMOD8hTf4CrBtGMSoXfPLchX+J0ruSePw3LZeK0juPJbYzrhkH0io7B3k164hiGvawhOKMLkrQLyVpZg8rHFW7E2uHOL888IBPlNZ1FPzstSJM694fWr6RwpvcJK60+0HCILTBzZLFNdtAzJaohze60T8qBzyh5ZuOg5e7uwQppofEmf2++DYvmySqGBuKaicF1blQjhuHdvCIMvp8whTTfZzI7RldpwtSzL+F1+wkdZ2TBOW2gIF88PBTzD/gpeREAMEbxnJcaJHNHrpzji0gQCS6hdkEeYt9DF/2qPcEC8RM28Hwmr3sdNyht00byAut2k3gufWNtgtOEOFGUwcXWNDbdNbpgBGxEvKkOQsxivJx33iow0Vw5S6SVTrpVq11ysA2Rp7gTfPfktc6zhtXBBC+adRLshf6sG2RfHPZ5EAc4sVZ83yCN00Fk/4kggu40ZTvIEm5g24qtU4KjBrx/BTTH8ifVASAG7gKrnWxJDcU7x8X6Ecczhm3o6YicvsLXWfh3Ch1W0k8x0nXF+0fFxgt4phz8QvypiwCCFKMqXCnqXExjq10beH+UUA7+nG6mdG/Pu0f3LgFcGrl2s0kNNjpmoJ9o4B29CMO8dMT4Q5ox8uitF6fqsrJOr8qnwNbRzv6hSnG5wP+64C7h9lp30hKNtKdWjtdkbuPA19nJ7Tz3zR/ibgARbhb4AlhavcBebmTHcFl2fvYEnW0ox9xMxKBS8btJ+KiEbq9zA4RthQXDhPa0T9TEe69gWupwc6uBUphquXgf+/FrIjweHQS4/pduMe5ERUMHUd9xv8ZR98CxkS4F2n3EUrUZ10EYNw7BWm9x1GiPssi3GgiGRDKWRYZfXlON+dfNbM+GgIwYdwAAAAASUVORK5CYII='
+                let defIconSrc = uiRes.iconPoint
                 r.iconSrc = defIconSrc
                 r.iconSize = [24, 40]
                 r.iconAnchor = [r.iconSize[0] / 2, r.iconSize[1]] //圖左上角相對座標
@@ -1210,10 +977,10 @@ export default {
             }
             if (size(get(panelBaseMaps, 'baseMaps', [])) === 0) {
                 if (size(get(vo, 'panelBaseMaps.baseMaps', [])) === 0) {
-                    panelBaseMaps.baseMaps = getDefBaseMaps() //無既有數據, 使用getDefBaseMaps產生預設地圖
+                    panelBaseMaps.baseMaps = cloneDeep(defBaseMaps) //無既有數據, 使用cloneDeep避免跨組件污染
                 }
                 else {
-                    panelBaseMaps.baseMaps = cloneDeep(vo.panelBaseMaps.baseMaps) //有既有數據, 因baseMaps包含使用者已切換指定之底圖, 故得要優先使用
+                    panelBaseMaps.baseMaps = cloneDeep(vo.panelBaseMaps.baseMaps) //有既有數據, 因baseMaps包含使用者已切換指定之底圖故得要優先使用, 使用cloneDeep避免污染外部數據
                 }
             }
             panelBaseMaps = cloneDeep(panelBaseMaps) //一定要cloneDeep使陣列記憶體與外部拖勾, 要不然更新baseMaps時就會觸發外部opt記憶體變更而被watch到, 進而導致無限觸發事件
@@ -1242,7 +1009,11 @@ export default {
             let defPanelCompassRose = {
                 show: false,
                 position: 'topright',
-                size: 155,
+                size: 120,
+                withPanel: false,
+                iconSrcLight: uiRes.iconCompassRoseLight,
+                iconSrcDark: uiRes.iconCompassRoseDark,
+                iconSrc: null,
             }
 
             //panelCompassRose
@@ -3405,6 +3176,7 @@ export default {
 <style scoped>
 
 .clsPanel {
+    display:flex;
     padding:4px 5px;
     box-shadow:0 0 15px rgba(0,0,0,0.2);
     border-radius:5px;

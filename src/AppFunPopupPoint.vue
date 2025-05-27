@@ -123,7 +123,8 @@ export default {
                     //             latLng: [22.40, 120.67],
                     //         },
                     //     ],
-                    //     visible: false,
+                    //     colorShade: 'light',
+        //     visible: false,,
                     //     popup: function(v) {
                     //         console.log('pointSet[1] popup', v)
                     //         let c = ''
@@ -144,7 +145,8 @@ export default {
                     //             latLng: [21.95, 120.797],
                     //         },
                     //     ],
-                    //     visible: false,
+                    //     colorShade: 'light',
+        //     visible: false,,
                     // },
                 ],
             },

@@ -74,6 +74,10 @@
 
             <AppPCRSize v-if="showSubCmp==='panelCompassRose.size'"></AppPCRSize>
 
+            <AppPCRWithPanel v-if="showSubCmp==='panelCompassRose.withPanel'"></AppPCRWithPanel>
+
+            <AppPCRIconSrcDarkLight v-if="showSubCmp==='panelCompassRose.iconSrcDark,iconSrcLight'"></AppPCRIconSrcDarkLight>
+
             <AppPLBShow v-if="showSubCmp==='panelLabels.show'"></AppPLBShow>
 
             <AppPLBPosition v-if="showSubCmp==='panelLabels.position'"></AppPLBPosition>
@@ -305,6 +309,8 @@ import AppPSCPosition from './AppPSCPosition.vue'
 import AppPCRShow from './AppPCRShow.vue'
 import AppPCRPosition from './AppPCRPosition.vue'
 import AppPCRSize from './AppPCRSize.vue'
+import AppPCRWithPanel from './AppPCRWithPanel.vue'
+import AppPCRIconSrcDarkLight from './AppPCRIconSrcDarkLight.vue'
 import AppPLBShow from './AppPLBShow.vue'
 import AppPLBPosition from './AppPLBPosition.vue'
 import AppPLBTitle from './AppPLBTitle.vue'
@@ -428,6 +434,8 @@ export default {
         AppPCRShow,
         AppPCRPosition,
         AppPCRSize,
+        AppPCRWithPanel,
+        AppPCRIconSrcDarkLight,
         AppPLBShow,
         AppPLBPosition,
         AppPLBTitle,
@@ -560,6 +568,8 @@ export default {
                     'panelCompassRose.show',
                     'panelCompassRose.position',
                     'panelCompassRose.size',
+                    'panelCompassRose.withPanel',
+                    'panelCompassRose.iconSrcDark,iconSrcLight',
                 ],
                 panelLabels: [
                     'panelLabels.show',

@@ -53,6 +53,9 @@ export default {
     data: function() {
         return {
             'opt': {
+                panelLabels: {
+                    show: false,
+                },
                 panelCompassRose: {
                     show: true,
                     position: 'topright',

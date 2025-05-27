@@ -2,16 +2,16 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">panelCompassRose.show</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPCRShow.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPCRShow.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">panelCompassRose.withPanel</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPCRWithPanel.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPCRWithPanel.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div class="bkp">
 
             <div>
-                <button style="margin:0px 3px 3px 0px;" @click="opt.panelCompassRose.show=true">show</button>
-                <button style="margin:0px 3px 3px 0px;" @click="opt.panelCompassRose.show=false">hide(default)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelCompassRose.withPanel=false">false(default)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="opt.panelCompassRose.withPanel=true">true</button>
             </div>
 
             <div style="display:flex; padding-bottom:40px; overflow-x:auto;">
@@ -55,7 +55,8 @@ export default {
                     show: false,
                 },
                 panelCompassRose: {
-                    show: false,
+                    show: true,
+                    withPanel: false,
                 },
             },
             'action': [
