@@ -65,7 +65,10 @@
             >
                 <div
                     class="clsPanel"
-                    :style="{background:panelBackgroundColor}"
+                    :style="{
+                        background:panelBackgroundColor,
+                        padding:'3px 8px',
+                    }"
                 >
                     <div
                         :style="{overflow:'auto',...panelBaseMaps.style}"
@@ -87,7 +90,10 @@
             >
                 <div
                     class="clsPanel"
-                    :style="{background:panelBackgroundColor}"
+                    :style="{
+                        background:panelBackgroundColor,
+                        padding:'3px 8px',
+                    }"
                 >
                     <div
                         :style="{overflow:'auto',...panelItems.style}"
@@ -111,7 +117,10 @@
             >
                 <div
                     class="clsPanel"
-                    :style="{background:panelBackgroundColor}"
+                    :style="{
+                        background:panelBackgroundColor,
+                        padding:'3px 6px',
+                    }"
                 >
                     <div :style="{overflow:'auto',...panelLabels.style}">
 
@@ -228,12 +237,13 @@
             <!-- tooltip顯示區 -->
             <l-layer-group style="white-space:normal;" ref="refTooltip"></l-layer-group>
 
-            <!-- 底圖圖層 -->
+            <!-- 圖層 -->
             <l-tile-layer
                 layer-type="base"
                 :key="'baseMap:'+kbaseMap"
                 :name="baseMap.name"
                 :opacity="baseMap.opacity"
+                :zIndex="1+kbaseMap"
                 :visible.sync="baseMap.visible"
                 :url="baseMap.url"
                 :subdomains="baseMap.subdomains"
@@ -3179,7 +3189,7 @@ export default {
 
 .clsPanel {
     display:flex;
-    padding:4px 5px;
+    padding:3px;
     box-shadow:0 0 15px rgba(0,0,0,0.2);
     border-radius:5px;
     font-size: 0.8rem;
