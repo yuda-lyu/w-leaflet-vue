@@ -233,6 +233,7 @@
                 layer-type="base"
                 :key="'baseMap:'+kbaseMap"
                 :name="baseMap.name"
+                :opacity="baseMap.opacity"
                 :visible.sync="baseMap.visible"
                 :url="baseMap.url"
                 :subdomains="baseMap.subdomains"
@@ -698,6 +699,7 @@ export default {
 
             //baseMaps
             let baseMaps = get(vo, 'panelBaseMaps.baseMaps', [])
+            // console.log('baseMaps', baseMaps)
 
             //colorShade
             let colorShade = ''
