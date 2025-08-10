@@ -2,9 +2,9 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">contourSet.click</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetClick.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetClick.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">contourSetsClick</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetsClick.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetsClick.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div class="bkp">
@@ -48,8 +48,8 @@ export default {
             'opt': {
                 center: [24.084, 121.068],
                 zoom: 8,
-                defContourSetsClick: function(v) {
-                    console.log('defContourSetsClick', v)
+                contourSetsClick: function(v) {
+                    console.log('contourSetsClick', v)
                 },
                 contourSets: [
                     {
@@ -61,9 +61,6 @@ export default {
                             [23.193, 120.355, 22], [23.456, 120.890, 42], [23.280, 120.551, 25], [23.162, 121.247, 5],
                         ],
                         visible: true,
-                        click: function(msg) {
-                            console.log('contourSets[0] click', msg)
-                        },
                     },
                     {
                         title: 'contourSet B',

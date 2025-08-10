@@ -2,9 +2,9 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">pointSet.tooltip</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetTooltip.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetTooltip.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">pointSetsTooltip</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetsTooltip.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetsTooltip.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div class="bkp">
@@ -15,7 +15,23 @@
                     <WLeafletVue
                         style="width:800px; height:500px;"
                         :opt="opt"
-                    ></WLeafletVue>
+                    >
+                        <template v-slot:point-tooltip="props">
+                            <div style="padding:15px; width:300px;">
+                                <div style="padding-bottom:8px;">
+                                    <div style="font-size:0.90rem; color:#f26;">[Tooltip]</div>
+                                </div>
+                                <div style="padding-bottom:5px;">
+                                    <div style="font-size:0.80rem; color:#aa2df4;">[PointSet: {{ props.pointSet.title }}]</div>
+                                    <div style="font-size:0.70rem; color:#777;">{{ props.pointSet.msg }}</div>
+                                </div>
+                                <div style="">
+                                    <div style="font-size:0.70rem;color:#4347de;">[Point: {{ props.point.title }}]</div>
+                                    <div style="font-size:0.70rem;color:#777;">{{ props.point.msg }}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </WLeafletVue>
                 </div>
 
                 <div style="width:600px; min-width:600px; padding:0px 20px;">
@@ -46,15 +62,6 @@ export default {
     data: function() {
         return {
             'opt': {
-                defPointSetsTooltip: function(v) {
-                    console.log('defPointSetsTooltip', v)
-                    let c = ''
-                    c += '<div style="padding:5px 10px;">'
-                    c += '<div style="color:#222; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;"><span style="color:#62f;">[Tooltip>pointSets]</span> ' + v.point.title + '</div>'
-                    c += '<div style="color:#aaa; white-space:normal;">' + v.point.msg + '</div>'
-                    c += '</div>'
-                    return c
-                },
                 pointSets: [
                     {
                         title: 'Lakes',
@@ -72,15 +79,6 @@ export default {
                             },
                         ],
                         visible: true,
-                        tooltip: function(v) {
-                            console.log('pointSet[0] tooltip', v)
-                            let c = ''
-                            c += '<div style="padding:5px 10px;">'
-                            c += '<div style="color:#222; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;"><span style="color:#f26;">[Tooltip>pointSet:' + v.pointSet.title + ']</span> ' + v.point.title + '</div>'
-                            c += '<div style="color:#aaa; white-space:normal;">' + v.point.msg + '</div>'
-                            c += '</div>'
-                            return c
-                        },
                     },
                     {
                         title: 'pointSet B',

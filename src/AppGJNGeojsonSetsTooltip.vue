@@ -2,9 +2,9 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">geojsonSet.popup</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppGJNGeojsonSetPopup.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppGJNGeojsonSetPopup.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">geojsonSetsTooltip</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppGJNGeojsonSetsTooltip.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppGJNGeojsonSetsTooltip.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div class="bkp">
@@ -15,7 +15,19 @@
                     <WLeafletVue
                         style="width:800px; height:500px;"
                         :opt="opt"
-                    ></WLeafletVue>
+                    >
+                        <template v-slot:geojson-tooltip="props">
+                            <div style="padding:15px; width:300px;">
+                                <div style="padding-bottom:8px;">
+                                    <div style="font-size:0.90rem; color:#f26;">[Tooltip]</div>
+                                </div>
+                                <div style="padding-bottom:5px;">
+                                    <div style="font-size:0.80rem; color:#aa2df4;">[GeojsonSet: {{ props.geojsonSet.title }}]</div>
+                                    <div style="font-size:0.70rem; color:#777;">{{ props.geojsonSet.msg }}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </WLeafletVue>
                 </div>
 
                 <div style="width:600px; min-width:600px; padding:0px 20px;">
@@ -48,15 +60,6 @@ export default {
             'opt': {
                 center: [25, 121.58],
                 zoom: 10,
-                defGeojsonSetsPopup: function(v) {
-                    console.log('defGeojsonSetsPopup', v)
-                    let c = ''
-                    c += '<div style="padding:15px;">'
-                    c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#62f;">[Popup>geojsonSets]</span> ' + v.geojsonSet.title + '</div>'
-                    c += '<div style="color:#aaa;">' + v.geojsonSet.msg + '</div>'
-                    c += '</div>'
-                    return c
-                },
                 geojsonSets: [
                     {
                         title: 'geojsonSet A',
@@ -128,15 +131,6 @@ export default {
                         },
                         keyStyle: 'properties.style',
                         visible: true,
-                        popup: function(v) {
-                            console.log('geojsonSets[0] popup', v)
-                            let c = ''
-                            c += '<div style="padding:15px;">'
-                            c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f26;">[Popup>geojsonSet]</span> ' + v.geojsonSet.title + '</div>'
-                            c += '<div style="color:#aaa;">' + v.geojsonSet.msg + '</div>'
-                            c += '</div>'
-                            return c
-                        },
                     },
                     {
                         title: 'geojsonSet B',

@@ -116,23 +116,11 @@
 
             <AppPNTPointSetPointIconSrcSizeAnchor v-if="showSubCmp==='pointSet.point.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor'"></AppPNTPointSetPointIconSrcSizeAnchor>
 
-            <AppPNTDefPointSetsClick v-if="showSubCmp==='defPointSetsClick'"></AppPNTDefPointSetsClick>
+            <AppPNTPointSetsClick v-if="showSubCmp==='pointSetsClick'"></AppPNTPointSetsClick>
 
-            <AppPNTPointSetClick v-if="showSubCmp==='pointSet.click'"></AppPNTPointSetClick>
+            <AppPNTPointSetsPopup v-if="showSubCmp==='pointSetsPopup'"></AppPNTPointSetsPopup>
 
-            <AppPNTPointSetPointClick v-if="showSubCmp==='pointSet.point.click'"></AppPNTPointSetPointClick>
-
-            <AppPNTDefPointSetsPopup v-if="showSubCmp==='defPointSetsPopup'"></AppPNTDefPointSetsPopup>
-
-            <AppPNTPointSetPopup v-if="showSubCmp==='pointSet.popup'"></AppPNTPointSetPopup>
-
-            <AppPNTPointSetPointPopup v-if="showSubCmp==='pointSet.point.popup'"></AppPNTPointSetPointPopup>
-
-            <AppPNTDefPointSetsTooltip v-if="showSubCmp==='defPointSetsTooltip'"></AppPNTDefPointSetsTooltip>
-
-            <AppPNTPointSetTooltip v-if="showSubCmp==='pointSet.tooltip'"></AppPNTPointSetTooltip>
-
-            <AppPNTPointSetPointTooltip v-if="showSubCmp==='pointSet.point.tooltip'"></AppPNTPointSetPointTooltip>
+            <AppPNTPointSetsTooltip v-if="showSubCmp==='pointSetsTooltip'"></AppPNTPointSetsTooltip>
 
             <AppPNTPointSetLargeSet v-if="showSubCmp==='pointSet.largeSet'"></AppPNTPointSetLargeSet>
 
@@ -154,17 +142,11 @@
 
             <AppPGNPolygonSetFillColorHover v-if="showSubCmp==='polygonSet.fillColorHover'"></AppPGNPolygonSetFillColorHover>
 
-            <AppPGNDefPolygonSetsClick v-if="showSubCmp==='defPolygonSetsClick'"></AppPGNDefPolygonSetsClick>
+            <AppPGNPolygonSetsClick v-if="showSubCmp==='polygonSetsClick'"></AppPGNPolygonSetsClick>
 
-            <AppPGNPolygonSetClick v-if="showSubCmp==='polygonSet.click'"></AppPGNPolygonSetClick>
+            <AppPGNPolygonSetsPopup v-if="showSubCmp==='polygonSetsPopup'"></AppPGNPolygonSetsPopup>
 
-            <AppPGNDefPolygonSetsPopup v-if="showSubCmp==='defPolygonSetsPopup'"></AppPGNDefPolygonSetsPopup>
-
-            <AppPGNPolygonSetPopup v-if="showSubCmp==='polygonSet.popup'"></AppPGNPolygonSetPopup>
-
-            <AppPGNDefPolygonSetsTooltip v-if="showSubCmp==='defPolygonSetsTooltip'"></AppPGNDefPolygonSetsTooltip>
-
-            <AppPGNPolygonSetTooltip v-if="showSubCmp==='polygonSet.tooltip'"></AppPGNPolygonSetTooltip>
+            <AppPGNPolygonSetsTooltip v-if="showSubCmp==='polygonSetsTooltip'"></AppPGNPolygonSetsTooltip>
 
             <AppGJNGeojsonSets v-if="showSubCmp==='geojsonSets'"></AppGJNGeojsonSets>
 
@@ -186,17 +168,11 @@
 
             <AppGJNGeojsonSetFillColorHover v-if="showSubCmp==='geojsonSet.fillColorHover'"></AppGJNGeojsonSetFillColorHover>
 
-            <AppGJNDefGeojsonSetsClick v-if="showSubCmp==='defGeojsonSetsClick'"></AppGJNDefGeojsonSetsClick>
+            <AppGJNGeojsonSetsClick v-if="showSubCmp==='geojsonSetsClick'"></AppGJNGeojsonSetsClick>
 
-            <AppGJNGeojsonSetClick v-if="showSubCmp==='geojsonSet.click'"></AppGJNGeojsonSetClick>
+            <AppGJNGeojsonSetsPopup v-if="showSubCmp==='geojsonSetsPopup'"></AppGJNGeojsonSetsPopup>
 
-            <AppGJNDefGeojsonSetsPopup v-if="showSubCmp==='defGeojsonSetsPopup'"></AppGJNDefGeojsonSetsPopup>
-
-            <AppGJNGeojsonSetPopup v-if="showSubCmp==='geojsonSet.popup'"></AppGJNGeojsonSetPopup>
-
-            <AppGJNDefGeojsonSetsTooltip v-if="showSubCmp==='defGeojsonSetsTooltip'"></AppGJNDefGeojsonSetsTooltip>
-
-            <AppGJNGeojsonSetTooltip v-if="showSubCmp==='geojsonSet.tooltip'"></AppGJNGeojsonSetTooltip>
+            <AppGJNGeojsonSetsTooltip v-if="showSubCmp==='geojsonSetsTooltip'"></AppGJNGeojsonSetsTooltip>
 
             <AppCTRContourSets v-if="showSubCmp==='contourSets'"></AppCTRContourSets>
 
@@ -236,17 +212,11 @@
 
             <AppCTRContourSetPolygonsContainInner v-if="showSubCmp==='contourSet.polygonsContainInner'"></AppCTRContourSetPolygonsContainInner>
 
-            <AppCTRDefContourSetsClick v-if="showSubCmp==='defContourSetsClick'"></AppCTRDefContourSetsClick>
+            <AppCTRContourSetsClick v-if="showSubCmp==='contourSetsClick'"></AppCTRContourSetsClick>
 
-            <AppCTRContourSetClick v-if="showSubCmp==='contourSet.click'"></AppCTRContourSetClick>
+            <AppCTRContourSetsPopup v-if="showSubCmp==='contourSetsPopup'"></AppCTRContourSetsPopup>
 
-            <AppCTRDefContourSetsPopup v-if="showSubCmp==='defContourSetsPopup'"></AppCTRDefContourSetsPopup>
-
-            <AppCTRContourSetPopup v-if="showSubCmp==='contourSet.popup'"></AppCTRContourSetPopup>
-
-            <AppCTRDefContourSetsTooltip v-if="showSubCmp==='defContourSetsTooltip'"></AppCTRDefContourSetsTooltip>
-
-            <AppCTRContourSetTooltip v-if="showSubCmp==='contourSet.tooltip'"></AppCTRContourSetTooltip>
+            <AppCTRContourSetsTooltip v-if="showSubCmp==='contourSetsTooltip'"></AppCTRContourSetsTooltip>
 
             <AppCTRContourSetLargeSet v-if="showSubCmp==='contourSet.largeSet'"></AppCTRContourSetLargeSet>
 
@@ -330,15 +300,9 @@ import AppPNTPointSetFillColor from './AppPNTPointSetFillColor.vue'
 import AppPNTPointSetSize from './AppPNTPointSetSize.vue'
 import AppPNTPointSetIconSrcSizeAnchor from './AppPNTPointSetIconSrcSizeAnchor.vue'
 import AppPNTPointSetPointIconSrcSizeAnchor from './AppPNTPointSetPointIconSrcSizeAnchor.vue'
-import AppPNTDefPointSetsClick from './AppPNTDefPointSetsClick.vue'
-import AppPNTPointSetClick from './AppPNTPointSetClick.vue'
-import AppPNTPointSetPointClick from './AppPNTPointSetPointClick.vue'
-import AppPNTDefPointSetsPopup from './AppPNTDefPointSetsPopup.vue'
-import AppPNTPointSetPopup from './AppPNTPointSetPopup.vue'
-import AppPNTPointSetPointPopup from './AppPNTPointSetPointPopup.vue'
-import AppPNTDefPointSetsTooltip from './AppPNTDefPointSetsTooltip.vue'
-import AppPNTPointSetTooltip from './AppPNTPointSetTooltip.vue'
-import AppPNTPointSetPointTooltip from './AppPNTPointSetPointTooltip.vue'
+import AppPNTPointSetsClick from './AppPNTPointSetsClick.vue'
+import AppPNTPointSetsPopup from './AppPNTPointSetsPopup.vue'
+import AppPNTPointSetsTooltip from './AppPNTPointSetsTooltip.vue'
 import AppPNTPointSetLargeSet from './AppPNTPointSetLargeSet.vue'
 import AppPGNPolygonSets from './AppPGNPolygonSets.vue'
 import AppPGNPolygonSetChangeData from './AppPGNPolygonSetChangeData.vue'
@@ -349,12 +313,9 @@ import AppPGNPolygonSetLineWidth from './AppPGNPolygonSetLineWidth.vue'
 import AppPGNPolygonSetLineWidthHover from './AppPGNPolygonSetLineWidthHover.vue'
 import AppPGNPolygonSetFillColor from './AppPGNPolygonSetFillColor.vue'
 import AppPGNPolygonSetFillColorHover from './AppPGNPolygonSetFillColorHover.vue'
-import AppPGNDefPolygonSetsClick from './AppPGNDefPolygonSetsClick.vue'
-import AppPGNPolygonSetClick from './AppPGNPolygonSetClick.vue'
-import AppPGNDefPolygonSetsPopup from './AppPGNDefPolygonSetsPopup.vue'
-import AppPGNPolygonSetPopup from './AppPGNPolygonSetPopup.vue'
-import AppPGNDefPolygonSetsTooltip from './AppPGNDefPolygonSetsTooltip.vue'
-import AppPGNPolygonSetTooltip from './AppPGNPolygonSetTooltip.vue'
+import AppPGNPolygonSetsClick from './AppPGNPolygonSetsClick.vue'
+import AppPGNPolygonSetsPopup from './AppPGNPolygonSetsPopup.vue'
+import AppPGNPolygonSetsTooltip from './AppPGNPolygonSetsTooltip.vue'
 import AppGJNGeojsonSets from './AppGJNGeojsonSets.vue'
 import AppGJNGeojsonSetChangeData from './AppGJNGeojsonSetChangeData.vue'
 import AppGJNGeojsonSetUpload from './AppGJNGeojsonSetUpload.vue'
@@ -365,12 +326,9 @@ import AppGJNGeojsonSetLineWidth from './AppGJNGeojsonSetLineWidth.vue'
 import AppGJNGeojsonSetLineWidthHover from './AppGJNGeojsonSetLineWidthHover.vue'
 import AppGJNGeojsonSetFillColor from './AppGJNGeojsonSetFillColor.vue'
 import AppGJNGeojsonSetFillColorHover from './AppGJNGeojsonSetFillColorHover.vue'
-import AppGJNDefGeojsonSetsClick from './AppGJNDefGeojsonSetsClick.vue'
-import AppGJNGeojsonSetClick from './AppGJNGeojsonSetClick.vue'
-import AppGJNDefGeojsonSetsPopup from './AppGJNDefGeojsonSetsPopup.vue'
-import AppGJNGeojsonSetPopup from './AppGJNGeojsonSetPopup.vue'
-import AppGJNDefGeojsonSetsTooltip from './AppGJNDefGeojsonSetsTooltip.vue'
-import AppGJNGeojsonSetTooltip from './AppGJNGeojsonSetTooltip.vue'
+import AppGJNGeojsonSetsClick from './AppGJNGeojsonSetsClick.vue'
+import AppGJNGeojsonSetsPopup from './AppGJNGeojsonSetsPopup.vue'
+import AppGJNGeojsonSetsTooltip from './AppGJNGeojsonSetsTooltip.vue'
 import AppCTRContourSets from './AppCTRContourSets.vue'
 import AppCTRContourSetChangeData from './AppCTRContourSetChangeData.vue'
 import AppCTRContourSetThresholds from './AppCTRContourSetThresholds.vue'
@@ -390,12 +348,9 @@ import AppCTRContourSetLegendTextExtra from './AppCTRContourSetLegendTextExtra.v
 import AppCTRContourSetPolygonClipOuter from './AppCTRContourSetPolygonClipOuter.vue'
 import AppCTRContourSetPolygonsClipInner from './AppCTRContourSetPolygonsClipInner.vue'
 import AppCTRContourSetPolygonsContainInner from './AppCTRContourSetPolygonsContainInner.vue'
-import AppCTRDefContourSetsClick from './AppCTRDefContourSetsClick.vue'
-import AppCTRContourSetClick from './AppCTRContourSetClick.vue'
-import AppCTRDefContourSetsPopup from './AppCTRDefContourSetsPopup.vue'
-import AppCTRContourSetPopup from './AppCTRContourSetPopup.vue'
-import AppCTRDefContourSetsTooltip from './AppCTRDefContourSetsTooltip.vue'
-import AppCTRContourSetTooltip from './AppCTRContourSetTooltip.vue'
+import AppCTRContourSetsClick from './AppCTRContourSetsClick.vue'
+import AppCTRContourSetsPopup from './AppCTRContourSetsPopup.vue'
+import AppCTRContourSetsTooltip from './AppCTRContourSetsTooltip.vue'
 import AppCTRContourSetLargeSet from './AppCTRContourSetLargeSet.vue'
 import AppCTRContourSetInterp2 from './AppCTRContourSetInterp2.vue'
 import AppIMGImageSets from './AppIMGImageSets.vue'
@@ -455,15 +410,9 @@ export default {
         AppPNTPointSetSize,
         AppPNTPointSetIconSrcSizeAnchor,
         AppPNTPointSetPointIconSrcSizeAnchor,
-        AppPNTDefPointSetsClick,
-        AppPNTPointSetClick,
-        AppPNTPointSetPointClick,
-        AppPNTDefPointSetsPopup,
-        AppPNTPointSetPopup,
-        AppPNTPointSetPointPopup,
-        AppPNTDefPointSetsTooltip,
-        AppPNTPointSetTooltip,
-        AppPNTPointSetPointTooltip,
+        AppPNTPointSetsClick,
+        AppPNTPointSetsPopup,
+        AppPNTPointSetsTooltip,
         AppPNTPointSetLargeSet,
         AppPGNPolygonSets,
         AppPGNPolygonSetChangeData,
@@ -474,12 +423,9 @@ export default {
         AppPGNPolygonSetLineWidthHover,
         AppPGNPolygonSetFillColor,
         AppPGNPolygonSetFillColorHover,
-        AppPGNDefPolygonSetsClick,
-        AppPGNPolygonSetClick,
-        AppPGNDefPolygonSetsPopup,
-        AppPGNPolygonSetPopup,
-        AppPGNDefPolygonSetsTooltip,
-        AppPGNPolygonSetTooltip,
+        AppPGNPolygonSetsClick,
+        AppPGNPolygonSetsPopup,
+        AppPGNPolygonSetsTooltip,
         AppGJNGeojsonSets,
         AppGJNGeojsonSetChangeData,
         AppGJNGeojsonSetUpload,
@@ -490,12 +436,9 @@ export default {
         AppGJNGeojsonSetLineWidthHover,
         AppGJNGeojsonSetFillColor,
         AppGJNGeojsonSetFillColorHover,
-        AppGJNDefGeojsonSetsClick,
-        AppGJNGeojsonSetClick,
-        AppGJNDefGeojsonSetsPopup,
-        AppGJNGeojsonSetPopup,
-        AppGJNDefGeojsonSetsTooltip,
-        AppGJNGeojsonSetTooltip,
+        AppGJNGeojsonSetsClick,
+        AppGJNGeojsonSetsPopup,
+        AppGJNGeojsonSetsTooltip,
         AppCTRContourSets,
         AppCTRContourSetChangeData,
         AppCTRContourSetThresholds,
@@ -515,12 +458,9 @@ export default {
         AppCTRContourSetPolygonClipOuter,
         AppCTRContourSetPolygonsClipInner,
         AppCTRContourSetPolygonsContainInner,
-        AppCTRDefContourSetsClick,
-        AppCTRContourSetClick,
-        AppCTRDefContourSetsPopup,
-        AppCTRContourSetPopup,
-        AppCTRDefContourSetsTooltip,
-        AppCTRContourSetTooltip,
+        AppCTRContourSetsClick,
+        AppCTRContourSetsPopup,
+        AppCTRContourSetsTooltip,
         AppCTRContourSetLargeSet,
         AppCTRContourSetInterp2,
         AppIMGImageSets,
@@ -609,15 +549,9 @@ export default {
                     'pointSet.size',
                     'pointSet.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor',
                     'pointSet.point.iconSrc,iconSize,iconAnchor,popupAnchor,tooltipAnchor',
-                    'defPointSetsClick',
-                    'pointSet.click',
-                    'pointSet.point.click',
-                    'defPointSetsPopup',
-                    'pointSet.popup',
-                    'pointSet.point.popup',
-                    'defPointSetsTooltip',
-                    'pointSet.tooltip',
-                    'pointSet.point.tooltip',
+                    'pointSetsClick',
+                    'pointSetsPopup',
+                    'pointSetsTooltip',
                     'pointSet.largeSet',
                 ],
                 polygon: [
@@ -630,12 +564,9 @@ export default {
                     'polygonSet.lineWidthHover',
                     'polygonSet.fillColor',
                     'polygonSet.fillColorHover',
-                    'defPolygonSetsClick',
-                    'polygonSet.click',
-                    'defPolygonSetsPopup',
-                    'polygonSet.popup',
-                    'defPolygonSetsTooltip',
-                    'polygonSet.tooltip',
+                    'polygonSetsClick',
+                    'polygonSetsPopup',
+                    'polygonSetsTooltip',
                 ],
                 geojson: [
                     'geojsonSets',
@@ -648,12 +579,9 @@ export default {
                     'geojsonSet.lineWidthHover',
                     'geojsonSet.fillColor',
                     'geojsonSet.fillColorHover',
-                    'defGeojsonSetsClick',
-                    'geojsonSet.click',
-                    'defGeojsonSetsPopup',
-                    'geojsonSet.popup',
-                    'defGeojsonSetsTooltip',
-                    'geojsonSet.tooltip',
+                    'geojsonSetsClick',
+                    'geojsonSetsPopup',
+                    'geojsonSetsTooltip',
                 ],
                 contour: [
                     'contourSets',
@@ -675,12 +603,9 @@ export default {
                     'contourSet.polygonClipOuter',
                     'contourSet.polygonsClipInner',
                     'contourSet.polygonsContainInner',
-                    'defContourSetsClick',
-                    'contourSet.click',
-                    'defContourSetsPopup',
-                    'contourSet.popup',
-                    'defContourSetsTooltip',
-                    'contourSet.tooltip',
+                    'contourSetsClick',
+                    'contourSetsPopup',
+                    'contourSetsTooltip',
                     'contourSet.largeSet',
                     'contourSet.interp2',
                 ],

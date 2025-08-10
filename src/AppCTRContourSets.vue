@@ -86,16 +86,16 @@ export default {
                         msg: 'msg from pointSet A',
                         points: psA,
                         visible: false,
-                        popup: function(v) {
-                            console.log('pointSet A popup', v)
-                            let c = `
-                                <div style="padding:15px;">
-                                <div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f26;">[${v.pointSet.title}]</span> ${v.point.title}</div>
-                                <div style="color:#666;">${v.point.msg}</div>
-                                </div>
-                            `
-                            return c
-                        },
+                        // popup: function(v) { bbb
+                        //     console.log('pointSet A popup', v)
+                        //     let c = `
+                        //         <div style="padding:15px;">
+                        //         <div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f26;">[${v.pointSet.title}]</span> ${v.point.title}</div>
+                        //         <div style="color:#666;">${v.point.msg}</div>
+                        //         </div>
+                        //     `
+                        //     return c
+                        // },
                     },
                 ],
             },

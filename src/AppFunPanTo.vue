@@ -84,15 +84,6 @@ export default {
                                 title: 'Ming Chi(明池)',
                                 msg: 'Yingshi Village, Datong Township, Yilan County, Taiwan(台灣宜蘭縣大同鄉英士村)',
                                 latLng: [24.6508143, 121.4716748],
-                                popup: function(v) {
-                                    console.log('pointSet[0].point[0] popup', v)
-                                    let c = ''
-                                    c += '<div style="padding:15px;">'
-                                    c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f83;">[Popup>point]</span> ' + v.point.title + '</div>'
-                                    c += '<div style="color:#aaa;">' + v.point.msg + '</div>'
-                                    c += '</div>'
-                                    return c
-                                },
                             },
                         ],
                         visible: true,

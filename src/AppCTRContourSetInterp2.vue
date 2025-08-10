@@ -175,15 +175,6 @@ export default {
                         points: ptsStation,
                         visible: false,
                         order: 1,
-                        tooltip: function(v) {
-                            console.log('tooltip v', v)
-                            let c = ''
-                            c += '<div style="padding:5px 10px;">'
-                            c += '<div style="width:150px; color:#222; margin-bottom:5px; white-space:nowrap;"><span style="font-size:0.9rem; color:#f26;">[' + v.point.title + ']</span> <span style="font-size:0.8rem; ">' + v.point.msg + '</span></div>'
-                            c += '<div style="font-size:0.7rem; color:#666; white-space:normal;">降雨量 ' + v.point.rain + ' cm</div>'
-                            c += '</div>'
-                            return c
-                        },
                     },
                 ]
 

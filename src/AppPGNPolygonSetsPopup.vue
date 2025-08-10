@@ -2,9 +2,9 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">defPolygonSetsPopup</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPGNDefPolygonSetsPopup.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPGNDefPolygonSetsPopup.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">polygonSetsPopup</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPGNPolygonSetsPopup.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPGNPolygonSetsPopup.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div class="bkp">
@@ -15,7 +15,19 @@
                     <WLeafletVue
                         style="width:800px; height:500px;"
                         :opt="opt"
-                    ></WLeafletVue>
+                    >
+                        <template v-slot:polygon-popup="props">
+                            <div style="padding:15px; width:300px;">
+                                <div style="padding-bottom:8px;">
+                                    <div style="font-size:0.90rem; color:#f26;">[Popup]</div>
+                                </div>
+                                <div style="padding-bottom:5px;">
+                                    <div style="font-size:0.80rem; color:#aa2df4;">[PolygonSet: {{ props.polygonSet.title }}]</div>
+                                    <div style="font-size:0.70rem; color:#777;">{{ props.polygonSet.msg }}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </WLeafletVue>
                 </div>
 
                 <div style="width:600px; min-width:600px; padding:0px 20px;">
@@ -48,15 +60,6 @@ export default {
             'opt': {
                 center: [25, 121.58],
                 zoom: 10,
-                defPolygonSetsPopup: function(v) {
-                    console.log('defPolygonSetsPopup', v)
-                    let c = ''
-                    c += '<div style="padding:15px;">'
-                    c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#62f;">[Popup>polygonSets]</span> ' + v.polygonSet.title + '</div>'
-                    c += '<div style="color:#aaa;">' + v.polygonSet.msg + '</div>'
-                    c += '</div>'
-                    return c
-                },
                 polygonSets: [
                     {
                         title: 'polygonSet A',

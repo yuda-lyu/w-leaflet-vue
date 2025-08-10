@@ -2,9 +2,9 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">pointSet.point.click</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetPointClick.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetPointClick.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">pointSetsPopup</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetsPopup.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetsPopup.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div class="bkp">
@@ -15,7 +15,23 @@
                     <WLeafletVue
                         style="width:800px; height:500px;"
                         :opt="opt"
-                    ></WLeafletVue>
+                    >
+                        <template v-slot:point-popup="props">
+                            <div style="padding:15px; width:300px;">
+                                <div style="padding-bottom:8px;">
+                                    <div style="font-size:0.90rem; color:#f26;">[Popup]</div>
+                                </div>
+                                <div style="padding-bottom:5px;">
+                                    <div style="font-size:0.80rem; color:#aa2df4;">[PointSet: {{ props.pointSet.title }}]</div>
+                                    <div style="font-size:0.70rem; color:#777;">{{ props.pointSet.msg }}</div>
+                                </div>
+                                <div style="">
+                                    <div style="font-size:0.70rem;color:#4347de;">[Point: {{ props.point.title }}]</div>
+                                    <div style="font-size:0.70rem;color:#777;">{{ props.point.msg }}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </WLeafletVue>
                 </div>
 
                 <div style="width:600px; min-width:600px; padding:0px 20px;">
@@ -46,35 +62,23 @@ export default {
     data: function() {
         return {
             'opt': {
-                defPointSetsClick: function(v) {
-                    console.log('defPointSetsClick', v)
-                },
                 pointSets: [
                     {
-                        title: 'pointSet A',
-                        msg: 'msg from pointSet A',
+                        title: 'Lakes',
+                        msg: 'tears of the mountains',
                         points: [
                             {
-                                title: 'point A-1',
-                                msg: 'msg from data A-1',
-                                latLng: [24.20, 121.27],
-                                click: function(msg) {
-                                    console.log('pointSet[0].point[0] click', msg)
-                                },
+                                title: 'Ming Chi(明池)',
+                                msg: 'Yingshi Village, Datong Township, Yilan County, Taiwan(台灣宜蘭縣大同鄉英士村)',
+                                latLng: [24.6508143, 121.4716748],
                             },
                             {
-                                title: 'point A-2',
-                                msg: 'msg from data A-2',
-                                latLng: [23.90, 120.97],
-                                click: function(msg) {
-                                    console.log('pointSet[0].point[1] click', msg)
-                                },
+                                title: 'Jiaming Lake(嘉明湖)',
+                                msg: 'Haiduan Township, Taitung County, Taiwan(台灣台東縣海端鄉)',
+                                latLng: [23.2933843, 121.0341861],
                             },
                         ],
                         visible: true,
-                        click: function(msg) {
-                            console.log('pointSet[0] click', msg)
-                        },
                     },
                     {
                         title: 'pointSet B',
@@ -83,24 +87,15 @@ export default {
                             {
                                 title: 'point B-1',
                                 msg: 'msg from data B-1',
-                                latLng: [23.30, 120.57],
-                                click: function(msg) {
-                                    console.log('pointSet[1].point[0] click', msg)
-                                },
+                                latLng: [22.80, 120.37],
                             },
                             {
                                 title: 'point B-2',
                                 msg: 'msg from data B-2',
-                                latLng: [23.00, 120.87],
-                                click: function(msg) {
-                                    console.log('pointSet[1].point[1] click', msg)
-                                },
+                                latLng: [22.40, 120.67],
                             },
                         ],
                         visible: false,
-                        click: function(msg) {
-                            console.log('pointSet[1] click', msg)
-                        },
                     },
                 ],
             },

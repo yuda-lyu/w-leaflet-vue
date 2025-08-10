@@ -2,9 +2,9 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">defPointSetsTooltip</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTDefPointSetsTooltip.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTDefPointSetsTooltip.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">pointSetsClick</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetsClick.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetsClick.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div class="bkp">
@@ -46,29 +46,23 @@ export default {
     data: function() {
         return {
             'opt': {
-                defPointSetsTooltip: function(v) {
-                    console.log('defPointSetsTooltip', v)
-                    let c = ''
-                    c += '<div style="padding:5px 10px;">'
-                    c += '<div style="color:#222; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;"><span style="color:#62f;">[Tooltip>pointSets]</span> ' + v.point.title + '</div>'
-                    c += '<div style="color:#aaa; white-space:normal;">' + v.point.msg + '</div>'
-                    c += '</div>'
-                    return c
+                pointSetsClick: function(v) {
+                    console.log('pointSetsClick', v)
                 },
                 pointSets: [
                     {
-                        title: 'Lakes',
-                        msg: 'tears of the mountains',
+                        title: 'pointSet A',
+                        msg: 'msg from pointSet A',
                         points: [
                             {
-                                title: 'Ming Chi(明池)',
-                                msg: 'Yingshi Village, Datong Township, Yilan County, Taiwan(台灣宜蘭縣大同鄉英士村)',
-                                latLng: [24.6508143, 121.4716748],
+                                title: 'point A-1',
+                                msg: 'msg from data A-1',
+                                latLng: [24.20, 121.27],
                             },
                             {
-                                title: 'Jiaming Lake(嘉明湖)',
-                                msg: 'Haiduan Township, Taitung County, Taiwan(台灣台東縣海端鄉)',
-                                latLng: [23.2933843, 121.0341861],
+                                title: 'point A-2',
+                                msg: 'msg from data A-2',
+                                latLng: [23.90, 120.97],
                             },
                         ],
                         visible: true,
@@ -80,12 +74,12 @@ export default {
                             {
                                 title: 'point B-1',
                                 msg: 'msg from data B-1',
-                                latLng: [22.80, 120.37],
+                                latLng: [23.30, 120.57],
                             },
                             {
                                 title: 'point B-2',
                                 msg: 'msg from data B-2',
-                                latLng: [22.40, 120.67],
+                                latLng: [23.00, 120.87],
                             },
                         ],
                         visible: false,

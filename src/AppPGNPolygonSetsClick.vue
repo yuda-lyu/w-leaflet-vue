@@ -2,9 +2,9 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">polygonSet.popup</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPGNPolygonSetPopup.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPGNPolygonSetPopup.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">polygonSetsClick</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPGNPolygonSetsClick.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPGNPolygonSetsClick.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div class="bkp">
@@ -48,14 +48,8 @@ export default {
             'opt': {
                 center: [25, 121.58],
                 zoom: 10,
-                defPolygonSetsPopup: function(v) {
-                    console.log('defPolygonSetsPopup', v)
-                    let c = ''
-                    c += '<div style="padding:15px;">'
-                    c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#62f;">[Popup>polygonSets]</span> ' + v.polygonSet.title + '</div>'
-                    c += '<div style="color:#aaa;">' + v.polygonSet.msg + '</div>'
-                    c += '</div>'
-                    return c
+                polygonSetsClick: function(v) {
+                    console.log('polygonSetsClick', v)
                 },
                 polygonSets: [
                     {
@@ -82,15 +76,6 @@ export default {
                             ],
                         ],
                         visible: true,
-                        popup: function(v) {
-                            console.log('polygonSets[0] popup', v)
-                            let c = ''
-                            c += '<div style="padding:15px;">'
-                            c += '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f26;">[Popup>polygonSet]</span> ' + v.polygonSet.title + '</div>'
-                            c += '<div style="color:#aaa;">' + v.polygonSet.msg + '</div>'
-                            c += '</div>'
-                            return c
-                        },
                     },
                     {
                         title: 'polygonSet B',

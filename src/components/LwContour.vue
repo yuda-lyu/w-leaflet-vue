@@ -9,6 +9,19 @@
             @click="(ev)=>{clickPolygon(ev,polygonSet,kpolygonSet)}"
             v-for="(polygonSet,kpolygonSet) in polygonSets"
         >
+
+            <TooltipRegion>
+                <template v-slot>
+                    <slot name="tooltip"></slot>
+                </template>
+            </TooltipRegion>
+
+            <PopupRegion>
+                <template v-slot>
+                    <slot name="popup"></slot>
+                </template>
+            </PopupRegion>
+
         </l-polygon>
     </div>
 </template>
@@ -20,11 +33,15 @@ import isfun from 'wsemi/src/isfun.mjs'
 import oc from 'wsemi/src/color.mjs'
 import { LPolygon } from 'vue2-leaflet'
 import calcContours from 'w-gis/src/calcContours.mjs'
+import PopupRegion from './PopupRegion.vue'
+import TooltipRegion from './TooltipRegion.vue'
 
 
 export default {
     components: {
         LPolygon,
+        PopupRegion,
+        TooltipRegion,
     },
     props: {
         points: {

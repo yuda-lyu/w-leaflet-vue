@@ -15,7 +15,51 @@
                     <WLeafletVue
                         style="width:800px; height:500px;"
                         :opt="opt"
-                    ></WLeafletVue>
+                    >
+                        <template v-slot:point-popup="props">
+                            <div style="width:300px;">
+
+                                <div style="padding:15px;">
+                                    <div style="_white-space:nowrap; padding-bottom:5px;">
+                                        <div style="font-size:0.90rem; color:#f26;">[PointSet: {{ props.pointSet.title }}]</div>
+                                        <div style="font-size:0.70rem; color:#777;">{{ props.pointSet.msg }}</div>
+                                    </div>
+                                    <div style="_white-space:nowrap;">
+                                        <div style="font-size:0.80rem;color:#aa2df4;">[Point: {{ props.point.title }}]</div>
+                                        <div style="font-size:0.70rem;color:#777;">{{ props.point.msg }}</div>
+                                    </div>
+                                </div>
+
+                                <div style="padding:15px; border-top:1px solid #ddd;">
+
+                                    <div style="color:#454bbc; font-size:0.9rem; white-space:nowrap;">
+                                        {{ props.point.title }}
+                                    </div>
+
+                                    <div style="padding-top:2px;">
+
+                                        <div style="display:inline-block; padding-right:7px;">
+                                            <span style="color:#777; font-size:0.75rem;">目前:</span>
+                                            <span style="color:#ef8f30; font-size:0.85rem;">{{ props.point.available_rent_bikes }}</span>
+                                        </div>
+
+                                        <div style="display:inline-block; padding-right:7px;">
+                                            <span style="color:#777; font-size:0.75rem;">總共:</span>
+                                            <span style="color:#ef8f30; font-size:0.85rem;">{{ props.point.Quantity }}</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div style="padding-top:0px;">
+                                        <span style="color:#777; font-size:0.75rem;">地址: </span>
+                                        <span style="color:#777; font-size:0.75rem;">{{ props.point.msg }}</span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </template>
+                    </WLeafletVue>
                 </div>
 
                 <div style="width:600px; min-width:600px; padding:0px 20px;">
@@ -48,29 +92,6 @@ export default {
             'opt': {
                 center: [25.087, 121.54],
                 zoom: 11,
-                defPointSetsPopup: function(v) {
-                    console.log('defPointSetsPopup', v)
-                    let c = `
-                        <div style="padding:20px 20px 15px 15px;">
-
-                            <div style="color:#c1409d; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;">
-                                ${v.point.title}
-                            </div>
-
-                            <div style="padding-top:5px;">
-                                <span style="color:#777; font-size:0.75rem;">目前 / 總共車輛: </span>
-                                <span style="color:#ef8f30; font-size:0.85rem;">${v.point.sbi} / ${v.point.tot}</span>
-                            </div>
-
-                            <div style="padding-top:8px;">
-                                <span style="color:#777; font-size:0.75rem;">地址: </span>
-                                <span style="color:#777; font-size:0.75rem;">${v.point.msg}</span>
-                            </div>
-
-                        </div>
-                    `
-                    return c
-                },
                 pointSets: [],
             },
             'action': [
@@ -95,9 +116,10 @@ export default {
                     let p = {
                         title: v.sna,
                         msg: v.ar,
-                        latLng: [v.lat, v.lng],
-                        sbi: v.sbi,
-                        tot: v.tot,
+                        latLng: [v.latitude, v.longitude],
+                        available_rent_bikes: v.available_rent_bikes, //可租借
+                        available_return_bikes: v.available_return_bikes, //可歸還位置
+                        Quantity: v.Quantity, //總共
                     }
                     return p
                 })

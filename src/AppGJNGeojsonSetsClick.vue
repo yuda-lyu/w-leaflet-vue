@@ -2,9 +2,9 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">geojsonSet.click</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppGJNGeojsonSetClick.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppGJNGeojsonSetClick.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">geojsonSetsClick</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppGJNGeojsonSetsClick.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppGJNGeojsonSetsClick.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div class="bkp">
@@ -48,8 +48,8 @@ export default {
             'opt': {
                 center: [25, 121.58],
                 zoom: 10,
-                defGeojsonSetsClick: function(v) {
-                    console.log('defGeojsonSetsClick', v)
+                geojsonSetsClick: function(v) {
+                    console.log('geojsonSetsClick', v)
                 },
                 geojsonSets: [
                     {
@@ -122,9 +122,6 @@ export default {
                         },
                         keyStyle: 'properties.style',
                         visible: true,
-                        click: function(msg) {
-                            console.log('geojsonSets[0] click', msg)
-                        },
                     },
                     {
                         title: 'geojsonSet B',
@@ -160,9 +157,6 @@ export default {
                         },
                         keyStyle: 'properties.style',
                         visible: false,
-                        click: function(msg) {
-                            console.log('geojsonSets[1] click', msg)
-                        },
                     },
                 ],
             },
