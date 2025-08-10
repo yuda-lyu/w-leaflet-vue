@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppCTRDefContourSetsTooltip</title>
+    <title>example for AppPNTPointSetsClick</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.61/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.62/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -111,14 +111,14 @@
 >
     <div id="app" class="bkh" style>
         <div class="bkh">
-            <div style="font-size:1.5rem;">defContourSetsTooltip</div>
+            <div style="font-size:1.5rem;">pointSetsClick</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRDefContourSetsTooltip.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetsClick.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRDefContourSetsTooltip.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetsClick.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -157,52 +157,41 @@
     data: function() {
       return {
         opt: {
-          center: [24.084, 121.068],
-          zoom: 8,
-          defContourSetsTooltip: function(v) {
-            console.log("defContourSetsTooltip", v);
-            let c = "";
-            c += '<div style="padding:5px 10px;">';
-            c +=
-              '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#62f;">[Popup>contourSets]</span> ' +
-              v.contourSet.title +
-              "</div>";
-            c +=
-              '<div style="color:#aaa; white-space:normal;">' +
-              v.contourSet.msg +
-              "</div>";
-            c += "</div>";
-            return c;
+          pointSetsClick: function(v) {
+            console.log("pointSetsClick", v);
           },
-          contourSets: [
+          pointSets: [
             {
-              title: "contourSet A",
-              msg: "msg from contourSet A",
+              title: "pointSet A",
+              msg: "msg from pointSet A",
               points: [
-                [24.325, 120.786, 0],
-                [23.944, 120.968, 10],
-                [24.884, 121.234, 20],
-                [24.579, 121.345, 80],
-                [24.664, 121.761, 40],
-                [23.803, 121.397, 30],
-                [23.727, 120.772, 0],
-                [23.539, 120.975, 0],
-                [23.612, 121.434, 0],
-                [23.193, 120.355, 22],
-                [23.456, 120.89, 42],
-                [23.28, 120.551, 25],
-                [23.162, 121.247, 5]
+                {
+                  title: "point A-1",
+                  msg: "msg from data A-1",
+                  latLng: [24.2, 121.27]
+                },
+                {
+                  title: "point A-2",
+                  msg: "msg from data A-2",
+                  latLng: [23.9, 120.97]
+                }
               ],
               visible: true
             },
             {
-              title: "contourSet B",
-              msg: "msg from contourSet B",
+              title: "pointSet B",
+              msg: "msg from pointSet B",
               points: [
-                [22.607, 120.416, 0],
-                [22.967, 120.663, 15],
-                [22.592, 120.922, 20],
-                [22.717, 120.644, 45]
+                {
+                  title: "point B-1",
+                  msg: "msg from data B-1",
+                  latLng: [23.3, 120.57]
+                },
+                {
+                  title: "point B-2",
+                  msg: "msg from data B-2",
+                  latLng: [23.0, 120.87]
+                }
               ],
               visible: false
             }

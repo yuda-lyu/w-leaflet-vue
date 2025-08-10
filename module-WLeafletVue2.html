@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>WLeafletVue - Documentation</title>
+    <title>WLeafletVue2 - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">WLeafletVue</h1>
+    <h1 class="page-title">WLeafletVue2</h1>
     
 
     
@@ -510,72 +510,6 @@
         <td><code>function(){}</code></td>
         <td>No</td>
         <td>輸入全域點集合的click呼叫函數，可給予函數接收點擊事件，預設為function(){}</td>
-    </tr><tr>
-        <td><code>opt.polylineSets</code></td>
-        <td>Array</td>
-        <td><code>[]</code></td>
-        <td>No</td>
-        <td>輸入折線集合陣列，各元素為物件，預設[]</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].title</code></td>
-        <td>String</td>
-        <td><code>''</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的標題字串，預設為''</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].msg</code></td>
-        <td>String</td>
-        <td><code>''</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的說明字串，預設為''</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].order</code></td>
-        <td>Number</td>
-        <td><code>null</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的排序用數字，預設null</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].lineColor</code></td>
-        <td>String</td>
-        <td><code>'rgba(0,150,255,1)'</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的框線顏色字串，預設為'rgba(0,150,255,1)'</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].lineColorHover</code></td>
-        <td>String</td>
-        <td><code>'rgba(0,150,255,1)'</code></td>
-        <td>No</td>
-        <td>輸入滑鼠移入時第i個折線集合的框線顏色字串，預設為'rgba(0,150,255,1)'</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].lineWidth</code></td>
-        <td>Number</td>
-        <td><code>3</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的框線寬度數字，預設為3</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].lineWidthHover</code></td>
-        <td>Number</td>
-        <td><code>3</code></td>
-        <td>No</td>
-        <td>輸入滑鼠移入時第i個折線集合的框線寬度數字，預設為3</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].latLngs</code></td>
-        <td>Array</td>
-        <td><code>[]</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的數據陣列，可使用polyline或multiPolyline，各點座標為緯經度，預設[]</td>
-    </tr><tr>
-        <td><code>opt.polylineSetsClick</code></td>
-        <td>function</td>
-        <td><code>function(){}</code></td>
-        <td>No</td>
-        <td>輸入全域折線集合的click呼叫函數，可給予函數接收點擊事件，預設為function(){}</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].visible</code></td>
-        <td>Boolean</td>
-        <td><code>true</code></td>
-        <td>No</td>
-        <td>輸入是否顯示第i個折線集合布林值，預設為true</td>
     </tr><tr>
         <td><code>opt.polygonSets</code></td>
         <td>Array</td>
@@ -1362,72 +1296,6 @@
         <td><code>function(){}</code></td>
         <td>No</td>
         <td>輸入全域點集合的click呼叫函數，可給予函數接收點擊事件，預設為function(){}</td>
-    </tr><tr>
-        <td><code>opt.polylineSets</code></td>
-        <td>Array</td>
-        <td><code>[]</code></td>
-        <td>No</td>
-        <td>輸入折線集合陣列，各元素為物件，預設[]</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].title</code></td>
-        <td>String</td>
-        <td><code>''</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的標題字串，預設為''</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].msg</code></td>
-        <td>String</td>
-        <td><code>''</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的說明字串，預設為''</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].order</code></td>
-        <td>Number</td>
-        <td><code>null</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的排序用數字，預設null</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].lineColor</code></td>
-        <td>String</td>
-        <td><code>'rgba(0,150,255,1)'</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的框線顏色字串，預設為'rgba(0,150,255,1)'</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].lineColorHover</code></td>
-        <td>String</td>
-        <td><code>'rgba(0,150,255,1)'</code></td>
-        <td>No</td>
-        <td>輸入滑鼠移入時第i個折線集合的框線顏色字串，預設為'rgba(0,150,255,1)'</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].lineWidth</code></td>
-        <td>Number</td>
-        <td><code>3</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的框線寬度數字，預設為3</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].lineWidthHover</code></td>
-        <td>Number</td>
-        <td><code>3</code></td>
-        <td>No</td>
-        <td>輸入滑鼠移入時第i個折線集合的框線寬度數字，預設為3</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].latLngs</code></td>
-        <td>Array</td>
-        <td><code>[]</code></td>
-        <td>No</td>
-        <td>輸入第i個折線集合的數據陣列，可使用polyline或multiPolyline，各點座標為緯經度，預設[]</td>
-    </tr><tr>
-        <td><code>opt.polylineSetsClick</code></td>
-        <td>function</td>
-        <td><code>function(){}</code></td>
-        <td>No</td>
-        <td>輸入全域折線集合的click呼叫函數，可給予函數接收點擊事件，預設為function(){}</td>
-    </tr><tr>
-        <td><code>opt.polylineSets[i].visible</code></td>
-        <td>Boolean</td>
-        <td><code>true</code></td>
-        <td>No</td>
-        <td>輸入是否顯示第i個折線集合布林值，預設為true</td>
     </tr><tr>
         <td><code>opt.polygonSets</code></td>
         <td>Array</td>

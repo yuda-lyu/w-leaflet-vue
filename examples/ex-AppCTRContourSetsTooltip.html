@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppPNTPointSetClick</title>
+    <title>example for AppCTRContourSetsTooltip</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.61/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.62/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -111,14 +111,14 @@
 >
     <div id="app" class="bkh" style>
         <div class="bkh">
-            <div style="font-size:1.5rem;">pointSet.click</div>
+            <div style="font-size:1.5rem;">contourSetsTooltip</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTPointSetClick.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRContourSetsTooltip.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTPointSetClick.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRContourSetsTooltip.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -130,7 +130,25 @@
                     <w-leaflet-vue
                         style="width:800px; height:500px;"
                         :opt="opt"
-                    ></w-leaflet-vue>
+                    >
+                        <template v-slot:contour-tooltip="props">
+                            <div style="padding:15px; width:300px;">
+                                <div style="padding-bottom:8px;">
+                                    <div
+                                        style="font-size:0.90rem; color:#f26;"
+                                    >[Tooltip]</div>
+                                </div>
+                                <div style="padding-bottom:5px;">
+                                    <div
+                                        style="font-size:0.80rem; color:#aa2df4;"
+                                    >[ContourSet: {{ props.contourSet.title }}]</div>
+                                    <div
+                                        style="font-size:0.70rem; color:#777;"
+                                    >{{ props.contourSet.msg }}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </w-leaflet-vue>
                 </div>
 
                 <div style="width:600px; min-width:600px; padding:0px 20px;">
@@ -157,49 +175,39 @@
     data: function() {
       return {
         opt: {
-          defPointSetsClick: function(v) {
-            console.log("defPointSetsClick", v);
-          },
-          pointSets: [
+          center: [24.084, 121.068],
+          zoom: 8,
+          contourSets: [
             {
-              title: "pointSet A",
-              msg: "msg from pointSet A",
+              title: "contourSet A",
+              msg: "msg from contourSet A",
               points: [
-                {
-                  title: "point A-1",
-                  msg: "msg from data A-1",
-                  latLng: [24.2, 121.27]
-                },
-                {
-                  title: "point A-2",
-                  msg: "msg from data A-2",
-                  latLng: [23.9, 120.97]
-                }
+                [24.325, 120.786, 0],
+                [23.944, 120.968, 10],
+                [24.884, 121.234, 20],
+                [24.579, 121.345, 80],
+                [24.664, 121.761, 40],
+                [23.803, 121.397, 30],
+                [23.727, 120.772, 0],
+                [23.539, 120.975, 0],
+                [23.612, 121.434, 0],
+                [23.193, 120.355, 22],
+                [23.456, 120.89, 42],
+                [23.28, 120.551, 25],
+                [23.162, 121.247, 5]
               ],
-              visible: true,
-              click: function(msg) {
-                console.log("pointSet[0] click", msg);
-              }
+              visible: true
             },
             {
-              title: "pointSet B",
-              msg: "msg from pointSet B",
+              title: "contourSet B",
+              msg: "msg from contourSet B",
               points: [
-                {
-                  title: "point B-1",
-                  msg: "msg from data B-1",
-                  latLng: [23.3, 120.57]
-                },
-                {
-                  title: "point B-2",
-                  msg: "msg from data B-2",
-                  latLng: [23.0, 120.87]
-                }
+                [22.607, 120.416, 0],
+                [22.967, 120.663, 15],
+                [22.592, 120.922, 20],
+                [22.717, 120.644, 45]
               ],
-              visible: false,
-              click: function(msg) {
-                console.log("pointSet[1] click", msg);
-              }
+              visible: false
             }
           ]
         },

@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppCTRDefContourSetsClick</title>
+    <title>example for AppPLNPolylineSetsClick</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.61/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.62/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -111,14 +111,14 @@
 >
     <div id="app" class="bkh" style>
         <div class="bkh">
-            <div style="font-size:1.5rem;">defContourSetsClick</div>
+            <div style="font-size:1.5rem;">polylineSetsClick</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppCTRDefContourSetsClick.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPLNPolylineSetsClick.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppCTRDefContourSetsClick.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPLNPolylineSetsClick.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -157,40 +157,56 @@
     data: function() {
       return {
         opt: {
-          center: [24.084, 121.068],
-          zoom: 8,
-          defContourSetsClick: function(v) {
-            console.log("defContourSetsClick", v);
+          center: [25, 121.58],
+          zoom: 10,
+          polylineSetsClick: function(v) {
+            console.log("polylineSetsClick", v);
           },
-          contourSets: [
+          polylineSets: [
             {
-              title: "contourSet A",
-              msg: "msg from contourSet A",
-              points: [
-                [24.325, 120.786, 0],
-                [23.944, 120.968, 10],
-                [24.884, 121.234, 20],
-                [24.579, 121.345, 80],
-                [24.664, 121.761, 40],
-                [23.803, 121.397, 30],
-                [23.727, 120.772, 0],
-                [23.539, 120.975, 0],
-                [23.612, 121.434, 0],
-                [23.193, 120.355, 22],
-                [23.456, 120.89, 42],
-                [23.28, 120.551, 25],
-                [23.162, 121.247, 5]
+              title: "polylineSet A",
+              msg: "msg from polylineSet A",
+              latLngs: [
+                [
+                  //add p1
+                  [24.96, 121.41],
+                  [25.11, 121.47],
+                  [25.06, 121.69],
+                  [24.99, 121.61],
+                  [24.95, 121.53],
+                  [24.96, 121.41]
+                ],
+                [
+                  //add p2
+                  [24.92, 121.6],
+                  [25.045, 121.75],
+                  [24.99, 121.79],
+                  [24.93, 121.74],
+                  [24.92, 121.6]
+                ]
               ],
               visible: true
             },
             {
-              title: "contourSet B",
-              msg: "msg from contourSet B",
-              points: [
-                [22.607, 120.416, 0],
-                [22.967, 120.663, 15],
-                [22.592, 120.922, 20],
-                [22.717, 120.644, 45]
+              title: "polylineSet B",
+              msg: "msg from polylineSet B",
+              latLngs: [
+                [
+                  //add p3
+                  [24.971, 121.372],
+                  [24.976, 121.434],
+                  [24.937, 121.473],
+                  [24.918, 121.418],
+                  [24.971, 121.372]
+                ],
+                [
+                  //add p4
+                  [24.9, 121.14],
+                  [24.97, 121.09],
+                  [25.05, 121.177],
+                  [24.95, 121.32],
+                  [24.9, 121.14]
+                ]
               ],
               visible: false
             }

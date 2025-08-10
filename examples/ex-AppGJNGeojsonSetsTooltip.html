@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppGJNDefGeojsonSetsPopup</title>
+    <title>example for AppGJNGeojsonSetsTooltip</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.61/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.62/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -111,14 +111,14 @@
 >
     <div id="app" class="bkh" style>
         <div class="bkh">
-            <div style="font-size:1.5rem;">defGeojsonSetsPopup</div>
+            <div style="font-size:1.5rem;">geojsonSetsTooltip</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppGJNDefGeojsonSetsPopup.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppGJNGeojsonSetsTooltip.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppGJNDefGeojsonSetsPopup.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppGJNGeojsonSetsTooltip.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -130,7 +130,25 @@
                     <w-leaflet-vue
                         style="width:800px; height:500px;"
                         :opt="opt"
-                    ></w-leaflet-vue>
+                    >
+                        <template v-slot:geojson-tooltip="props">
+                            <div style="padding:15px; width:300px;">
+                                <div style="padding-bottom:8px;">
+                                    <div
+                                        style="font-size:0.90rem; color:#f26;"
+                                    >[Tooltip]</div>
+                                </div>
+                                <div style="padding-bottom:5px;">
+                                    <div
+                                        style="font-size:0.80rem; color:#aa2df4;"
+                                    >[GeojsonSet: {{ props.geojsonSet.title }}]</div>
+                                    <div
+                                        style="font-size:0.70rem; color:#777;"
+                                    >{{ props.geojsonSet.msg }}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </w-leaflet-vue>
                 </div>
 
                 <div style="width:600px; min-width:600px; padding:0px 20px;">
@@ -159,18 +177,6 @@
         opt: {
           center: [25, 121.58],
           zoom: 10,
-          defGeojsonSetsPopup: function(v) {
-            console.log("defGeojsonSetsPopup", v);
-            let c = "";
-            c += '<div style="padding:15px;">';
-            c +=
-              '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#62f;">[Popup>geojsonSets]</span> ' +
-              v.geojsonSet.title +
-              "</div>";
-            c += '<div style="color:#aaa;">' + v.geojsonSet.msg + "</div>";
-            c += "</div>";
-            return c;
-          },
           geojsonSets: [
             {
               title: "geojsonSet A",

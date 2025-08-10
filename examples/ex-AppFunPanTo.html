@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.61/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.62/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -200,19 +200,7 @@
                   title: "Ming Chi(明池)",
                   msg:
                     "Yingshi Village, Datong Township, Yilan County, Taiwan(台灣宜蘭縣大同鄉英士村)",
-                  latLng: [24.6508143, 121.4716748],
-                  popup: function(v) {
-                    console.log("pointSet[0].point[0] popup", v);
-                    let c = "";
-                    c += '<div style="padding:15px;">';
-                    c +=
-                      '<div style="color:#222; font-size:0.9rem; white-space:nowrap;"><span style="color:#f83;">[Popup>point]</span> ' +
-                      v.point.title +
-                      "</div>";
-                    c += '<div style="color:#aaa;">' + v.point.msg + "</div>";
-                    c += "</div>";
-                    return c;
-                  }
+                  latLng: [24.6508143, 121.4716748]
                 }
               ],
               visible: true

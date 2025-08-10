@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppGJNGeojsonSetLineColorHover</title>
+    <title>example for AppGJNGeojsonSetsClick</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.61/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.62/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -111,14 +111,14 @@
 >
     <div id="app" class="bkh" style>
         <div class="bkh">
-            <div style="font-size:1.5rem;">geojsonSet.lineColorHover</div>
+            <div style="font-size:1.5rem;">geojsonSetsClick</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppGJNGeojsonSetLineColorHover.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppGJNGeojsonSetsClick.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppGJNGeojsonSetLineColorHover.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppGJNGeojsonSetsClick.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -159,6 +159,9 @@
         opt: {
           center: [25, 121.58],
           zoom: 10,
+          geojsonSetsClick: function(v) {
+            console.log("geojsonSetsClick", v);
+          },
           geojsonSets: [
             {
               title: "geojsonSet A",
@@ -234,9 +237,7 @@
                   }
                 ]
               },
-              lineColor: "rgba(100,150,255,0.9)",
-              lineColorHover: "rgba(255,150,50,0.9)",
-              keyStyle: "", //use settings
+              keyStyle: "properties.style",
               visible: true
             },
             {
@@ -282,7 +283,7 @@
                   }
                 ]
               },
-              keyStyle: "", //use settings
+              keyStyle: "properties.style",
               visible: false
             }
           ]

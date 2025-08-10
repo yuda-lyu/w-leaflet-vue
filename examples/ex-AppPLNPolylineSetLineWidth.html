@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>example for AppPNTDefPointSetsPopup</title>
+    <title>example for AppPLNPolylineSetLineWidth</title>
 
     <!-- @babel/polyfill -->
     <script
@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.61/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.62/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -111,14 +111,14 @@
 >
     <div id="app" class="bkh" style>
         <div class="bkh">
-            <div style="font-size:1.5rem;">defPointSetsPopup</div>
+            <div style="font-size:1.5rem;">polylineSet.lineWidth</div>
             <a
-                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPNTDefPointSetsPopup.html"
+                href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppPLNPolylineSetLineWidth.html"
                 target="_blank"
                 class="item-link"
             >example</a>
             <a
-                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPNTDefPointSetsPopup.html"
+                href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppPLNPolylineSetLineWidth.html"
                 target="_blank"
                 class="item-link"
             >code</a>
@@ -157,52 +157,54 @@
     data: function() {
       return {
         opt: {
-          defPointSetsPopup: function(v) {
-            console.log("defPointSetsPopup", v);
-            let c = "";
-            c += '<div style="padding:15px;">';
-            c +=
-              '<div style="color:#222; font-size:0.9rem; margin-bottom:5px; white-space:nowrap;"><span style="color:#62f;">[Popup>pointSets]</span> ' +
-              v.point.title +
-              "</div>";
-            c += '<div style="color:#aaa;">' + v.point.msg + "</div>";
-            c += "</div>";
-            return c;
-          },
-          pointSets: [
+          center: [25, 121.58],
+          zoom: 10,
+          polylineSets: [
             {
-              title: "Lakes",
-              msg: "tears of the mountains",
-              points: [
-                {
-                  title: "Ming Chi(明池)",
-                  msg:
-                    "Yingshi Village, Datong Township, Yilan County, Taiwan(台灣宜蘭縣大同鄉英士村)",
-                  latLng: [24.6508143, 121.4716748]
-                },
-                {
-                  title: "Jiaming Lake(嘉明湖)",
-                  msg:
-                    "Haiduan Township, Taitung County, Taiwan(台灣台東縣海端鄉)",
-                  latLng: [23.2933843, 121.0341861]
-                }
+              title: "polylineSet A",
+              msg: "msg from polylineSet A",
+              latLngs: [
+                [
+                  //add p1
+                  [24.96, 121.41],
+                  [25.11, 121.47],
+                  [25.06, 121.69],
+                  [24.99, 121.61],
+                  [24.95, 121.53],
+                  [24.96, 121.41]
+                ],
+                [
+                  //add p2
+                  [24.92, 121.6],
+                  [25.045, 121.75],
+                  [24.99, 121.79],
+                  [24.93, 121.74],
+                  [24.92, 121.6]
+                ]
               ],
+              lineWidth: 1,
               visible: true
             },
             {
-              title: "pointSet B",
-              msg: "msg from pointSet B",
-              points: [
-                {
-                  title: "point B-1",
-                  msg: "msg from data B-1",
-                  latLng: [22.8, 120.37]
-                },
-                {
-                  title: "point B-2",
-                  msg: "msg from data B-2",
-                  latLng: [22.4, 120.67]
-                }
+              title: "polylineSet B",
+              msg: "msg from polylineSet B",
+              latLngs: [
+                [
+                  //add p3
+                  [24.971, 121.372],
+                  [24.976, 121.434],
+                  [24.937, 121.473],
+                  [24.918, 121.418],
+                  [24.971, 121.372]
+                ],
+                [
+                  //add p4
+                  [24.9, 121.14],
+                  [24.97, 121.09],
+                  [25.05, 121.177],
+                  [24.95, 121.32],
+                  [24.9, 121.14]
+                ]
               ],
               visible: false
             }
