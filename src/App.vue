@@ -124,6 +124,22 @@
 
             <AppPNTPointSetLargeSet v-if="showSubCmp==='pointSet.largeSet'"></AppPNTPointSetLargeSet>
 
+            <AppPLNPolylineSets v-if="showSubCmp==='polylineSets'"></AppPLNPolylineSets>
+
+            <AppPLNPolylineSetChangeData v-if="showSubCmp==='polylineSet-changeData'"></AppPLNPolylineSetChangeData>
+
+            <AppPLNPolylineSetOrder v-if="showSubCmp==='polylineSet.order'"></AppPLNPolylineSetOrder>
+
+            <AppPLNPolylineSetLineColor v-if="showSubCmp==='polylineSet.lineColor'"></AppPLNPolylineSetLineColor>
+
+            <AppPLNPolylineSetLineWidth v-if="showSubCmp==='polylineSet.lineWidth'"></AppPLNPolylineSetLineWidth>
+
+            <AppPLNPolylineSetsClick v-if="showSubCmp==='polylineSetsClick'"></AppPLNPolylineSetsClick>
+
+            <AppPLNPolylineSetsPopup v-if="showSubCmp==='polylineSetsPopup'"></AppPLNPolylineSetsPopup>
+
+            <AppPLNPolylineSetsTooltip v-if="showSubCmp==='polylineSetsTooltip'"></AppPLNPolylineSetsTooltip>
+
             <AppPGNPolygonSets v-if="showSubCmp==='polygonSets'"></AppPGNPolygonSets>
 
             <AppPGNPolygonSetChangeData v-if="showSubCmp==='polygonSet-changeData'"></AppPGNPolygonSetChangeData>
@@ -132,15 +148,9 @@
 
             <AppPGNPolygonSetLineColor v-if="showSubCmp==='polygonSet.lineColor'"></AppPGNPolygonSetLineColor>
 
-            <AppPGNPolygonSetLineColorHover v-if="showSubCmp==='polygonSet.lineColorHover'"></AppPGNPolygonSetLineColorHover>
-
             <AppPGNPolygonSetLineWidth v-if="showSubCmp==='polygonSet.lineWidth'"></AppPGNPolygonSetLineWidth>
 
-            <AppPGNPolygonSetLineWidthHover v-if="showSubCmp==='polygonSet.lineWidthHover'"></AppPGNPolygonSetLineWidthHover>
-
             <AppPGNPolygonSetFillColor v-if="showSubCmp==='polygonSet.fillColor'"></AppPGNPolygonSetFillColor>
-
-            <AppPGNPolygonSetFillColorHover v-if="showSubCmp==='polygonSet.fillColorHover'"></AppPGNPolygonSetFillColorHover>
 
             <AppPGNPolygonSetsClick v-if="showSubCmp==='polygonSetsClick'"></AppPGNPolygonSetsClick>
 
@@ -158,15 +168,9 @@
 
             <AppGJNGeojsonSetLineColor v-if="showSubCmp==='geojsonSet.lineColor'"></AppGJNGeojsonSetLineColor>
 
-            <AppGJNGeojsonSetLineColorHover v-if="showSubCmp==='geojsonSet.lineColorHover'"></AppGJNGeojsonSetLineColorHover>
-
             <AppGJNGeojsonSetLineWidth v-if="showSubCmp==='geojsonSet.lineWidth'"></AppGJNGeojsonSetLineWidth>
 
-            <AppGJNGeojsonSetLineWidthHover v-if="showSubCmp==='geojsonSet.lineWidthHover'"></AppGJNGeojsonSetLineWidthHover>
-
             <AppGJNGeojsonSetFillColor v-if="showSubCmp==='geojsonSet.fillColor'"></AppGJNGeojsonSetFillColor>
-
-            <AppGJNGeojsonSetFillColorHover v-if="showSubCmp==='geojsonSet.fillColorHover'"></AppGJNGeojsonSetFillColorHover>
 
             <AppGJNGeojsonSetsClick v-if="showSubCmp==='geojsonSetsClick'"></AppGJNGeojsonSetsClick>
 
@@ -304,15 +308,20 @@ import AppPNTPointSetsClick from './AppPNTPointSetsClick.vue'
 import AppPNTPointSetsPopup from './AppPNTPointSetsPopup.vue'
 import AppPNTPointSetsTooltip from './AppPNTPointSetsTooltip.vue'
 import AppPNTPointSetLargeSet from './AppPNTPointSetLargeSet.vue'
+import AppPLNPolylineSets from './AppPLNPolylineSets.vue'
+import AppPLNPolylineSetChangeData from './AppPLNPolylineSetChangeData.vue'
+import AppPLNPolylineSetOrder from './AppPLNPolylineSetOrder.vue'
+import AppPLNPolylineSetLineColor from './AppPLNPolylineSetLineColor.vue'
+import AppPLNPolylineSetLineWidth from './AppPLNPolylineSetLineWidth.vue'
+import AppPLNPolylineSetsClick from './AppPLNPolylineSetsClick.vue'
+import AppPLNPolylineSetsPopup from './AppPLNPolylineSetsPopup.vue'
+import AppPLNPolylineSetsTooltip from './AppPLNPolylineSetsTooltip.vue'
 import AppPGNPolygonSets from './AppPGNPolygonSets.vue'
 import AppPGNPolygonSetChangeData from './AppPGNPolygonSetChangeData.vue'
 import AppPGNPolygonSetOrder from './AppPGNPolygonSetOrder.vue'
 import AppPGNPolygonSetLineColor from './AppPGNPolygonSetLineColor.vue'
-import AppPGNPolygonSetLineColorHover from './AppPGNPolygonSetLineColorHover.vue'
 import AppPGNPolygonSetLineWidth from './AppPGNPolygonSetLineWidth.vue'
-import AppPGNPolygonSetLineWidthHover from './AppPGNPolygonSetLineWidthHover.vue'
 import AppPGNPolygonSetFillColor from './AppPGNPolygonSetFillColor.vue'
-import AppPGNPolygonSetFillColorHover from './AppPGNPolygonSetFillColorHover.vue'
 import AppPGNPolygonSetsClick from './AppPGNPolygonSetsClick.vue'
 import AppPGNPolygonSetsPopup from './AppPGNPolygonSetsPopup.vue'
 import AppPGNPolygonSetsTooltip from './AppPGNPolygonSetsTooltip.vue'
@@ -321,11 +330,8 @@ import AppGJNGeojsonSetChangeData from './AppGJNGeojsonSetChangeData.vue'
 import AppGJNGeojsonSetUpload from './AppGJNGeojsonSetUpload.vue'
 import AppGJNGeojsonSetOrder from './AppGJNGeojsonSetOrder.vue'
 import AppGJNGeojsonSetLineColor from './AppGJNGeojsonSetLineColor.vue'
-import AppGJNGeojsonSetLineColorHover from './AppGJNGeojsonSetLineColorHover.vue'
 import AppGJNGeojsonSetLineWidth from './AppGJNGeojsonSetLineWidth.vue'
-import AppGJNGeojsonSetLineWidthHover from './AppGJNGeojsonSetLineWidthHover.vue'
 import AppGJNGeojsonSetFillColor from './AppGJNGeojsonSetFillColor.vue'
-import AppGJNGeojsonSetFillColorHover from './AppGJNGeojsonSetFillColorHover.vue'
 import AppGJNGeojsonSetsClick from './AppGJNGeojsonSetsClick.vue'
 import AppGJNGeojsonSetsPopup from './AppGJNGeojsonSetsPopup.vue'
 import AppGJNGeojsonSetsTooltip from './AppGJNGeojsonSetsTooltip.vue'
@@ -414,15 +420,20 @@ export default {
         AppPNTPointSetsPopup,
         AppPNTPointSetsTooltip,
         AppPNTPointSetLargeSet,
+        AppPLNPolylineSets,
+        AppPLNPolylineSetChangeData,
+        AppPLNPolylineSetOrder,
+        AppPLNPolylineSetLineColor,
+        AppPLNPolylineSetLineWidth,
+        AppPLNPolylineSetsClick,
+        AppPLNPolylineSetsPopup,
+        AppPLNPolylineSetsTooltip,
         AppPGNPolygonSets,
         AppPGNPolygonSetChangeData,
         AppPGNPolygonSetOrder,
         AppPGNPolygonSetLineColor,
-        AppPGNPolygonSetLineColorHover,
         AppPGNPolygonSetLineWidth,
-        AppPGNPolygonSetLineWidthHover,
         AppPGNPolygonSetFillColor,
-        AppPGNPolygonSetFillColorHover,
         AppPGNPolygonSetsClick,
         AppPGNPolygonSetsPopup,
         AppPGNPolygonSetsTooltip,
@@ -431,11 +442,8 @@ export default {
         AppGJNGeojsonSetUpload,
         AppGJNGeojsonSetOrder,
         AppGJNGeojsonSetLineColor,
-        AppGJNGeojsonSetLineColorHover,
         AppGJNGeojsonSetLineWidth,
-        AppGJNGeojsonSetLineWidthHover,
         AppGJNGeojsonSetFillColor,
-        AppGJNGeojsonSetFillColorHover,
         AppGJNGeojsonSetsClick,
         AppGJNGeojsonSetsPopup,
         AppGJNGeojsonSetsTooltip,
@@ -554,16 +562,23 @@ export default {
                     'pointSetsTooltip',
                     'pointSet.largeSet',
                 ],
+                polyline: [
+                    'polylineSets',
+                    'polylineSet-changeData',
+                    'polylineSet.order',
+                    'polylineSet.lineColor',
+                    'polylineSet.lineWidth',
+                    'polylineSetsClick',
+                    'polylineSetsPopup',
+                    'polylineSetsTooltip',
+                ],
                 polygon: [
                     'polygonSets',
                     'polygonSet-changeData',
                     'polygonSet.order',
                     'polygonSet.lineColor',
-                    'polygonSet.lineColorHover',
                     'polygonSet.lineWidth',
-                    'polygonSet.lineWidthHover',
                     'polygonSet.fillColor',
-                    'polygonSet.fillColorHover',
                     'polygonSetsClick',
                     'polygonSetsPopup',
                     'polygonSetsTooltip',
@@ -574,11 +589,8 @@ export default {
                     'geojsonSet-changeData',
                     'geojsonSet.order',
                     'geojsonSet.lineColor',
-                    'geojsonSet.lineColorHover',
                     'geojsonSet.lineWidth',
-                    'geojsonSet.lineWidthHover',
                     'geojsonSet.fillColor',
-                    'geojsonSet.fillColorHover',
                     'geojsonSetsClick',
                     'geojsonSetsPopup',
                     'geojsonSetsTooltip',

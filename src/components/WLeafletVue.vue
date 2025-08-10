@@ -263,79 +263,6 @@
                 ></l-image-overlay>
             </l-layer-group>
 
-            <!-- 多邊形圖層 -->
-            <l-layer-group
-                layer-type="overlay"
-                :key="'polygonSet:'+kpolygonSet"
-                :name="polygonSet.title"
-                :visible.sync="polygonSet.visible"
-                v-for="(polygonSet,kpolygonSet) in polygonSets"
-            >
-                <l-polygon
-                    :latLngs="polygonSet.latLngs"
-                    v-bind="polygonSet.style"
-                    @click="(ev)=>{clickPolygon(ev,polygonSet,kpolygonSet,polygonSets)}"
-                >
-
-                    <TooltipRegion>
-                        <template v-slot>
-                            <slot
-                                name="polygon-tooltip"
-                                :polygonSet="polygonSet"
-                                :polygonSets="polygonSets"
-                            ></slot>
-                        </template>
-                    </TooltipRegion>
-
-                    <PopupRegion>
-                        <template v-slot>
-                            <slot
-                                name="polygon-popup"
-                                :polygonSet="polygonSet"
-                                :polygonSets="polygonSets"
-                            ></slot>
-                        </template>
-                    </PopupRegion>
-
-                </l-polygon>
-            </l-layer-group>
-
-            <!-- geojson圖層 -->
-            <l-layer-group
-                layer-type="overlay"
-                :key="'geojsonSet:'+kgeojsonSet"
-                :name="geojsonSet.title"
-                :visible.sync="geojsonSet.visible"
-                v-for="(geojsonSet,kgeojsonSet) in geojsonSets"
-            >
-
-                <LwGeoJson
-                    :geojson="geojsonSet.geojson"
-                    :wrapStyle="geojsonSet.style"
-                    :wrapStyleHover="geojsonSet.styleHover"
-                    @click="(ev)=>{clickGeojson(ev,geojsonSet,kgeojsonSet,geojsonSets)}"
-                >
-
-                    <template v-slot:tooltip>
-                        <slot
-                            name="geojson-tooltip"
-                            :geojsonSet="geojsonSet"
-                            :geojsonSets="geojsonSets"
-                        ></slot>
-                    </template>
-
-                    <template v-slot:popup>
-                        <slot
-                            name="geojson-popup"
-                            :geojsonSet="geojsonSet"
-                            :geojsonSets="geojsonSets"
-                        ></slot>
-                    </template>
-
-                </LwGeoJson>
-
-            </l-layer-group>
-
             <!-- 等值線圖層 -->
             <l-layer-group
                 layer-type="overlay"
@@ -380,6 +307,116 @@
                     </template>
 
                 </LwContour>
+            </l-layer-group>
+
+            <!-- geojson圖層 -->
+            <l-layer-group
+                layer-type="overlay"
+                :key="'geojsonSet:'+kgeojsonSet"
+                :name="geojsonSet.title"
+                :visible.sync="geojsonSet.visible"
+                v-for="(geojsonSet,kgeojsonSet) in geojsonSets"
+            >
+
+                <LwGeoJson
+                    :geojson="geojsonSet.geojson"
+                    :wrapStyle="geojsonSet.style"
+                    :wrapStyleHover="geojsonSet.styleHover"
+                    @click="(ev)=>{clickGeojson(ev,geojsonSet,kgeojsonSet,geojsonSets)}"
+                >
+
+                    <template v-slot:tooltip>
+                        <slot
+                            name="geojson-tooltip"
+                            :geojsonSet="geojsonSet"
+                            :geojsonSets="geojsonSets"
+                        ></slot>
+                    </template>
+
+                    <template v-slot:popup>
+                        <slot
+                            name="geojson-popup"
+                            :geojsonSet="geojsonSet"
+                            :geojsonSets="geojsonSets"
+                        ></slot>
+                    </template>
+
+                </LwGeoJson>
+
+            </l-layer-group>
+
+            <!-- 多邊形圖層 -->
+            <l-layer-group
+                layer-type="overlay"
+                :key="'polygonSet:'+kpolygonSet"
+                :name="polygonSet.title"
+                :visible.sync="polygonSet.visible"
+                v-for="(polygonSet,kpolygonSet) in polygonSets"
+            >
+                <l-polygon
+                    :latLngs="polygonSet.latLngs"
+                    v-bind="polygonSet.style"
+                    @click="(ev)=>{clickPolygon(ev,polygonSet,kpolygonSet,polygonSets)}"
+                >
+
+                    <TooltipRegion>
+                        <template v-slot>
+                            <slot
+                                name="polygon-tooltip"
+                                :polygonSet="polygonSet"
+                                :polygonSets="polygonSets"
+                            ></slot>
+                        </template>
+                    </TooltipRegion>
+
+                    <PopupRegion>
+                        <template v-slot>
+                            <slot
+                                name="polygon-popup"
+                                :polygonSet="polygonSet"
+                                :polygonSets="polygonSets"
+                            ></slot>
+                        </template>
+                    </PopupRegion>
+
+                </l-polygon>
+            </l-layer-group>
+
+            <!-- 折線圖層 -->
+            <l-layer-group
+                layer-type="overlay"
+                :key="'polylineSet:'+kpolylineSet"
+                :name="polylineSet.title"
+                :visible.sync="polylineSet.visible"
+                v-for="(polylineSet,kpolylineSet) in polylineSets"
+            >
+                <l-polyline
+                    :latLngs="polylineSet.latLngs"
+                    v-bind="polylineSet.style"
+                    @click="(ev)=>{clickPolyline(ev,polylineSet,kpolylineSet,polylineSets)}"
+                >
+
+                    <TooltipRegion>
+                        <template v-slot>
+                            <slot
+                                name="polyline-tooltip"
+                                :polylineSet="polylineSet"
+                                :polylineSets="polylineSets"
+                            ></slot>
+                        </template>
+                    </TooltipRegion>
+
+                    <PopupRegion>
+                        <template v-slot>
+                            <slot
+                                name="polyline-popup"
+                                :polylineSet="polylineSet"
+                                :polylineSets="polylineSets"
+                            ></slot>
+                        </template>
+                    </PopupRegion>
+
+                </l-polyline>
             </l-layer-group>
 
             <!-- 點圖層 -->
@@ -503,11 +540,10 @@ import isnum from 'wsemi/src/isnum.mjs'
 import cdbl from 'wsemi/src/cdbl.mjs'
 import dig from 'wsemi/src/dig.mjs'
 import debounce from 'wsemi/src/debounce.mjs'
-import getCentroidMultiPolygon from 'w-gis/src/getCentroidMultiPolygon.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
 import { Icon } from 'leaflet'
-import { LMap, LTileLayer, LControl, LControlAttribution, LControlZoom, LControlScale, LLayerGroup, LMarker, LCircleMarker, LPolygon, LImageOverlay, LTooltip } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl, LControlAttribution, LControlZoom, LControlScale, LLayerGroup, LMarker, LCircleMarker, LPolyline, LPolygon, LImageOverlay, LTooltip } from 'vue2-leaflet'
 import LwGeoJson from './LwGeoJson.vue'
 import LwContour from './LwContour.vue'
 import Radios from './Radios.vue'
@@ -594,6 +630,17 @@ import defBaseMaps from '../defBaseMaps.mjs'
  * @vue-prop {Array} [opt.pointSets[i].points[j].iconAnchor=[iconSize[0]/2,iconSize[1]]] 輸入第i個點集合的第j個點的顯示圖標的實際定位位置陣列，由圖標左上角代表實際定位點起算，往左移動為+x，往上移動為+y，x與y單位px，需給予[x,y]，預設[iconSize[0]/2,iconSize[1]]
  * @vue-prop {Array} [opt.pointSets[i].points[j].popupAnchor=[0,-iconSize[1]/1.5]] 輸入第i個點集合的第j個點的顯示popup或tooltip時的指向位置陣列，由實際定位點起算，往右移動為+x，往下移動為+y，x與y單位px，需給予[x,y]，預設[0,-iconSize[1]/1.5]
  * @vue-prop {Function} [opt.pointSetsClick=function(){}] 輸入全域點集合的click呼叫函數，可給予函數接收點擊事件，預設為function(){}
+ * @vue-prop {Array} [opt.polylineSets=[]] 輸入折線集合陣列，各元素為物件，預設[]
+ * @vue-prop {String} [opt.polylineSets[i].title=''] 輸入第i個折線集合的標題字串，預設為''
+ * @vue-prop {String} [opt.polylineSets[i].msg=''] 輸入第i個折線集合的說明字串，預設為''
+ * @vue-prop {Number} [opt.polylineSets[i].order=null] 輸入第i個折線集合的排序用數字，預設null
+ * @vue-prop {String} [opt.polylineSets[i].lineColor='rgba(0,150,255,1)'] 輸入第i個折線集合的框線顏色字串，預設為'rgba(0,150,255,1)'
+ * @vue-prop {String} [opt.polylineSets[i].lineColorHover='rgba(0,150,255,1)'] 輸入滑鼠移入時第i個折線集合的框線顏色字串，預設為'rgba(0,150,255,1)'
+ * @vue-prop {Number} [opt.polylineSets[i].lineWidth=3] 輸入第i個折線集合的框線寬度數字，預設為3
+ * @vue-prop {Number} [opt.polylineSets[i].lineWidthHover=3] 輸入滑鼠移入時第i個折線集合的框線寬度數字，預設為3
+ * @vue-prop {Array} [opt.polylineSets[i].latLngs=[]] 輸入第i個折線集合的數據陣列，可使用polyline或multiPolyline，各點座標為緯經度，預設[]
+ * @vue-prop {Function} [opt.polylineSetsClick=function(){}] 輸入全域折線集合的click呼叫函數，可給予函數接收點擊事件，預設為function(){}
+ * @vue-prop {Boolean} [opt.polylineSets[i].visible=true] 輸入是否顯示第i個折線集合布林值，預設為true
  * @vue-prop {Array} [opt.polygonSets=[]] 輸入多邊形集合陣列，各元素為物件，預設[]
  * @vue-prop {String} [opt.polygonSets[i].title=''] 輸入第i個多邊形集合的標題字串，預設為''
  * @vue-prop {String} [opt.polygonSets[i].msg=''] 輸入第i個多邊形集合的說明字串，預設為''
@@ -656,6 +703,7 @@ export default {
         LLayerGroup,
         LMarker,
         LCircleMarker,
+        LPolyline,
         LPolygon,
         LTooltip,
         LImageOverlay,
@@ -678,6 +726,7 @@ export default {
         return {
 
             dbcChangePointSets: debounce(),
+            dbcChangePolylineSets: debounce(),
             dbcChangePolygonSets: debounce(),
             dbcChangeGeojsonSets: debounce(),
             dbcChangeContourSets: debounce(),
@@ -713,6 +762,9 @@ export default {
             pointSets: [],
             effPointSetsTemp: [],
 
+            polylineSets: [],
+            effPolylineSetsTemp: [],
+
             polygonSets: [],
             effPolygonSetsTemp: [],
 
@@ -743,6 +795,11 @@ export default {
 
         each(['pointSets', 'pointSetsClick'], (v) => {
             let wat = vo.$watch(`opt.${v}`, vo.changePointSetsDebounce, wo)
+            vo.wats.push(wat)
+        })
+
+        each(['polylineSets', 'polylineSetsClick'], (v) => {
+            let wat = vo.$watch(`opt.${v}`, vo.changePolylineSetsDebounce, wo)
             vo.wats.push(wat)
         })
 
@@ -1481,12 +1538,12 @@ export default {
                     // style,
                     // styleHover,
                     // mouseenter: (ev) => {
-                    //     console.log('mouseenter', ev)
+                    //     // console.log('mouseenter', ev)
                     //     let layer = ev.target
                     //     layer.setStyle(styleHover)
                     // },
                     // mouseleave: (ev) => {
-                    //     console.log('mouseleave', ev)
+                    //     // console.log('mouseleave', ev)
                     //     let layer = ev.target
                     //     layer.setStyle(style)
                     // },
@@ -1732,6 +1789,138 @@ export default {
 
         },
 
+        changePolylineSetsDebounce: function(v) {
+            // console.log('methods changePolylineSetsDebounce', v)
+
+            let vo = this
+
+            vo.dbcChangePolylineSets(() => {
+                vo.changePolylineSets()
+            })
+
+        },
+
+        changePolylineSets: function() {
+            // console.log('methods changePolylineSets')
+
+            let vo = this
+
+            //polylineSets
+            let polylineSets = get(vo, 'opt.polylineSets', null)
+            if (!isarr(polylineSets)) {
+                polylineSets = []
+            }
+            polylineSets = cloneDeep(polylineSets) //cloneDeep, 後續map會直接修改設定物件記憶體故需脫勾, 但值為函數不會脫勾
+
+            // //check, 不能檢查size為0跳出, 否則外部會無法清空數據
+            // if (size(polylineSets) === 0) {
+            //     return
+            // }
+
+            //effPolylineSets
+            let effPolylineSets = map(polylineSets, (v) => {
+                return omit(v, 'visible')
+            })
+
+            //check
+            if (isEqual(vo.effPolylineSetsTemp, effPolylineSets)) {
+                return
+            }
+            vo.effPolylineSetsTemp = effPolylineSets
+            // console.log('call changePolylineSets')
+
+            //funSetsClick
+            let funSetsClick = get(vo, 'opt.polylineSetsClick', null)
+
+            vo.polylineSets = map(polylineSets, (polylineSet, kpolylineSet) => {
+
+                //idPolylineSet
+                let idPolylineSet = `polylineSet-${kpolylineSet}`
+
+                //order
+                let order = get(polylineSet, 'order', null)
+
+                //lineColor
+                let lineColor = get(polylineSet, 'lineColor', null)
+                if (!isestr(lineColor)) {
+                    lineColor = 'rgba(0,150,255,1)'
+                }
+
+                //lineWidth
+                let lineWidth = get(polylineSet, 'lineWidth', null)
+                if (!isNumber(lineWidth)) {
+                    lineWidth = 3
+                }
+
+                //style
+                let style = {
+                    color: lineColor,
+                    weight: lineWidth,
+                }
+
+                //lineColorHover
+                let lineColorHover = get(polylineSet, 'lineColorHover', null)
+                if (!isestr(lineColorHover)) {
+                    lineColorHover = lineColor
+                }
+
+                //lineWidthHover
+                let lineWidthHover = get(polylineSet, 'lineWidthHover', null)
+                if (!isNumber(lineWidthHover)) {
+                    lineWidthHover = lineWidth
+                }
+
+                //styleHover
+                let styleHover = {
+                    color: lineColorHover,
+                    weight: lineWidthHover,
+                }
+
+                //title
+                if (!isestr(get(polylineSet, 'title', null))) {
+                    polylineSet.title = ''
+                }
+
+                //msg
+                if (!isestr(get(polylineSet, 'msg', null))) {
+                    polylineSet.msg = ''
+                }
+
+                //order
+                if (!isNumber(get(polylineSet, 'order', null))) {
+                    polylineSet.order = null
+                }
+
+                //visible
+                if (!isbol(get(polylineSet, 'visible', null))) {
+                    polylineSet.visible = false
+                }
+
+                return {
+                    id: idPolylineSet,
+                    ...polylineSet,
+                    order,
+                    style, //需給予, 才能通過v-bind給予初始樣式
+                    styleHover,
+                    // mouseenter: (ev) => {
+                    //     // console.log('mouseenter', ev)
+                    //     let layer = ev.target
+                    //     layer.setStyle(styleHover)
+                    // },
+                    // mouseleave: (ev) => {
+                    //     // console.log('mouseleave', ev)
+                    //     let layer = ev.target
+                    //     layer.setStyle(style)
+                    // },
+                    funSetsClick,
+                }
+            })
+
+            //changeItemsDebounce
+            vo.changeItemsDebounce('changePolylineSets')
+
+        },
+
         changePolygonSetsDebounce: function(v) {
             // console.log('methods changePolygonSetsDebounce', v)
 
@@ -1969,27 +2158,6 @@ export default {
                     fillColor = 'rgba(0,150,255,0.25)'
                 }
 
-                // //funSetsStyle
-                // let funSetsStyle = (feature, geojsonSet) => {
-                //     console.log('funSetsStyle', feature, geojsonSet)
-                //     let style = {}
-                //     if (isestr(keyStyle)) {
-                //         style = get(feature, keyStyle, {})
-                //         if (!iseobj(style)) {
-                //             console.log(`feature.${keyStyle} is not an effective object`)
-                //         }
-                //     }
-                //     else {
-                //         if (bMouseEnter) {
-                //             style = get(geojsonSet, 'styleHover', {})
-                //         }
-                //         else {
-                //             style = get(geojsonSet, 'style', {})
-                //         }
-                //     }
-                //     return style
-                // }
-
                 //style
                 let style = {
                     fillColor,
@@ -2053,12 +2221,12 @@ export default {
                 return {
                     id: idGeojsonSet,
                     ...geojsonSet,
-                    latLngs,
                     order,
+                    latLngs,
                     style, //需給予, 才能通過v-bind給予初始樣式
                     styleHover,
                     // mouseenter: (ev) => {
-                    //     console.log('mouseenter', ev)
+                    //     // console.log('mouseenter', ev)
                     //     bMouseEnter = true
                     //     if (!isestr(keyStyle)) { //非指定geojson內style
                     //         let layer = ev.target
@@ -2067,7 +2235,7 @@ export default {
                     //     }
                     // },
                     // mouseleave: (ev) => {
-                    //     console.log('mouseleave', ev)
+                    //     // console.log('mouseleave', ev)
                     //     bMouseEnter = false
                     //     if (!isestr(keyStyle)) { //非指定geojson內style
                     //         let layer = ev.target
@@ -2075,8 +2243,6 @@ export default {
                     //         // console.log('mouseleave', ev, cloneDeep(style))
                     //     }
                     // },
-                    // funSetsStyle,
-                    // funSetsStyleHover,
                     funSetsClick,
                 }
             })
@@ -2141,13 +2307,13 @@ export default {
                 //lineColor
                 let lineColor = get(contourSet, 'lineColor', null)
                 if (!isestr(lineColor)) {
-                    lineColor = 'rgba(0,150,255,1)'
+                    lineColor = '' //由contour內建自己計算
                 }
 
                 //lineWidth
                 let lineWidth = get(contourSet, 'lineWidth', null)
                 if (!isNumber(lineWidth)) {
-                    lineWidth = 3
+                    lineWidth = 1
                 }
 
                 //fillOpacity
@@ -2244,7 +2410,17 @@ export default {
                     id: idContourSet,
                     ...contourSet,
                     order,
-                    // style, //需給予, 才能通過v-bind給予初始樣式
+                    lineColor,
+                    // lineWidth,
+                    // fillOpacity,
+                    // lineColorHover,
+                    // lineWidthHover,
+                    // fillOpacityHover,
+                    legendNumDig,
+                    legendTextFormater,
+                    legendTextExtra,
+                    legend: [],
+                    // style,
                     // styleHover,
                     // mouseenter: (ev) => {
                     //     // console.log('mouseenter', ev)
@@ -2256,16 +2432,27 @@ export default {
                     //     let layer = ev.target
                     //     layer.setStyle(style)
                     // },
-                    legendNumDig,
-                    legendTextFormater,
-                    legendTextExtra,
-                    legend: [],
                     funSetsClick,
                 }
             })
 
             //changeItemsDebounce
             vo.changeItemsDebounce('changeContourSets')
+
+        },
+
+        changeItemsDebounce: function(from) {
+            // console.log('methods changeItemsDebounce', from)
+
+            let vo = this
+
+            //dbcChangeItems
+            vo.dbcChangeItems(() => {
+
+                //changeItems
+                vo.changeItems(from)
+
+            })
 
         },
 
@@ -2293,6 +2480,9 @@ export default {
             each(vo.pointSets, (v, k) => {
                 add(v.title, v.msg, v.order, v.visible, `pointSets.${k}.visible`)
             })
+            each(vo.polylineSets, (v, k) => {
+                add(v.title, v.msg, v.order, v.visible, `polylineSets.${k}.visible`)
+            })
             each(vo.polygonSets, (v, k) => {
                 add(v.title, v.msg, v.order, v.visible, `polygonSets.${k}.visible`)
             })
@@ -2318,21 +2508,6 @@ export default {
 
             //save
             vo.items = items
-
-        },
-
-        changeItemsDebounce: function(from) {
-            // console.log('methods changeItemsDebounce', from)
-
-            let vo = this
-
-            //dbcChangeItems
-            vo.dbcChangeItems(() => {
-
-                //changeItems
-                vo.changeItems(from)
-
-            })
 
         },
 
@@ -2575,6 +2750,24 @@ export default {
             }
             catch (err) {
                 // console.log(err)
+            }
+
+        },
+
+        clickPolyline: function(ev, polylineSet, kpolylineSet, polylineSets) {
+            // console.log('methods clickPolyline', ev, polylineSet, kpolylineSet, polylineSets)
+
+            // let vo = this
+
+            //obj
+            let obj = polylineSet
+
+            //msg
+            let msg = { ev, polylineSet, kpolylineSet, polylineSets }
+
+            //funSetsClick
+            if (isfun(get(obj, 'funSetsClick', null))) {
+                obj.funSetsClick(msg)
             }
 
         },
