@@ -543,7 +543,7 @@ import debounce from 'wsemi/src/debounce.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
 import { Icon } from 'leaflet'
-import { LMap, LTileLayer, LControl, LControlAttribution, LControlZoom, LControlScale, LLayerGroup, LMarker, LCircleMarker, LPolyline, LPolygon, LImageOverlay, LTooltip } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl, LControlAttribution, LControlZoom, LControlScale, LLayerGroup, LMarker, LCircleMarker, LPolyline, LPolygon, LImageOverlay } from 'vue2-leaflet'
 import LwGeoJson from './LwGeoJson.vue'
 import LwContour from './LwContour.vue'
 import Radios from './Radios.vue'
@@ -705,7 +705,6 @@ export default {
         LCircleMarker,
         LPolyline,
         LPolygon,
-        LTooltip,
         LImageOverlay,
         LwGeoJson,
         LwContour,
