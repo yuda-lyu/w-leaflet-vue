@@ -103,7 +103,7 @@ export default {
         WSlider,
     },
     props: {
-        mapLayers: {
+        mapLayers: { //匯入defBaseMaps.mjs作為mapLayers
             type: Array,
             default: () => [],
         },
