@@ -10,9 +10,11 @@
         <div class="bkp">
 
             <div>
-                <button style="margin:0px 3px 3px 0px;" @click="toggleLake('show',0)">show Lakes[0]</button>
-                <button style="margin:0px 3px 3px 0px;" @click="toggleLake('show',1)">show Lakes[1]</button>
-                <button style="margin:0px 3px 3px 0px;" @click="toggleLake('hide',null)">hide popup</button>
+                <button style="margin:0px 3px 3px 0px;" @click="popupPoint(0)">show Point0</button>
+                <button style="margin:0px 3px 3px 0px;" @click="popupPoint(1)">show Point1</button>
+                <button style="margin:0px 3px 3px 0px;" @click="popupPolyline(0)">show Polyline</button>
+                <button style="margin:0px 3px 3px 0px;" @click="popupPolygon(0)">show Polygon</button>
+                <button style="margin:0px 3px 3px 0px;" @click="closePopup()">hide popup</button>
             </div>
 
             <div style="display:flex; padding-bottom:40px; overflow-x:auto;">
@@ -23,6 +25,7 @@
                         style="width:800px; height:500px;"
                         :opt="opt"
                     >
+
                         <template v-slot:point-popup="props">
                             <div style="padding:15px;">
                                 <div style="white-space:nowrap; padding-bottom:5px;">
@@ -32,6 +35,30 @@
                                 <div style="white-space:nowrap;">
                                     <div style="font-size:0.80rem;color:#aa2df4;">[Point: {{ props.point.title }}]</div>
                                     <div style="font-size:0.70rem;color:#777;">{{ props.point.msg }}</div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <template v-slot:polyline-popup="props">
+                            <div style="padding:15px; width:300px;">
+                                <div style="padding-bottom:8px;">
+                                    <div style="font-size:0.90rem; color:#f26;">[Popup]</div>
+                                </div>
+                                <div style="padding-bottom:5px;">
+                                    <div style="font-size:0.80rem; color:#aa2df4;">[PolylineSet: {{ props.polylineSet.title }}]</div>
+                                    <div style="font-size:0.70rem; color:#777;">{{ props.polylineSet.msg }}</div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <template v-slot:polygon-popup="props">
+                            <div style="padding:15px; width:300px;">
+                                <div style="padding-bottom:8px;">
+                                    <div style="font-size:0.90rem; color:#f26;">[Popup]</div>
+                                </div>
+                                <div style="padding-bottom:5px;">
+                                    <div style="font-size:0.80rem; color:#aa2df4;">[PolygonSet: {{ props.polygonSet.title }}]</div>
+                                    <div style="font-size:0.70rem; color:#777;">{{ props.polygonSet.msg }}</div>
                                 </div>
                             </div>
                         </template>
@@ -98,6 +125,68 @@ export default {
                         popupAnchor: [0, -40], //葉子上緣
                     },
                 ],
+                polylineSets: [
+                    {
+                        title: 'polylineSet A',
+                        msg: 'msg from polylineSet A',
+                        latLngs: [
+                            [
+                                [24.841124444738004, 120.94188282873644],
+                                [24.832981757194897, 120.9573809540131],
+                                [24.824098214540694, 120.9728790792898],
+                                [24.82261756214556, 120.98266736893821],
+                                [24.821136892051708, 120.98674582295835],
+                                [24.820396550368013, 120.9965341126068],
+                                [24.81299289020566, 121.01040085627538],
+                                [24.810031302279615, 121.01366361949152],
+                                [24.805588787701673, 121.02018914592381],
+                                [24.79818424295329, 121.0316088171803],
+                                [24.79670328094285, 121.03568727120047],
+                                [24.794481804767845, 121.04139710682871],
+                                [24.78485494826077, 121.05526385049731],
+                                [24.770783583676316, 121.06831490336188],
+                                [24.75819206347587, 121.07565612059818],
+                                [24.753006948874717, 121.08055026542239],
+                                [24.748562392723887, 121.08870717346275],
+                                [24.74115444595389, 121.0968640815031],
+                                [24.738191143649242, 121.09849546311118],
+                                [24.73226432719433, 121.10420529873942],
+                                [24.728559923490835, 121.10420529873942],
+                                [24.70855423768253, 121.10338960793538],
+                            ],
+                        ],
+                        lineColor: '#f26',
+                        lineWidth: 5,
+                        visible: true,
+                    },
+                ],
+                polygonSets: [
+                    {
+                        title: 'polygonSet A',
+                        msg: 'msg from polygonSet A',
+                        latLngs: [
+                            [ //add p1
+                                [24.96, 121.41], [25.11, 121.47], [25.06, 121.69], [24.99, 121.61], [24.95, 121.53]
+                            ],
+                            [ //c1 XOR p1
+                                [24.98, 121.45], [25.07, 121.49], [25.06, 121.54], [25.00, 121.50]
+                            ],
+                            [ //add p1-1 in c1
+                                [25.017, 121.48], [25.032, 121.49], [25.036, 121.50], [25.02, 121.502]
+                            ],
+                            [ //c2 XOR p1
+                                [24.99, 121.54], [25.056, 121.56], [25.05, 121.61], [25.00, 121.59]
+                            ],
+                            [ //add p2
+                                [24.92, 121.60], [25.045, 121.75], [24.99, 121.79], [24.93, 121.74],
+                            ],
+                            [ //c3 XOR p1, p2
+                                [24.961, 121.523], [24.979, 121.551], [24.950, 121.674], [24.887, 121.606],
+                            ],
+                        ],
+                        visible: true,
+                    },
+                ],
             },
             'action': [
             ],
@@ -121,48 +210,57 @@ export default {
             let vo = this
             jv(vo.opt, document.querySelector('#optjson'), { expanded: true })
         },
-        toggleLake: function(mode, ind) {
+        closePopup: function() {
             let vo = this
 
-            if (mode === 'show') {
+            //closePopup
+            vo.$refs.wlf.closePopup()
 
-                //objPoint
-                let objPoint = null
-                if (ind === 0) {
-                    objPoint = {
-                        point: {
-                            ...vo.opt.pointSets[0].points[0],
-                            id: `pointSet-0-point-0`, //開啟popup須給予id
-                        },
-                    }
-                }
-                else {
-                    objPoint = {
-                        point: {
-                            ...vo.opt.pointSets[0].points[1],
-                            id: `pointSet-0-point-1`, //開啟popup須給予id
-                        },
-                    }
-                }
+        },
+        popupPoint: function(ind) {
+            let vo = this
 
-                //centerTo
-                vo.$refs.wlf.centerTo(objPoint.point.latLng)
+            //id
+            let id = `pointSet-0-point-${ind}` //開啟popup須給予id
 
-                //delay, 通過延遲使centerTo效果出現才顯示popup
-                setTimeout(() => {
-
-                    //popupPoint
-                    vo.$refs.wlf.popupPoint(objPoint)
-
-                }, 300)
-
+            //obj
+            let obj = {
+                point: {
+                    ...vo.opt.pointSets[0].points[ind],
+                    id,
+                },
             }
-            else {
 
-                //closePopup
-                vo.$refs.wlf.closePopup()
+            //centerTo
+            vo.$refs.wlf.centerTo(obj.point.latLng)
 
-            }
+            //delay, 通過延遲使centerTo效果出現才顯示popup
+            setTimeout(() => {
+
+                //popupPoint
+                vo.$refs.wlf.popupPoint(obj)
+
+            }, 300)
+
+        },
+        popupPolyline: function(ind) {
+            let vo = this
+
+            //id
+            let id = `polylineSet-${ind}` //開啟popup須給予id
+
+            //popupFeatureById
+            vo.$refs.wlf.popupFeatureById(id)
+
+        },
+        popupPolygon: function(ind) {
+            let vo = this
+
+            //id
+            let id = `polygonSet-${ind}` //開啟popup須給予id
+
+            //popupFeatureById
+            vo.$refs.wlf.popupFeatureById(id)
 
         },
     },

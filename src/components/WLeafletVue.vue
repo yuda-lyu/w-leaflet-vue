@@ -354,6 +354,7 @@
                 v-for="(polygonSet,kpolygonSet) in polygonSets"
             >
                 <l-polygon
+                    :ref="polygonSet.id"
                     :latLngs="polygonSet.latLngs"
                     v-bind="polygonSet.style"
                     @click="(ev)=>{clickPolygon(ev,polygonSet,kpolygonSet,polygonSets)}"
@@ -391,6 +392,7 @@
                 v-for="(polylineSet,kpolylineSet) in polylineSets"
             >
                 <l-polyline
+                    :ref="polylineSet.id"
                     :latLngs="polylineSet.latLngs"
                     v-bind="polylineSet.style"
                     @click="(ev)=>{clickPolyline(ev,polylineSet,kpolylineSet,polylineSets)}"
@@ -2715,17 +2717,13 @@ export default {
 
         },
 
-        popupPoint: function(params) { //點擊出現popup已由組件處理, 不再需要用函數呼叫, 僅供外部用組件ref調用
-            // console.log('methods popupPoint', params)
+        popupFeatureById: function(id) {
+            // console.log('methods popupFeatureById', id)
 
             let vo = this
 
-            //idPoint
-            let idPoint = get(params, 'point.id', '')
-            // console.log('idPoint', idPoint)
-
             //refObjects
-            let refObjects = get(vo, `$refs[${idPoint}]`, [])
+            let refObjects = get(vo, `$refs[${id}]`, [])
             // console.log('$refs', vo.$refs)
             // console.log('refObjects', refObjects)
 
@@ -2750,6 +2748,50 @@ export default {
             catch (err) {
                 // console.log(err)
             }
+
+        },
+
+        popupFeature: function(type, params) {
+            // console.log('methods popupFeature', type, params)
+
+            let vo = this
+
+            //id
+            let id = get(params, `${type}.id`, '')
+            // console.log('id', id)
+
+            //popupFeatureById
+            vo.popupFeatureById(id)
+
+        },
+
+        popupPoint: function(params) { //點擊出現popup已由組件處理, 不再需要用函數呼叫, 僅供外部用組件ref調用
+            // console.log('methods popupPoint', params)
+
+            let vo = this
+
+            //popupFeature
+            vo.popupFeature('point', params)
+
+        },
+
+        popupPolyline: function(params) { //點擊出現popup已由組件處理, 不再需要用函數呼叫, 僅供外部用組件ref調用
+            // console.log('methods popupPolyline', params)
+
+            let vo = this
+
+            //popupFeature
+            vo.popupFeature('polylineSet', params)
+
+        },
+
+        popupPolygon: function(params) { //點擊出現popup已由組件處理, 不再需要用函數呼叫, 僅供外部用組件ref調用
+            // console.log('methods popupPolygon', params)
+
+            let vo = this
+
+            //popupFeature
+            vo.popupFeature('polygonSet', params)
 
         },
 
