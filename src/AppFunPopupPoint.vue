@@ -231,16 +231,11 @@ export default {
                 },
             }
 
+            //popupPoint
+            let latLng = vo.$refs.wlf.popupPoint(obj)
+
             //centerTo
-            vo.$refs.wlf.centerTo(obj.point.latLng)
-
-            //delay, 通過延遲使centerTo效果出現才顯示popup
-            setTimeout(() => {
-
-                //popupPoint
-                vo.$refs.wlf.popupPoint(obj)
-
-            }, 300)
+            vo.$refs.wlf.centerTo(latLng)
 
         },
         popupPolyline: function(ind) {
@@ -250,7 +245,10 @@ export default {
             let id = `polylineSet-${ind}` //開啟popup須給予id
 
             //popupFeatureById
-            vo.$refs.wlf.popupFeatureById(id)
+            let latLng = vo.$refs.wlf.popupFeatureById(id)
+
+            //centerTo
+            vo.$refs.wlf.centerTo(latLng)
 
         },
         popupPolygon: function(ind) {
@@ -260,7 +258,10 @@ export default {
             let id = `polygonSet-${ind}` //開啟popup須給予id
 
             //popupFeatureById
-            vo.$refs.wlf.popupFeatureById(id)
+            let latLng = vo.$refs.wlf.popupFeatureById(id)
+
+            //centerTo
+            vo.$refs.wlf.centerTo(latLng)
 
         },
     },

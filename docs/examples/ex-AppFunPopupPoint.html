@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.64/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.65/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -397,14 +397,11 @@
           }
         };
 
-        //centerTo
-        vo.$refs.wlf.centerTo(obj.point.latLng);
+        //popupPoint
+        let latLng = vo.$refs.wlf.popupPoint(obj);
 
-        //delay, 通過延遲使centerTo效果出現才顯示popup
-        setTimeout(() => {
-          //popupPoint
-          vo.$refs.wlf.popupPoint(obj);
-        }, 300);
+        //centerTo
+        vo.$refs.wlf.centerTo(latLng);
       },
       popupPolyline: function(ind) {
         let vo = this;
@@ -413,7 +410,10 @@
         let id = `polylineSet-${ind}`; //開啟popup須給予id
 
         //popupFeatureById
-        vo.$refs.wlf.popupFeatureById(id);
+        let latLng = vo.$refs.wlf.popupFeatureById(id);
+
+        //centerTo
+        vo.$refs.wlf.centerTo(latLng);
       },
       popupPolygon: function(ind) {
         let vo = this;
@@ -422,7 +422,10 @@
         let id = `polygonSet-${ind}`; //開啟popup須給予id
 
         //popupFeatureById
-        vo.$refs.wlf.popupFeatureById(id);
+        let latLng = vo.$refs.wlf.popupFeatureById(id);
+
+        //centerTo
+        vo.$refs.wlf.centerTo(latLng);
       }
     }
   });

@@ -2749,6 +2749,18 @@ export default {
                 // console.log(err)
             }
 
+            //latLng
+            let latLng = null
+            try {
+                let r = mapObject._popup.getLatLng()
+                latLng = [r.lat, r.lng]
+            }
+            catch (err) {
+                // console.log(err)
+            }
+            // console.log('latLng', latLng)
+
+            return latLng
         },
 
         popupFeature: function(type, params) {
@@ -2761,8 +2773,9 @@ export default {
             // console.log('id', id)
 
             //popupFeatureById
-            vo.popupFeatureById(id)
+            let latLng = vo.popupFeatureById(id)
 
+            return latLng
         },
 
         popupPoint: function(params) { //點擊出現popup已由組件處理, 不再需要用函數呼叫, 僅供外部用組件ref調用
@@ -2771,8 +2784,9 @@ export default {
             let vo = this
 
             //popupFeature
-            vo.popupFeature('point', params)
+            let latLng = vo.popupFeature('point', params)
 
+            return latLng
         },
 
         popupPolyline: function(params) { //點擊出現popup已由組件處理, 不再需要用函數呼叫, 僅供外部用組件ref調用
@@ -2781,8 +2795,9 @@ export default {
             let vo = this
 
             //popupFeature
-            vo.popupFeature('polylineSet', params)
+            let latLng = vo.popupFeature('polylineSet', params)
 
+            return latLng
         },
 
         popupPolygon: function(params) { //點擊出現popup已由組件處理, 不再需要用函數呼叫, 僅供外部用組件ref調用
@@ -2791,8 +2806,9 @@ export default {
             let vo = this
 
             //popupFeature
-            vo.popupFeature('polygonSet', params)
+            let latLng = vo.popupFeature('polygonSet', params)
 
+            return latLng
         },
 
         clickPolyline: function(ev, polylineSet, kpolylineSet, polylineSets) {
