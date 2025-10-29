@@ -234,8 +234,8 @@ export default {
             //popupPoint
             let latLng = vo.$refs.wlf.popupPoint(obj)
 
-            //centerTo
-            vo.$refs.wlf.centerTo(latLng)
+            // //centerTo
+            // vo.$refs.wlf.centerTo(latLng)
 
         },
         popupPolyline: function(ind) {
@@ -247,8 +247,8 @@ export default {
             //popupFeatureById
             let latLng = vo.$refs.wlf.popupFeatureById(id)
 
-            //centerTo
-            vo.$refs.wlf.centerTo(latLng)
+            // //centerTo
+            // vo.$refs.wlf.centerTo(latLng)
 
         },
         popupPolygon: function(ind) {
@@ -260,8 +260,8 @@ export default {
             //popupFeatureById
             let latLng = vo.$refs.wlf.popupFeatureById(id)
 
-            //centerTo
-            vo.$refs.wlf.centerTo(latLng)
+            // //centerTo
+            // vo.$refs.wlf.centerTo(latLng)
 
         },
     },

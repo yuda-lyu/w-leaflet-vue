@@ -18,21 +18,20 @@ To view some examples for more understanding, visit examples:
 > **all examples:** [web](https://yuda-lyu.github.io/w-leaflet-vue/examples/app.html) [[source code](https://github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/app.html)]
 
 ## Installation
+
 ### Using npm(ES6 module):
 ```alias
 npm i w-leaflet-vue
 ```
 
 ### In a browser(UMD module):
-[Optional] Add script with nomodule for IE11.
-```alias
-<script nomodule src="https://cdn.jsdelivr.net/npm/@babel/polyfill/dist/polyfill.min.js"></script>
-```
-[Necessary] Add script for vue.
+
+Add script for vue.
 ```alias
 <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js"></script>
 ```
-[Necessary] Add script for w-leaflet-vue.
+
+Add script for w-leaflet-vue.
 ```alias
 <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.65/dist/w-leaflet-vue.umd.js"></script>
 ```
