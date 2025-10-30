@@ -51,7 +51,7 @@ let defBaseMaps = [
 
     // //測試geoserver的wms圖層
     // {
-    //     name: '行政區邊界',
+    //     name: '縣市邊界',
     //     type: 'wms',
     //     url: 'http://localhost:9041/geoserver/tw/wms?',
     //     layers: 'tw:COUNTY_MOI_1090820',
@@ -60,7 +60,7 @@ let defBaseMaps = [
     //     visible: false,
     // },
     // {
-    //     name: '鄉鎮市邊界',
+    //     name: '村里邊界',
     //     type: 'wms',
     //     url: 'http://localhost:9041/geoserver/tw/wms?',
     //     layers: 'tw:VILLAGE_NLSC_1140825',
