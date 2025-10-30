@@ -49,6 +49,18 @@ let defBaseMaps = [
         visible: false,
     },
 
+    // //測試geoserver的wms圖層
+    // {
+    //     type: 'wms',
+    //     url: 'http://localhost:9041/geoserver/tw/wms?',
+    //     name: 'tw:VILLAGE_NLSC_1140825',
+    // },
+    // {
+    //     type: 'wms',
+    //     url: 'http://localhost:9041/geoserver/tw/wms?',
+    //     name: 'tw:COUNTY_MOI_1090820',
+    // },
+
     // //google要申請tokne才能用
     // {
     //     name: 'googleStreets',

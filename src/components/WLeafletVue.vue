@@ -235,18 +235,37 @@
             <l-layer-group style="white-space:normal;" ref="refTooltip"></l-layer-group>
 
             <!-- 圖層 -->
-            <l-tile-layer
-                layer-type="base"
+            <l-layer-group
                 :key="'baseMap:'+kbaseMap"
-                :name="baseMap.name"
-                :opacity="baseMap.opacity"
-                :zIndex="1+kbaseMap"
-                :visible.sync="baseMap.visible"
-                :url="baseMap.url"
-                :subdomains="baseMap.subdomains"
-                :attribution="baseMap.attribution"
                 v-for="(baseMap,kbaseMap) in panelBaseMaps.baseMaps"
-            ></l-tile-layer>
+            >
+
+                <!-- wms圖層(LWMSTileLayer) -->
+                <l-w-m-s-tile-layer
+                    version="1.1.1"
+                    format="image/png"
+                    transparent
+                    :baseUrl="baseMap.url"
+                    :layers="baseMap.name"
+                    :zIndex="1+kbaseMap"
+                    :options="{
+                        CQL_FILTER: '',
+                    }"
+                    v-if="baseMap.visible && baseMap?.type==='wms'"
+                ></l-w-m-s-tile-layer>
+
+                <!-- wmts圖層 -->
+                <l-tile-layer
+                    layer-type="base"
+                    :name="baseMap.name"
+                    :opacity="baseMap.opacity"
+                    :zIndex="1+kbaseMap"
+                    :visible="baseMap.visible"
+                    :url="baseMap.url"
+                    v-else
+                ></l-tile-layer>
+
+            </l-layer-group>
 
             <!-- 點陣圖圖層 -->
             <l-layer-group
@@ -545,7 +564,7 @@ import debounce from 'wsemi/src/debounce.mjs'
 import domResize from 'w-component-vue/src/js/domResize.mjs'
 import 'leaflet/dist/leaflet.css'
 import { Icon } from 'leaflet'
-import { LMap, LTileLayer, LControl, LControlAttribution, LControlZoom, LControlScale, LLayerGroup, LMarker, LCircleMarker, LPolyline, LPolygon, LImageOverlay } from 'vue2-leaflet'
+import { LMap, LTileLayer, LControl, LControlAttribution, LControlZoom, LControlScale, LLayerGroup, LMarker, LCircleMarker, LPolyline, LPolygon, LImageOverlay, LWMSTileLayer } from 'vue2-leaflet'
 import LwGeoJson from './LwGeoJson.vue'
 import LwContour from './LwContour.vue'
 import Radios from './Radios.vue'
@@ -708,6 +727,7 @@ export default {
         LPolyline,
         LPolygon,
         LImageOverlay,
+        LWMSTileLayer,
         LwGeoJson,
         LwContour,
         Radios,
