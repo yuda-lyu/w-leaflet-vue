@@ -242,12 +242,14 @@
 
                 <!-- wms圖層(LWMSTileLayer) -->
                 <l-w-m-s-tile-layer
-                    version="1.1.1"
+                    _version="1.1.1"
                     format="image/png"
                     transparent
                     :baseUrl="baseMap.url"
                     :layers="baseMap.layers"
+                    :opacity="baseMap.opacity"
                     :zIndex="1+kbaseMap"
+                    _visible="baseMap.visible"
                     :options="{
                         CQL_FILTER: '',
                     }"
@@ -258,10 +260,10 @@
                 <l-tile-layer
                     layer-type="base"
                     :name="baseMap.name"
+                    :url="baseMap.url"
                     :opacity="baseMap.opacity"
                     :zIndex="1+kbaseMap"
                     :visible="baseMap.visible"
-                    :url="baseMap.url"
                     v-if="baseMap?.type!=='wms'"
                 ></l-tile-layer>
 

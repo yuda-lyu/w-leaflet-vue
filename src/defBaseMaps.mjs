@@ -55,12 +55,18 @@ let defBaseMaps = [
     //     type: 'wms',
     //     url: 'http://localhost:9041/geoserver/tw/wms?',
     //     layers: 'tw:COUNTY_MOI_1090820',
+    //     colorShade: '',
+    //     opacity: 1,
+    //     visible: false,
     // },
     // {
     //     name: '鄉鎮市邊界',
     //     type: 'wms',
     //     url: 'http://localhost:9041/geoserver/tw/wms?',
     //     layers: 'tw:VILLAGE_NLSC_1140825',
+    //     colorShade: '',
+    //     opacity: 1,
+    //     visible: false,
     // },
 
     // //google要申請tokne才能用
