@@ -1,6 +1,6 @@
 {
   "name": "w-leaflet-vue",
-  "version": "1.0.66",
+  "version": "1.0.67",
   "main": "dist/w-leaflet-vue.umd.js",
   "dependencies": {
     "leaflet": "^1.9.4",

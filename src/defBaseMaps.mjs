@@ -51,14 +51,16 @@ let defBaseMaps = [
 
     // //測試geoserver的wms圖層
     // {
+    //     name: '行政區邊界',
     //     type: 'wms',
     //     url: 'http://localhost:9041/geoserver/tw/wms?',
-    //     name: 'tw:VILLAGE_NLSC_1140825',
+    //     layers: 'tw:COUNTY_MOI_1090820',
     // },
     // {
+    //     name: '鄉鎮市邊界',
     //     type: 'wms',
     //     url: 'http://localhost:9041/geoserver/tw/wms?',
-    //     name: 'tw:COUNTY_MOI_1090820',
+    //     layers: 'tw:VILLAGE_NLSC_1140825',
     // },
 
     // //google要申請tokne才能用

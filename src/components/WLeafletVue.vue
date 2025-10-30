@@ -246,12 +246,12 @@
                     format="image/png"
                     transparent
                     :baseUrl="baseMap.url"
-                    :layers="baseMap.name"
+                    :layers="baseMap.layers"
                     :zIndex="1+kbaseMap"
                     :options="{
                         CQL_FILTER: '',
                     }"
-                    v-if="baseMap.visible && baseMap?.type==='wms'"
+                    v-if="baseMap?.type==='wms' && baseMap.visible"
                 ></l-w-m-s-tile-layer>
 
                 <!-- wmts圖層 -->
@@ -262,7 +262,7 @@
                     :zIndex="1+kbaseMap"
                     :visible="baseMap.visible"
                     :url="baseMap.url"
-                    v-else
+                    v-if="baseMap?.type!=='wms'"
                 ></l-tile-layer>
 
             </l-layer-group>
