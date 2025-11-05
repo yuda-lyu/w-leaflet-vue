@@ -60,6 +60,15 @@ let defBaseMaps = [
     //     visible: false,
     // },
     // {
+    //     name: '鄉鎮邊界',
+    //     type: 'wms',
+    //     url: 'http://localhost:9041/geoserver/tw/wms?',
+    //     layers: 'tw:TOWN_NLSC_1140825',
+    //     colorShade: '',
+    //     opacity: 1,
+    //     visible: false,
+    // },
+    // {
     //     name: '村里邊界',
     //     type: 'wms',
     //     url: 'http://localhost:9041/geoserver/tw/wms?',

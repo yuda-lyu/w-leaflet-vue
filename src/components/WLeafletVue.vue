@@ -236,7 +236,7 @@
 
             <!-- 圖層 -->
             <l-layer-group
-                :key="'baseMap:'+kbaseMap"
+                :key="`baseMap:${kbaseMap}:${baseMap.name}`"
                 v-for="(baseMap,kbaseMap) in panelBaseMaps.baseMaps"
             >
 
