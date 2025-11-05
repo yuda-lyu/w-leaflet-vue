@@ -242,6 +242,7 @@
 
                 <!-- wms圖層(LWMSTileLayer) -->
                 <l-w-m-s-tile-layer
+                    _layer-type="overlay"
                     _version="1.1.1"
                     format="image/png"
                     transparent
@@ -258,7 +259,7 @@
 
                 <!-- wmts圖層 -->
                 <l-tile-layer
-                    layer-type="base"
+                    _layer-type="base"
                     :name="baseMap.name"
                     :url="baseMap.url"
                     :opacity="baseMap.opacity"
@@ -271,7 +272,6 @@
 
             <!-- 點陣圖圖層 -->
             <l-layer-group
-                layer-type="overlay"
                 :key="'imageSet:'+kimageSet"
                 :name="imageSet.title"
                 :visible.sync="imageSet.visible"
@@ -286,7 +286,6 @@
 
             <!-- 等值線圖層 -->
             <l-layer-group
-                layer-type="overlay"
                 :key="'contourSet:'+kcontourSet"
                 :name="contourSet.title"
                 :visible.sync="contourSet.visible"
@@ -332,7 +331,6 @@
 
             <!-- geojson圖層 -->
             <l-layer-group
-                layer-type="overlay"
                 :key="'geojsonSet:'+kgeojsonSet"
                 :name="geojsonSet.title"
                 :visible.sync="geojsonSet.visible"
@@ -368,7 +366,6 @@
 
             <!-- 多邊形圖層 -->
             <l-layer-group
-                layer-type="overlay"
                 :key="'polygonSet:'+kpolygonSet"
                 :name="polygonSet.title"
                 :visible.sync="polygonSet.visible"
@@ -406,7 +403,6 @@
 
             <!-- 折線圖層 -->
             <l-layer-group
-                layer-type="overlay"
                 :key="'polylineSet:'+kpolylineSet"
                 :name="polylineSet.title"
                 :visible.sync="polylineSet.visible"
@@ -444,7 +440,6 @@
 
             <!-- 點圖層 -->
             <l-layer-group
-                layer-type="overlay"
                 :key="'pointSet:'+kpointSet"
                 :name="pointSet.title"
                 :visible.sync="pointSet.visible"
