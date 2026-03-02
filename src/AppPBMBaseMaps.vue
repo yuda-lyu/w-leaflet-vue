@@ -44,19 +44,13 @@ export default {
         WLeafletVue,
     },
     data: function() {
-        let tokenMapbox = [
-            'pk',
-            'eyJ1Ijoic2VtaXNwaGVyZSIsImEiOiJja2s1anBrZzMwN3NkMndsOGt6MHo5ajI5In0',
-            '_vUKnQ57n7UcWsWgOPIEgQ',
-        ]
-        tokenMapbox = tokenMapbox.join('.')
         return {
             'opt': {
                 panelBaseMaps: {
                     baseMaps: [
                         {
                             name: 'Mapbox',
-                            url: '//api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=' + tokenMapbox,
+                            url: '//api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2VtaXNwaGVyZSIsImEiOiJja2s1anBrZzMwN3NkMndsOGt6MHo5ajI5In0._vUKnQ57n7UcWsWgOPIEgQ',
                             visible: true,
                         },
                         {

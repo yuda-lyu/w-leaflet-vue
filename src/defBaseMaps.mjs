@@ -1,9 +1,3 @@
-let tokenMapbox = [
-    'pk',
-    'eyJ1Ijoic2VtaXNwaGVyZSIsImEiOiJja2s1anBrZzMwN3NkMndsOGt6MHo5ajI5In0',
-    '_vUKnQ57n7UcWsWgOPIEgQ',
-]
-tokenMapbox = tokenMapbox.join('.')
 let defBaseMaps = [
     {
         name: 'Mapbox',
@@ -11,7 +5,7 @@ let defBaseMaps = [
         //api.mapbox.com/v4/mapbox.mapbox-streets-v8
         //api.mapbox.com/v4/mapbox.terrain-rgb
         //api.mapbox.com/v4/mapbox.mapbox-traffic-v1
-        url: '//api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=' + tokenMapbox,
+        url: '//api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2VtaXNwaGVyZSIsImEiOiJja2s1anBrZzMwN3NkMndsOGt6MHo5ajI5In0._vUKnQ57n7UcWsWgOPIEgQ',
         colorShade: 'dark',
         opacity: 1,
         visible: true,
