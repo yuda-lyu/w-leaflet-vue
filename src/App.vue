@@ -14,7 +14,10 @@
             <div style="padding:0px 80px 0px 10px; border-bottom:1px solid #ddd;">
                 <template v-for="(m,km) in mainCmps">
 
-                    <div :key="km" style="display:inline-block; margin:10px 0px 0px 0px;">
+                    <div 
+                        :key="km" 
+                        style="display:inline-block; margin:10px 0px 0px 0px;"
+                    >
                         <div
                             :class="`clsBtn clsMainMenu-basic ${km===showMainCmp?'clsMainMenu-active':'clsMainMenu'}`"
                             @click="showMainCmp=km"
@@ -28,7 +31,10 @@
 
             <div style="padding:0px 80px 10px 0px; border-bottom:1px solid #ddd;">
                 <template v-for="(s,ks) in nowSubCmps">
-                    <div :key="ks" style="display:inline-block; margin:10px 0px 0px 10px;">
+                    <div 
+                        :key="ks" 
+                        style="display:inline-block; margin:10px 0px 0px 10px;"
+                    >
                         <div
                             :class="`clsBtn clsSubMenu-basic ${s===showSubCmp?'clsSubMenu-active':'clsSubMenu'}`"
                             @click="showSubCmp=s"

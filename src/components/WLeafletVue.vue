@@ -254,7 +254,7 @@
                     :options="{
                         CQL_FILTER: '',
                     }"
-                    v-if="baseMap?.type==='wms' && baseMap.visible"
+                    v-if="baseMap.type==='wms' && baseMap.visible"
                 ></l-w-m-s-tile-layer>
 
                 <!-- wmts圖層 -->
@@ -265,7 +265,7 @@
                     :opacity="baseMap.opacity"
                     :zIndex="1+kbaseMap"
                     :visible="baseMap.visible"
-                    v-if="baseMap?.type!=='wms'"
+                    v-if="baseMap.type!=='wms'"
                 ></l-tile-layer>
 
             </l-layer-group>
