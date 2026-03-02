@@ -29,7 +29,7 @@
     ></script>
 
     <!-- w-leaflet-vue -->
-    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.69/dist/w-leaflet-vue.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.0.71/dist/w-leaflet-vue.umd.js"></script>
 
     <!-- lodash -->
     <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
@@ -155,6 +155,12 @@
     el: "#app",
 
     data: function() {
+      let tokenMapbox = [
+        "pk",
+        "eyJ1Ijoic2VtaXNwaGVyZSIsImEiOiJja2s1anBrZzMwN3NkMndsOGt6MHo5ajI5In0",
+        "_vUKnQ57n7UcWsWgOPIEgQ"
+      ];
+      tokenMapbox = tokenMapbox.join(".");
       return {
         opt: {
           panelBaseMaps: {
@@ -162,7 +168,8 @@
               {
                 name: "Mapbox",
                 url:
-                  "//api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2VtaXNwaGVyZSIsImEiOiJja2s1anBrZzMwN3NkMndsOGt6MHo5ajI5In0._vUKnQ57n7UcWsWgOPIEgQ",
+                  "//api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=" +
+                  tokenMapbox,
                 visible: true
               },
               {

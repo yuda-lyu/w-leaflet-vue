@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>WLeafletVue2.vue - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-WLeafletVue.html">WLeafletVue</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">WLeafletVue2.vue</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+    &lt;div ref="root" style="display:inline-block; position:relative;" v-domresize @domresize="resize">
+        &lt;!-- 地圖容器 -->
+        &lt;div ref="mapContainer" style="width:100%; height:100%;">&lt;/div>
+
+        &lt;!-- 四角面板容器，面板依順序由上往下堆疊，不重疊 -->
+        &lt;div v-for="corner in corners" :key="corner" class="clsCorner" :class="'clsCorner-'+corner">
+
+            &lt;!-- 羅盤 -->
+            &lt;div v-if="panelCompassRose.show &amp;&amp; panelCompassRose.position===corner"
+                :style="{ padding: panelCompassRose.withPanel ? '3px' : '0', background: panelCompassRose.withPanel ? panelBackgroundColor : 'transparent', borderRadius: '5px' }">
+                &lt;img :src="useIconCompassRose" :style="{ width: panelCompassRose.size+'px', height: panelCompassRose.size+'px', display:'block' }" />
+            &lt;/div>
+
+            &lt;!-- 底圖選擇 -->
+            &lt;div v-if="panelBaseMaps.show &amp;&amp; panelBaseMaps.position===corner" class="clsPanel" :style="{ background: panelBackgroundColor }">
+                &lt;div :style="{ overflow:'auto', ...panelBaseMaps.style }" @wheel="handleWheel($event, panelBaseMaps)">
+                    &lt;div v-for="(bm, kbm) in panelBaseMaps.baseMaps" :key="'bm:'+kbm" style="padding:2px 0;">
+                        &lt;label style="cursor:pointer; display:flex; align-items:center; gap:4px; font-size:0.8rem;">
+                            &lt;input type="radio" :name="'bmr_'+_uid" :checked="bm.visible" @change="switchBaseMap(kbm)" />
+                            &lt;span>{{ bm.name }}&lt;/span>
+                        &lt;/label>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+
+            &lt;!-- 圖層顯隱 -->
+            &lt;div v-if="panelItems.show &amp;&amp; items.length>0 &amp;&amp; panelItems.position===corner" class="clsPanel" :style="{ background: panelBackgroundColor }">
+                &lt;div :style="{ overflow:'auto', ...panelItems.style }" @wheel="handleWheel($event, panelItems)">
+                    &lt;div v-for="(item, ki) in items" :key="'item:'+ki" style="padding:2px 0;">
+                        &lt;label style="cursor:pointer; display:flex; align-items:center; gap:4px; font-size:0.8rem;">
+                            &lt;input type="checkbox" :checked="item.visible" @change="toggleItemVisible(ki)" />
+                            &lt;span>{{ item.name }}&lt;/span>
+                        &lt;/label>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+
+            &lt;!-- 地圖資訊（經緯度/縮放） -->
+            &lt;div v-if="panelLabels.show &amp;&amp; panelLabels.position===corner" class="clsPanel" :style="{ background: panelBackgroundColor }">
+                &lt;div :style="{ overflow:'auto', ...panelLabels.style }">
+                    &lt;template v-if="panelLabels.title !== ''">
+                        &lt;div style="font-size:1.1rem; font-weight:bold; text-align:center;">{{ panelLabels.title }}&lt;/div>
+                        &lt;div style="border-top:1px solid #b9b9b9; margin:4px 0;">&lt;/div>
+                    &lt;/template>
+                    &lt;table>&lt;tbody>
+                        &lt;tr v-for="(u, ku) in panelLabels.useItems" :key="ku">
+                            &lt;td style="text-align:right;">{{ panelLabels[u] }}&lt;/td>&lt;td> : &lt;/td>
+                            &lt;td>{{ u==='lng'||u==='lat' ? showLoc[u] : u==='zoom' ? currentZoom : '' }}&lt;/td>
+                        &lt;/tr>
+                    &lt;/tbody>&lt;/table>
+                &lt;/div>
+            &lt;/div>
+
+            &lt;!-- 縮放按鈕 -->
+            &lt;div v-if="panelZoom.show &amp;&amp; panelZoom.position===corner" class="clsPanel" style="padding:0;">
+                &lt;button class="clsZoomBtn" @click="zoomIn" title="放大">+&lt;/button>
+                &lt;div style="border-top:1px solid #ccc;">&lt;/div>
+                &lt;button class="clsZoomBtn" @click="zoomOut" title="縮小">−&lt;/button>
+            &lt;/div>
+
+            &lt;!-- 比例尺 -->
+            &lt;div v-if="panelScale.show &amp;&amp; panelScale.position===corner" class="clsPanel clsScale" :style="{ background: 'rgba(0,0,0,0.6)', color:'#fff' }">
+                &lt;div style="display:flex; align-items:center; gap:4px;">
+                    &lt;div style="width:80px; height:3px; background:#fff; border:1px solid #fff;">&lt;/div>
+                    &lt;span>{{ scaleText }}&lt;/span>
+                &lt;/div>
+            &lt;/div>
+
+        &lt;/div>
+    &lt;/div>
+&lt;/template>
+
+&lt;script>
+/**
+ * WLeafletVue2 - 使用 MapLibre GL JS 重構的地圖組件（Vue 2）
+ * 所有面板透過四角容器 (corner container) 自動堆疊，不重疊。
+ * 等值線 (contourSets) 本版暫不支援。
+ */
+import map from 'lodash-es/map.js'
+import each from 'lodash-es/each.js'
+import size from 'lodash-es/size.js'
+import omit from 'lodash-es/omit.js'
+import filter from 'lodash-es/filter.js'
+import get from 'lodash-es/get.js'
+import set from 'lodash-es/set.js'
+import isNumber from 'lodash-es/isNumber.js'
+import isEqual from 'lodash-es/isEqual.js'
+import cloneDeep from 'lodash-es/cloneDeep.js'
+import sortBy from 'lodash-es/sortBy.js'
+import isfun from 'wsemi/src/isfun.mjs'
+import isestr from 'wsemi/src/isestr.mjs'
+import isnum from 'wsemi/src/isnum.mjs'
+import isstr from 'wsemi/src/isstr.mjs'
+import isarr from 'wsemi/src/isarr.mjs'
+import isobj from 'wsemi/src/isobj.mjs'
+import iseobj from 'wsemi/src/iseobj.mjs'
+import isbol from 'wsemi/src/isbol.mjs'
+import ispint from 'wsemi/src/ispint.mjs'
+import isearr from 'wsemi/src/isearr.mjs'
+import cdbl from 'wsemi/src/cdbl.mjs'
+import dig from 'wsemi/src/dig.mjs'
+import debounce from 'wsemi/src/debounce.mjs'
+import domResize from 'w-component-vue/src/js/domResize.mjs'
+import 'maplibre-gl/dist/maplibre-gl.css'
+import maplibregl from 'maplibre-gl'
+import defBaseMaps from '../defBaseMaps.mjs'
+import uiRes from '../uiRes.mjs'
+import fixCloseMultiPolygon from 'w-gis/src/fixCloseMultiPolygon.mjs'
+
+export default {
+    directives: { domresize: domResize() },
+    props: { opt: { type: Object, default: () => ({}) } },
+
+    data() {
+        return {
+            map: null,
+            corners: ['topleft', 'topright', 'bottomleft', 'bottomright'],
+
+            // debounce
+            dbcChangePointSets: debounce(),
+            dbcChangePolylineSets: debounce(),
+            dbcChangePolygonSets: debounce(),
+            dbcChangeGeojsonSets: debounce(),
+            dbcChangeImageSets: debounce(),
+            dbcChangeItems: debounce(),
+
+            wats: [],
+            currentZoom: 7,
+            currentCenter: [23.5, 121.1],
+
+            // 面板設定
+            panelBackgroundColor: 'rgba(255,255,255,0.95)',
+            panelBaseMaps: { show: true, position: 'topleft', baseMaps: [], style: {}, stopWheel: false },
+            panelBaseMapsTemp: {},
+            panelCompassRose: { show: false, position: 'topright', size: 120, withPanel: false, iconSrc: null, iconSrcLight: uiRes.iconCompassRoseLight, iconSrcDark: uiRes.iconCompassRoseDark },
+            panelCompassRoseTemp: {},
+            panelLabels: { show: true, position: 'topright', useItems: ['lng', 'lat', 'zoom'], lng: 'Longitude', lat: 'Latitude', zoom: 'Zoom', title: '', style: {} },
+            panelLabelsTemp: {},
+            panelItems: { show: true, position: 'topleft', stopWheel: false, style: {} },
+            panelItemsTemp: {},
+            panelZoom: { show: true, position: 'bottomleft' },
+            panelZoomTemp: {},
+            panelScale: { show: true, position: 'bottomright' },
+            panelScaleTemp: {},
+
+            showLoc: { lat: '', lng: '' },
+
+            // 數據集
+            imageSets: [],
+            effImageSetsTemp: [],
+            pointSets: [],
+            effPointSetsTemp: [],
+            polylineSets: [],
+            effPolylineSetsTemp: [],
+            polygonSets: [],
+            effPolygonSetsTemp: [],
+            geojsonSets: [],
+            effGeojsonSetsTemp: [],
+
+            items: [],
+            trackedSourceIds: [],
+            trackedLayerIds: [],
+            trackedMarkers: [],
+            featurePopup: null, // 追蹤折線/多邊形 popup
+
+            // 底圖資料快照（與面板 UI 設定分離，避免切換 show 時閃爍）
+            baseMapsDataTemp: [],
+        }
+    },
+
+    computed: {
+        /** 依底圖色調選擇羅盤圖標 */
+        useIconCompassRose() {
+            let p = this.panelCompassRose
+            if (isestr(p.iconSrc)) return p.iconSrc
+            if (p.withPanel) return p.iconSrcDark
+            return this.baseMapColorShade === 'dark' ? p.iconSrcLight : p.iconSrcDark
+        },
+        /** 當前可見底圖的色調 */
+        baseMapColorShade() {
+            let shade = ''
+            each(get(this, 'panelBaseMaps.baseMaps', []), (v) => {
+                if (v.visible &amp;&amp; isestr(v.colorShade)) {
+                    shade = v.colorShade; return false
+                }
+            })
+            return shade
+        },
+        /** 比例尺文字 */
+        scaleText() {
+            let lat = this.currentCenter[0] || 23.5
+            let mpp = 156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, this.currentZoom)
+            let d = mpp * 80
+            return d >= 1000 ? Math.round(d / 1000) + ' km' : Math.round(d) + ' m'
+        },
+    },
+
+    mounted() {
+        let vo = this
+        vo.initMap()
+        let wo = { immediate: true, deep: true }
+        each(['imageSets'], (v) => {
+            vo.wats.push(vo.$watch(`opt.${v}`, vo.changeImageSetsDebounce, wo))
+        })
+        each(['pointSets', 'pointSetsClick'], (v) => {
+            vo.wats.push(vo.$watch(`opt.${v}`, vo.changePointSetsDebounce, wo))
+        })
+        each(['polylineSets', 'polylineSetsClick'], (v) => {
+            vo.wats.push(vo.$watch(`opt.${v}`, vo.changePolylineSetsDebounce, wo))
+        })
+        each(['polygonSets', 'polygonSetsClick'], (v) => {
+            vo.wats.push(vo.$watch(`opt.${v}`, vo.changePolygonSetsDebounce, wo))
+        })
+        each(['geojsonSets', 'geojsonSetsClick'], (v) => {
+            vo.wats.push(vo.$watch(`opt.${v}`, vo.changeGeojsonSetsDebounce, wo))
+        })
+    },
+
+    beforeDestroy() {
+        each(this.wats, (w) => {
+            w()
+        })
+        if (this.map) {
+            this.map.remove(); this.map = null
+        }
+    },
+
+    watch: {
+        opt: {
+            handler() {
+                this.changeOpt()
+            },
+            immediate: true,
+            deep: true
+        },
+    },
+
+    methods: {
+
+        // ===== 初始化 =====
+
+        initMap() {
+            let vo = this
+            let center = get(vo, 'opt.center', null)
+            let ck = isarr(center) &amp;&amp; size(center) === 2 &amp;&amp; isNumber(center[0]) &amp;&amp; isNumber(center[1])
+            if (!ck) center = [23.5, 121.1]
+            let zoom = get(vo, 'opt.zoom', null)
+            if (!ispint(zoom)) zoom = 7
+            zoom = Math.min(Math.max(zoom, 1), 18)
+
+            // 不使用 MapLibre 內建 control，全部由自訂面板管理
+            vo.map = new maplibregl.Map({
+                container: vo.$refs.mapContainer,
+                style: { version: 8, sources: {}, layers: [{ id: 'background', type: 'background', paint: { 'background-color': '#f0f0f0' } }] },
+                center: [center[1], center[0]],
+                zoom,
+                attributionControl: false,
+            })
+
+            vo.map.on('load', () => {
+                vo.applyBaseMaps()
+                // 確保所有資料在 map load 時已處理（debounce 可能尚未觸發）
+                vo.ensureDataProcessed()
+                vo.applyAllDataLayers()
+            })
+            vo.map.on('mousemove', (e) => {
+                vo.showLoc = { lat: dig(e.lngLat.lat, 7), lng: dig(e.lngLat.lng, 7) }
+            })
+            vo.map.on('zoomend', () => {
+                let z = Math.round(vo.map.getZoom()); vo.opt.zoom = z; vo.currentZoom = z
+            })
+            vo.map.on('moveend', () => {
+                let c = vo.map.getCenter(); let nc = [c.lat, c.lng]
+                if (!isEqual(vo.opt.center, nc)) vo.opt.center = nc
+                vo.currentCenter = nc
+            })
+            vo.currentZoom = zoom; vo.currentCenter = center
+        },
+
+        resize() {
+            if (this.map) this.map.resize()
+        },
+
+        // ===== 底圖 =====
+
+        applyBaseMaps() {
+            let vo = this
+            if (!vo.map || !vo.map.isStyleLoaded()) return
+            let baseMaps = get(vo, 'panelBaseMaps.baseMaps', [])
+            each(baseMaps, (bm, k) => {
+                let srcId = `basemap-src-${k}`; let layerId = `basemap-layer-${k}`
+                if (vo.map.getLayer(layerId)) vo.map.removeLayer(layerId)
+                if (vo.map.getSource(srcId)) vo.map.removeSource(srcId)
+                let tiles = []
+                if (bm.type === 'wms') {
+                    let u = bm.url; if (!u.includes('?')) u += '?'
+                    u += `SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;LAYERS=${bm.layers || ''}&amp;STYLES=&amp;FORMAT=image/png&amp;TRANSPARENT=true&amp;SRS=EPSG:3857&amp;WIDTH=256&amp;HEIGHT=256&amp;BBOX={bbox-epsg-3857}`
+                    tiles = [u]
+                }
+                else {
+                    let u = bm.url
+                    tiles = u.includes('{s}') ? ['a', 'b', 'c'].map((s) => u.replace('{s}', s)) : [u]
+                    tiles = tiles.map((t) => t.startsWith('//') ? 'https:' + t : t)
+                }
+                vo.map.addSource(srcId, { type: 'raster', tiles, tileSize: 256 })
+                vo.map.addLayer({ id: layerId, type: 'raster', source: srcId, paint: { 'raster-opacity': bm.opacity || 1 }, layout: { visibility: bm.visible ? 'visible' : 'none' } })
+            })
+        },
+
+        switchBaseMap(idx) {
+            let vo = this
+            each(vo.panelBaseMaps.baseMaps, (bm, k) => {
+                bm.visible = (k === idx)
+                let id = `basemap-layer-${k}`
+                if (vo.map &amp;&amp; vo.map.getLayer(id)) vo.map.setLayoutProperty(id, 'visibility', bm.visible ? 'visible' : 'none')
+            })
+            vo.$forceUpdate()
+        },
+
+        // ===== 自訂縮放 =====
+
+        zoomIn() {
+            if (this.map) this.map.zoomIn()
+        },
+        zoomOut() {
+            if (this.map) this.map.zoomOut()
+        },
+
+        // ===== 滾輪攔截 =====
+
+        handleWheel(e, panel) {
+            if (panel &amp;&amp; panel.stopWheel) e.stopPropagation()
+        },
+
+        // ===== opt 變更 =====
+
+        changeOpt() {
+            let vo = this
+            let pbc = get(vo, 'opt.panelBackgroundColor', null)
+            if (!isstr(pbc)) pbc = 'rgba(255,255,255,0.95)'
+            vo.panelBackgroundColor = pbc
+
+            let zoom = get(vo, 'opt.zoom', null)
+            if (!ispint(zoom)) zoom = 7
+            zoom = Math.min(Math.max(zoom, 1), 18)
+            if (vo.currentZoom !== zoom) {
+                vo.currentZoom = zoom; if (vo.map) vo.map.setZoom(zoom)
+            }
+
+            let center = get(vo, 'opt.center', null)
+            let ck = isarr(center) &amp;&amp; size(center) === 2 &amp;&amp; isNumber(center[0]) &amp;&amp; isNumber(center[1])
+            if (!ck) center = [23.5, 121.1]
+            center = cloneDeep(center)
+            if (!isEqual(vo.currentCenter, center)) {
+                vo.currentCenter = center; if (vo.map) vo.map.panTo([center[1], center[0]])
+            }
+
+            vo.showLoc = { lat: dig(center[0], 7), lng: dig(center[1], 7) }
+
+            vo.processPanelBaseMaps()
+            vo.processPanelCompassRose()
+            vo.processPanelLabels()
+            vo.processPanelItems()
+            vo.processPanelZoom()
+            vo.processPanelScale()
+            vo.changeItemsDebounce('changeOpt')
+        },
+
+        /** 面板尺寸樣式輔助 */
+        buildPanelStyle(p) {
+            let s = {}
+            if (isNumber(p.width)) s.width = `${p.width}px`
+            if (isNumber(p.maxWidth)) s.maxWidth = `${p.maxWidth}px`
+            if (isNumber(p.height)) s.height = `${p.height}px`
+            if (isNumber(p.maxHeight)) s.maxHeight = `${p.maxHeight}px`
+            return s
+        },
+
+        processPanelBaseMaps() {
+            let vo = this
+            let def = { show: true, position: 'topleft', baseMaps: [], stopWheel: false }
+            let p = get(vo, 'opt.panelBaseMaps', null); if (!isobj(p)) p = {}
+            p = { ...def, ...p }
+            if (size(get(p, 'baseMaps', [])) === 0) {
+                p.baseMaps = size(get(vo, 'panelBaseMaps.baseMaps', [])) === 0 ? cloneDeep(defBaseMaps) : cloneDeep(vo.panelBaseMaps.baseMaps)
+            }
+            p = cloneDeep(p); p.style = vo.buildPanelStyle(p)
+
+            // 分離比較：僅底圖資料變更才重繪底圖，避免 show/position 變更導致閃爍
+            let baseMapsChanged = !isEqual(vo.baseMapsDataTemp, p.baseMaps)
+            vo.panelBaseMaps = p
+            vo.panelBaseMapsTemp = cloneDeep(p)
+            if (baseMapsChanged) {
+                vo.baseMapsDataTemp = cloneDeep(p.baseMaps)
+                if (vo.map &amp;&amp; vo.map.isStyleLoaded()) vo.applyBaseMaps()
+            }
+        },
+
+        processPanelCompassRose() {
+            let vo = this
+            let def = { show: false, position: 'topright', size: 120, withPanel: false, iconSrc: null, iconSrcLight: uiRes.iconCompassRoseLight, iconSrcDark: uiRes.iconCompassRoseDark }
+            let p = get(vo, 'opt.panelCompassRose', null); if (!isobj(p)) p = {}
+            p = cloneDeep({ ...def, ...p })
+            if (!isEqual(vo.panelCompassRoseTemp, p)) {
+                vo.panelCompassRose = p; vo.panelCompassRoseTemp = cloneDeep(p)
+            }
+        },
+
+        processPanelLabels() {
+            let vo = this
+            let def = { show: true, title: '', useItems: ['lng', 'lat', 'zoom'], lng: 'Longitude', lat: 'Latitude', zoom: 'Zoom', position: 'topright' }
+            let p = get(vo, 'opt.panelLabels', null); if (!isobj(p)) p = {}
+            p = cloneDeep({ ...def, ...p }); p.style = vo.buildPanelStyle(p)
+            if (!isEqual(vo.panelLabelsTemp, p)) {
+                vo.panelLabels = p; vo.panelLabelsTemp = cloneDeep(p)
+            }
+        },
+
+        processPanelItems() {
+            let vo = this
+            let def = { show: true, position: 'topleft', stopWheel: false }
+            let p = get(vo, 'opt.panelItems', null); if (!isobj(p)) p = {}
+            p = cloneDeep({ ...def, ...p }); p.style = vo.buildPanelStyle(p)
+            if (!isEqual(vo.panelItemsTemp, p)) {
+                vo.panelItems = p; vo.panelItemsTemp = cloneDeep(p)
+            }
+        },
+
+        processPanelZoom() {
+            let vo = this
+            let def = { show: true, position: 'bottomleft' }
+            let p = get(vo, 'opt.panelZoom', null); if (!isobj(p)) p = {}
+            p = cloneDeep({ ...def, ...p })
+            if (!isEqual(vo.panelZoomTemp, p)) {
+                vo.panelZoom = p; vo.panelZoomTemp = cloneDeep(p)
+            }
+        },
+
+        processPanelScale() {
+            let vo = this
+            let def = { show: true, position: 'bottomright' }
+            let p = get(vo, 'opt.panelScale', null); if (!isobj(p)) p = {}
+            p = cloneDeep({ ...def, ...p })
+            if (!isEqual(vo.panelScaleTemp, p)) {
+                vo.panelScale = p; vo.panelScaleTemp = cloneDeep(p)
+            }
+        },
+
+        // ===== 資料圖層 =====
+
+        /** 確保各資料集已從 opt 處理（避免 debounce 延遲導致 map load 時資料為空） */
+        ensureDataProcessed() {
+            let vo = this
+            if (!isearr(vo.pointSets) &amp;&amp; isearr(get(vo, 'opt.pointSets', null))) vo.changePointSets()
+            if (!isearr(vo.polylineSets) &amp;&amp; isearr(get(vo, 'opt.polylineSets', null))) vo.changePolylineSets()
+            if (!isearr(vo.polygonSets) &amp;&amp; isearr(get(vo, 'opt.polygonSets', null))) vo.changePolygonSets()
+            if (!isearr(vo.geojsonSets) &amp;&amp; isearr(get(vo, 'opt.geojsonSets', null))) vo.changeGeojsonSets()
+            if (!isearr(vo.imageSets) &amp;&amp; isearr(get(vo, 'opt.imageSets', null))) vo.changeImageSets()
+        },
+
+        applyAllDataLayers() {
+            this.renderPointSets(); this.renderPolylineSets(); this.renderPolygonSets(); this.renderGeojsonSets(); this.renderImageSets()
+        },
+
+        clearTrackedByPrefix(prefix) {
+            let vo = this; if (!vo.map) return
+            let rl = []; let rs = []
+            each(vo.trackedLayerIds, (id) => {
+                id.startsWith(prefix) ? (vo.map.getLayer(id) &amp;&amp; vo.map.removeLayer(id)) : rl.push(id)
+            })
+            each(vo.trackedSourceIds, (id) => {
+                id.startsWith(prefix) ? (vo.map.getSource(id) &amp;&amp; vo.map.removeSource(id)) : rs.push(id)
+            })
+            vo.trackedLayerIds = rl; vo.trackedSourceIds = rs
+        },
+
+        clearTrackedMarkersByPrefix(prefix) {
+            let remain = []
+            each(this.trackedMarkers, (m) => {
+                m._prefix === prefix ? m.remove() : remain.push(m)
+            })
+            this.trackedMarkers = remain
+        },
+
+        // -- 點 --
+        changePointSetsDebounce() {
+            this.dbcChangePointSets(() => {
+                this.changePointSets()
+            })
+        },
+        changePointSets() {
+            let vo = this
+            let sets = get(vo, 'opt.pointSets', null); if (!isarr(sets)) sets = []; sets = cloneDeep(sets)
+            let eff = map(sets, (v) => omit(v, 'visible')); if (isEqual(vo.effPointSetsTemp, eff)) return; vo.effPointSetsTemp = eff
+            let fc = get(vo, 'opt.pointSetsClick', null)
+            vo.pointSets = map(sets, (ps, kps) => {
+                if (!isestr(get(ps, 'title', null))) ps.title = ''; if (!isestr(get(ps, 'msg', null))) ps.msg = ''
+                if (!isNumber(get(ps, 'order', null))) ps.order = null; if (!isbol(get(ps, 'visible', null))) ps.visible = true
+                let sz = get(ps, 'size', 10); let fl = get(ps, 'fillColor', 'rgba(0,150,255,0.65)'); let lc = get(ps, 'lineColor', 'rgba(255,255,255,1)'); let lw = get(ps, 'lineWidth', 1)
+                ps.points = map(ps.points, (pt, kpt) => {
+                    if (isearr(pt)) pt = { latLng: [get(pt, 0), get(pt, 1)] }
+                    if (!isestr(get(pt, 'title', null))) pt.title = ''; if (!isestr(get(pt, 'msg', null))) pt.msg = ''
+                    return { id: `pointSet-${kps}-point-${kpt}`, ...pt, radius: get(pt, 'size', null) || sz, fillColor: get(pt, 'fillColor', null) || fl, lineColor: get(pt, 'lineColor', null) || lc, lineWidth: get(pt, 'lineWidth', null) || lw, funSetsClick: fc }
+                })
+                return { id: `pointSet-${kps}`, ...ps, funSetsClick: fc }
+            })
+            vo.changeItemsDebounce('changePointSets'); if (vo.map &amp;&amp; vo.map.isStyleLoaded()) vo.renderPointSets()
+        },
+        renderPointSets() {
+            let vo = this; if (!vo.map) return; vo.clearTrackedMarkersByPrefix('point')
+            each(vo.pointSets, (ps) => {
+                if (!ps.visible) return
+                each(ps.points, (pt) => {
+                    let ll = get(pt, 'latLng', null); if (!isarr(ll) || size(ll) &lt; 2) return
+                    let r = pt.radius || 10; let el = document.createElement('div')
+                    el.style.cssText = `width:${r * 2}px;height:${r * 2}px;border-radius:50%;background:${pt.fillColor};border:${pt.lineWidth || 1}px solid ${pt.lineColor};cursor:pointer;`
+                    let mk = new maplibregl.Marker({ element: el }).setLngLat([ll[1], ll[0]]).addTo(vo.map); mk._prefix = 'point'; mk._pointId = pt.id
+                    el.addEventListener('click', (ev) => {
+                        if (isfun(pt.funSetsClick)) pt.funSetsClick({ ev, point: pt, pointSet: ps, pointSets: vo.pointSets })
+                    })
+                    if (isestr(pt.title) || isestr(pt.msg)) mk.setPopup(new maplibregl.Popup({ offset: [0, -r] }).setHTML(`&lt;div style="padding:8px">&lt;b>${pt.title}&lt;/b>&lt;br/>${pt.msg}&lt;/div>`))
+                    vo.trackedMarkers.push(mk)
+                })
+            })
+        },
+
+        // -- 折線 --
+        changePolylineSetsDebounce() {
+            this.dbcChangePolylineSets(() => {
+                this.changePolylineSets()
+            })
+        },
+        changePolylineSets() {
+            let vo = this; let sets = get(vo, 'opt.polylineSets', null); if (!isarr(sets))sets = []; sets = cloneDeep(sets)
+            let eff = map(sets, (v) => omit(v, 'visible')); if (isEqual(vo.effPolylineSetsTemp, eff)) return; vo.effPolylineSetsTemp = eff
+            let fc = get(vo, 'opt.polylineSetsClick', null)
+            vo.polylineSets = map(sets, (pls, k) => {
+                if (!isestr(get(pls, 'title', null)))pls.title = ''; if (!isestr(get(pls, 'msg', null)))pls.msg = ''
+                if (!isNumber(get(pls, 'order', null)))pls.order = null; if (!isbol(get(pls, 'visible', null)))pls.visible = true
+                let lc = get(pls, 'lineColor', null); if (!isestr(lc))lc = 'rgba(0,150,255,1)'
+                let lw = get(pls, 'lineWidth', null); if (!isNumber(lw))lw = 3
+                return { id: `polylineSet-${k}`, ...pls, lineColor: lc, lineWidth: lw, funSetsClick: fc }
+            })
+            vo.changeItemsDebounce('changePolylineSets'); if (vo.map &amp;&amp; vo.map.isStyleLoaded())vo.renderPolylineSets()
+        },
+        /** 增量渲染折線（已存在的 source 用 setData 更新，避免閃爍） */
+        renderPolylineSets() {
+            let vo = this; if (!vo.map) return
+            each(vo.polylineSets, (pls, k) => {
+                let sid = `polyline-src-${k}`; let lid = `polyline-layer-${k}`
+                if (!pls.visible) {
+                    if (vo.map.getLayer(lid)) vo.map.removeLayer(lid)
+                    if (vo.map.getSource(sid)) vo.map.removeSource(sid)
+                    vo.trackedLayerIds = vo.trackedLayerIds.filter(x => x !== lid)
+                    vo.trackedSourceIds = vo.trackedSourceIds.filter(x => x !== sid)
+                    return
+                }
+                let lls = get(pls, 'latLngs', []); if (!isearr(lls)) return
+                // lls[0][0] 是數字 → 單段；否則 → 多段 (MultiLineString)
+                let geomType, coords
+                if (isarr(lls[0]) &amp;&amp; isNumber(lls[0][0])) {
+                    geomType = 'LineString'; coords = map(lls, (ll) => [ll[1], ll[0]])
+                }
+                else {
+                    geomType = 'MultiLineString'; coords = map(lls, (seg) => map(seg, (ll) => [ll[1], ll[0]]))
+                }
+                let geojsonData = { type: 'Feature', geometry: { type: geomType, coordinates: coords } }
+                if (vo.map.getSource(sid)) {
+                    vo.map.getSource(sid).setData(geojsonData)
+                }
+                else {
+                    vo.map.addSource(sid, { type: 'geojson', data: geojsonData })
+                    vo.map.addLayer({ id: lid, type: 'line', source: sid, paint: { 'line-color': pls.lineColor, 'line-width': pls.lineWidth } })
+                    vo.trackedSourceIds.push(sid); vo.trackedLayerIds.push(lid)
+                    vo.map.on('click', lid, (e) => {
+                        if (isfun(pls.funSetsClick)) pls.funSetsClick({ ev: e, polylineSet: pls, kpolylineSet: k, polylineSets: vo.polylineSets })
+                    })
+                }
+            })
+        },
+
+        // -- 多邊形 --
+        changePolygonSetsDebounce() {
+            this.dbcChangePolygonSets(() => {
+                this.changePolygonSets()
+            })
+        },
+        changePolygonSets() {
+            let vo = this; let sets = get(vo, 'opt.polygonSets', null); if (!isarr(sets))sets = []; sets = cloneDeep(sets)
+            let eff = map(sets, (v) => omit(v, 'visible')); if (isEqual(vo.effPolygonSetsTemp, eff)) return; vo.effPolygonSetsTemp = eff
+            let fc = get(vo, 'opt.polygonSetsClick', null)
+            vo.polygonSets = map(sets, (pg, k) => {
+                if (!isestr(get(pg, 'title', null)))pg.title = ''; if (!isestr(get(pg, 'msg', null)))pg.msg = ''
+                if (!isNumber(get(pg, 'order', null)))pg.order = null; if (!isbol(get(pg, 'visible', null)))pg.visible = true
+                let lc = get(pg, 'lineColor', 'rgba(0,150,255,1)'); if (!isestr(lc))lc = 'rgba(0,150,255,1)'
+                let lw = get(pg, 'lineWidth', 3); if (!isNumber(lw))lw = 3
+                let fl = get(pg, 'fillColor', 'rgba(0,150,255,0.25)'); if (!isestr(fl))fl = 'rgba(0,150,255,0.25)'
+                return { id: `polygonSet-${k}`, ...pg, lineColor: lc, lineWidth: lw, fillColor: fl, funSetsClick: fc }
+            })
+            vo.changeItemsDebounce('changePolygonSets'); if (vo.map &amp;&amp; vo.map.isStyleLoaded())vo.renderPolygonSets()
+        },
+        /**
+         * 點是否在環（ring）內部（Ray Casting 演算法）
+         * @param {Array} pt - [lng, lat] 座標
+         * @param {Array} ring - [[lng, lat], ...] 環座標陣列
+         * @returns {Boolean}
+         */
+        pointInRing(pt, ring) {
+            let inside = false
+            for (let i = 0, j = ring.length - 1; i &lt; ring.length; j = i++) {
+                let xi = ring[i][0]; let yi = ring[i][1]
+                let xj = ring[j][0]; let yj = ring[j][1]
+                if (((yi > pt[1]) !== (yj > pt[1])) &amp;&amp;
+                    (pt[0] &lt; (xj - xi) * (pt[1] - yi) / (yj - yi) + xi)) {
+                    inside = !inside
+                }
+            }
+            return inside
+        },
+
+        /**
+         * 依嵌套層級將多個環重組為正確的 MultiPolygon 結構
+         *
+         * Leaflet 使用 SVG 的 fill-rule: evenodd，可自動處理嵌套環的交替填充。
+         * MapLibre 使用 earcut 三角化，僅支援「1 個外環 + N 個一級洞」。
+         * 因此需要分析嵌套層級，將環正確分配到不同的 Polygon 中：
+         *   - 偶數層級 (0, 2, 4...) = 外環 → 建立新 Polygon
+         *   - 奇數層級 (1, 3, 5...) = 洞 → 加入其直接父外環所在的 Polygon
+         *
+         * @param {Array} rings - 已閉合、已轉換 [lng,lat] 的環陣列
+         * @returns {Array} MultiPolygon 格式 [polygon0, polygon1, ...]
+         */
+        buildNestedMultiPolygon(rings) {
+            let vo = this
+            if (!isearr(rings)) return []
+            if (rings.length === 1) return [rings] // 單環 = 單 Polygon
+
+            // 計算每個環的嵌套層級（被多少個其他環包含）
+            let levels = []
+            for (let i = 0; i &lt; rings.length; i++) {
+                // 使用環的重心（多點取平均）作為測試點，比單一頂點更穩定
+                let sumX = 0; let sumY = 0; let cnt = 0
+                let testRing = rings[i]
+                // 排除閉合點（最後一點等於第一點）
+                let len = testRing.length
+                if (len > 1 &amp;&amp; isEqual(testRing[0], testRing[len - 1])) len--
+                for (let p = 0; p &lt; len; p++) {
+                    sumX += testRing[p][0]; sumY += testRing[p][1]; cnt++
+                }
+                let centroid = [sumX / cnt, sumY / cnt]
+                let containCount = 0
+                for (let j = 0; j &lt; rings.length; j++) {
+                    if (i !== j &amp;&amp; vo.pointInRing(centroid, rings[j])) {
+                        containCount++
+                    }
+                }
+                levels.push(containCount)
+            }
+
+            // 依嵌套層級分組建構 MultiPolygon
+            // polygons: 每個元素 = { outerIdx, rings: [outerRing, hole1, hole2, ...] }
+            let polygons = []
+            let outerIdxMap = {} // ringIdx → polygons 陣列中的索引
+
+            for (let i = 0; i &lt; rings.length; i++) {
+                if (levels[i] % 2 === 0) {
+                    // 偶數層級 = 外環（填充 / 補回）→ 建立新 Polygon
+                    outerIdxMap[i] = polygons.length
+                    polygons.push([rings[i]])
+                }
+            }
+
+            for (let i = 0; i &lt; rings.length; i++) {
+                if (levels[i] % 2 === 1) {
+                    // 奇數層級 = 洞 → 找所有相交的直接父外環
+                    // 洞可能跨越多個外環（如 c3 跨越 p1 和 p2），需同時加入所有相關的外環 Polygon
+                    let testRing = rings[i]
+                    let len = testRing.length
+                    if (len > 1 &amp;&amp; isEqual(testRing[0], testRing[len - 1])) len--
+
+                    // 目標父層級 = levels[i] - 1（最近的偶數層級）
+                    let targetParentLevel = levels[i] - 1
+
+                    // 收集所有可能的父外環（使用洞的每個頂點測試，以捕捉跨多個外環的情況）
+                    let parentPolygonIdxSet = new Set()
+                    for (let p = 0; p &lt; len; p++) {
+                        let pt = testRing[p]
+                        for (let j = 0; j &lt; rings.length; j++) {
+                            if (j !== i &amp;&amp; levels[j] === targetParentLevel &amp;&amp; vo.pointInRing(pt, rings[j])) {
+                                let pi = outerIdxMap[j]
+                                if (pi !== undefined) parentPolygonIdxSet.add(pi)
+                            }
+                        }
+                    }
+
+                    if (parentPolygonIdxSet.size > 0) {
+                        // 將洞加入所有相關的父外環 Polygon
+                        each([...parentPolygonIdxSet], (pi) => {
+                            polygons[pi].push(rings[i])
+                        })
+                    }
+                    else {
+                        // 退路：用重心測試
+                        let sumX = 0; let sumY = 0; let cnt = 0
+                        for (let p = 0; p &lt; len; p++) {
+                            sumX += testRing[p][0]; sumY += testRing[p][1]; cnt++
+                        }
+                        let centroid = [sumX / cnt, sumY / cnt]
+                        let added = false
+                        for (let j = 0; j &lt; rings.length; j++) {
+                            if (j !== i &amp;&amp; levels[j] % 2 === 0 &amp;&amp; vo.pointInRing(centroid, rings[j])) {
+                                let pi = outerIdxMap[j]
+                                if (pi !== undefined) {
+                                    polygons[pi].push(rings[i])
+                                    added = true
+                                    break
+                                }
+                            }
+                        }
+                        if (!added) {
+                            // 最後退路：視為獨立 Polygon
+                            polygons.push([rings[i]])
+                        }
+                    }
+                }
+            }
+
+            return polygons
+        },
+
+        /** 自動閉合多邊形環並轉換座標，支援嵌套多環（even-odd 語義） */
+        buildPolygonCoords(lls) {
+            let vo = this
+            // 先轉換座標 [lat,lng] → [lng,lat]
+            let isSimple = isarr(lls[0]) &amp;&amp; isNumber(lls[0][0])
+            let converted
+            if (isSimple) {
+                // 單環：[[lat,lng],...]
+                converted = [map(lls, (ll) => [ll[1], ll[0]])]
+            }
+            else {
+                // 多環（含洞）：[[[lat,lng],...], ...]
+                converted = map(lls, (ring) => map(ring, (ll) => [ll[1], ll[0]]))
+            }
+            // 使用 fixCloseMultiPolygon 自動閉合
+            let mpg = fixCloseMultiPolygon(converted, { supposeType: 'ringStrings' })
+            if (!mpg || mpg.length === 0) return null
+
+            // mpg 的結構: [polygon0_rings, polygon1_rings, ...]
+            // 使用 ringStrings 模式時，所有環被放在 mpg[0] 中（一個 Polygon 的多個 ring）
+            // 需要依嵌套層級重新組織為正確的 MultiPolygon
+
+            let allRings = []
+            each(mpg, (pg) => {
+                each(pg, (ring) => {
+                    allRings.push(ring)
+                })
+            })
+
+            if (allRings.length === 0) return null
+            if (allRings.length === 1) {
+                return { type: 'Polygon', coordinates: [allRings[0]] }
+            }
+
+            // 依嵌套層級重組為 MultiPolygon
+            let polygons = vo.buildNestedMultiPolygon(allRings)
+            if (polygons.length === 0) return null
+            if (polygons.length === 1) {
+                return { type: 'Polygon', coordinates: polygons[0] }
+            }
+            return { type: 'MultiPolygon', coordinates: polygons }
+        },
+
+        /** 增量渲染多邊形（已存在的 source 用 setData 更新，避免閃爍） */
+        renderPolygonSets() {
+            let vo = this; if (!vo.map) return
+            each(vo.polygonSets, (pg, k) => {
+                let sid = `polygon-src-${k}`; let fid = `polygon-fill-${k}`; let lid = `polygon-line-${k}`
+                if (!pg.visible) {
+                    if (vo.map.getLayer(fid)) vo.map.removeLayer(fid)
+                    if (vo.map.getLayer(lid)) vo.map.removeLayer(lid)
+                    if (vo.map.getSource(sid)) vo.map.removeSource(sid)
+                    vo.trackedLayerIds = vo.trackedLayerIds.filter(x => x !== fid &amp;&amp; x !== lid)
+                    vo.trackedSourceIds = vo.trackedSourceIds.filter(x => x !== sid)
+                    return
+                }
+                let lls = get(pg, 'latLngs', []); if (!isearr(lls)) return
+                let geometry = vo.buildPolygonCoords(lls)
+                if (!geometry) return
+                let geojsonData = { type: 'Feature', geometry }
+                if (vo.map.getSource(sid)) {
+                    vo.map.getSource(sid).setData(geojsonData)
+                }
+                else {
+                    vo.map.addSource(sid, { type: 'geojson', data: geojsonData })
+                    vo.map.addLayer({ id: fid, type: 'fill', source: sid, paint: { 'fill-color': pg.fillColor, 'fill-opacity': 1 } })
+                    vo.map.addLayer({ id: lid, type: 'line', source: sid, paint: { 'line-color': pg.lineColor, 'line-width': pg.lineWidth } })
+                    vo.trackedSourceIds.push(sid); vo.trackedLayerIds.push(fid, lid)
+                    vo.map.on('click', fid, (e) => {
+                        if (isfun(pg.funSetsClick)) pg.funSetsClick({ ev: e, polygonSet: pg, kpolygonSet: k, polygonSets: vo.polygonSets })
+                    })
+                }
+            })
+        },
+
+        // -- GeoJSON --
+        changeGeojsonSetsDebounce() {
+            this.dbcChangeGeojsonSets(() => {
+                this.changeGeojsonSets()
+            })
+        },
+        changeGeojsonSets() {
+            let vo = this; let sets = get(vo, 'opt.geojsonSets', null); if (!isarr(sets))sets = []; sets = cloneDeep(sets)
+            let eff = map(sets, (v) => omit(v, 'visible')); if (isEqual(vo.effGeojsonSetsTemp, eff)) return; vo.effGeojsonSetsTemp = eff
+            let fc = get(vo, 'opt.geojsonSetsClick', null)
+            vo.geojsonSets = map(sets, (gj, k) => {
+                if (!isestr(get(gj, 'title', null)))gj.title = ''; if (!isestr(get(gj, 'msg', null)))gj.msg = ''
+                if (!isNumber(get(gj, 'order', null)))gj.order = null; if (!isbol(get(gj, 'visible', null)))gj.visible = true
+                let lc = get(gj, 'lineColor', 'rgba(0,150,255,1)'); if (!isestr(lc))lc = 'rgba(0,150,255,1)'
+                let lw = get(gj, 'lineWidth', 3); if (!isNumber(lw))lw = 3
+                let fl = get(gj, 'fillColor', 'rgba(0,150,255,0.25)'); if (!isestr(fl))fl = 'rgba(0,150,255,0.25)'
+                return { id: `geojsonSet-${k}`, ...gj, lineColor: lc, lineWidth: lw, fillColor: fl, funSetsClick: fc }
+            })
+            vo.changeItemsDebounce('changeGeojsonSets'); if (vo.map &amp;&amp; vo.map.isStyleLoaded())vo.renderGeojsonSets()
+        },
+        /** 修復 GeoJSON 中 Polygon/MultiPolygon 的未閉合環 */
+        fixGeojsonClose(geojson) {
+            if (!iseobj(geojson)) return geojson
+            let data = cloneDeep(geojson)
+            let fixRings = (rings) => {
+                return map(rings, (ring) => {
+                    if (!isearr(ring) || ring.length &lt; 3) return ring
+                    let first = ring[0]; let last = ring[ring.length - 1]
+                    if (!isEqual(first, last)) ring.push(cloneDeep(first))
+                    return ring
+                })
+            }
+            let fixFeature = (f) => {
+                let geom = get(f, 'geometry', null)
+                if (!geom) return f
+                if (geom.type === 'Polygon' &amp;&amp; isearr(geom.coordinates)) {
+                    geom.coordinates = fixRings(geom.coordinates)
+                }
+                else if (geom.type === 'MultiPolygon' &amp;&amp; isearr(geom.coordinates)) {
+                    geom.coordinates = map(geom.coordinates, (pg) => fixRings(pg))
+                }
+                return f
+            }
+            if (data.type === 'FeatureCollection' &amp;&amp; isearr(data.features)) {
+                data.features = map(data.features, fixFeature)
+            }
+            else if (data.type === 'Feature') {
+                data = fixFeature(data)
+            }
+            else if (data.type === 'Polygon' || data.type === 'MultiPolygon') {
+                data = fixFeature({ type: 'Feature', geometry: data }).geometry
+            }
+            return data
+        },
+
+        /** 增量渲染 GeoJSON（已存在的 source 用 setData 更新，避免閃爍） */
+        renderGeojsonSets() {
+            let vo = this; if (!vo.map) return
+            let needed = new Set()
+            each(vo.geojsonSets, (gj, k) => {
+                let sid = `geojson-src-${k}`; let fid = `geojson-fill-${k}`; let lid = `geojson-line-${k}`
+                if (!gj.visible || !iseobj(get(gj, 'geojson', null))) {
+                    if (vo.map.getLayer(fid))vo.map.removeLayer(fid)
+                    if (vo.map.getLayer(lid))vo.map.removeLayer(lid)
+                    if (vo.map.getSource(sid))vo.map.removeSource(sid)
+                    vo.trackedLayerIds = vo.trackedLayerIds.filter(x => x !== fid &amp;&amp; x !== lid)
+                    vo.trackedSourceIds = vo.trackedSourceIds.filter(x => x !== sid)
+                    return
+                }
+                needed.add(sid)
+                // 修復 GeoJSON 中未閉合的 Polygon 環
+                let fixedGeojson = vo.fixGeojsonClose(gj.geojson)
+                if (vo.map.getSource(sid)) {
+                    // 已存在 → 只更新資料，不重建
+                    vo.map.getSource(sid).setData(fixedGeojson)
+                }
+                else {
+                    vo.map.addSource(sid, { type: 'geojson', data: fixedGeojson })
+                    vo.map.addLayer({ id: fid, type: 'fill', source: sid, paint: { 'fill-color': gj.fillColor, 'fill-opacity': 1 } })
+                    vo.map.addLayer({ id: lid, type: 'line', source: sid, paint: { 'line-color': gj.lineColor, 'line-width': gj.lineWidth } })
+                    vo.trackedSourceIds.push(sid); vo.trackedLayerIds.push(fid, lid)
+                    vo.map.on('click', fid, (e) => {
+                        if (isfun(gj.funSetsClick))gj.funSetsClick({ ev: e, lat: e.lngLat.lat, lng: e.lngLat.lng, geojsonSet: gj, kgeojsonSet: k, geojsonSets: vo.geojsonSets })
+                    })
+                }
+            })
+        },
+
+        // -- 影像 --
+        changeImageSetsDebounce() {
+            this.dbcChangeImageSets(() => {
+                this.changeImageSets()
+            })
+        },
+        changeImageSets() {
+            let vo = this; let sets = get(vo, 'opt.imageSets', null); if (!isarr(sets))sets = []; sets = cloneDeep(sets)
+            let eff = map(sets, (v) => omit(v, 'visible')); if (isEqual(vo.effImageSetsTemp, eff)) return; vo.effImageSetsTemp = eff
+            vo.imageSets = map(sets, (im, k) => {
+                if (!isestr(get(im, 'title', null)))im.title = ''; if (!isestr(get(im, 'msg', null)))im.msg = ''
+                if (!isNumber(get(im, 'order', null)))im.order = null; if (!isbol(get(im, 'visible', null)))im.visible = false
+                return { id: `imageSet-${k}`, ...im }
+            })
+            vo.changeItemsDebounce('changeImageSets'); if (vo.map &amp;&amp; vo.map.isStyleLoaded())vo.renderImageSets()
+        },
+        /** 增量渲染影像（已存在的 source 用 updateImage 更新，避免閃爍） */
+        renderImageSets() {
+            let vo = this; if (!vo.map) return
+            each(vo.imageSets, (im, k) => {
+                let sid = `image-src-${k}`; let lid = `image-layer-${k}`
+                if (!im.visible) {
+                    if (vo.map.getLayer(lid))vo.map.removeLayer(lid)
+                    if (vo.map.getSource(sid))vo.map.removeSource(sid)
+                    vo.trackedLayerIds = vo.trackedLayerIds.filter(x => x !== lid)
+                    vo.trackedSourceIds = vo.trackedSourceIds.filter(x => x !== sid)
+                    return
+                }
+                let img = get(im, 'image', {}); if (!iseobj(img)) return; let url = get(img, 'url', ''); if (!isestr(url)) return
+                let lnMin = cdbl(get(img, 'lngMin', 0)); let lnMax = cdbl(get(img, 'lngMax', 0)); let ltMin = cdbl(get(img, 'latMin', 0)); let ltMax = cdbl(get(img, 'latMax', 0))
+                let coordinates = [[lnMin, ltMax], [lnMax, ltMax], [lnMax, ltMin], [lnMin, ltMin]]
+                if (vo.map.getSource(sid)) {
+                    vo.map.getSource(sid).updateImage({ url, coordinates })
+                }
+                else {
+                    vo.map.addSource(sid, { type: 'image', url, coordinates })
+                    vo.map.addLayer({ id: lid, type: 'raster', source: sid })
+                    vo.trackedSourceIds.push(sid); vo.trackedLayerIds.push(lid)
+                }
+            })
+        },
+
+        // ===== 圖層顯隱 =====
+        changeItemsDebounce(from) {
+            this.dbcChangeItems(() => {
+                this.changeItems(from)
+            })
+        },
+        changeItems() {
+            let vo = this; let items = []
+            let add = (n, m, o, v, p) => {
+                items.push({ name: n, msg: m, order: o, visible: v, updatePath: p })
+            }
+            each(vo.imageSets, (v, k) => {
+                add(v.title, v.msg, v.order, v.visible, `imageSets.${k}.visible`)
+            })
+            each(vo.pointSets, (v, k) => {
+                add(v.title, v.msg, v.order, v.visible, `pointSets.${k}.visible`)
+            })
+            each(vo.polylineSets, (v, k) => {
+                add(v.title, v.msg, v.order, v.visible, `polylineSets.${k}.visible`)
+            })
+            each(vo.polygonSets, (v, k) => {
+                add(v.title, v.msg, v.order, v.visible, `polygonSets.${k}.visible`)
+            })
+            each(vo.geojsonSets, (v, k) => {
+                add(v.title, v.msg, v.order, v.visible, `geojsonSets.${k}.visible`)
+            })
+            let ord = sortBy(filter(items, (v) => isNumber(v.order)), 'order'); let rest = filter(items, (v) => !isNumber(v.order))
+            vo.items = cloneDeep([...ord, ...rest])
+        },
+        toggleItemVisible(i) {
+            let vo = this; let item = vo.items[i]; item.visible = !item.visible
+            set(vo, item.updatePath, item.visible); set(vo.opt, item.updatePath, item.visible)
+            if (vo.map &amp;&amp; vo.map.isStyleLoaded())vo.applyAllDataLayers()
+        },
+
+        // ===== 公開方法 =====
+
+        /** 取得 map 物件（包裝 panTo 使其相容 Leaflet 的 [lat,lng] 格式） */
+        getMapObject() {
+            let vo = this; if (!vo.map) return null
+            let m = vo.map
+            if (!m._wlfWrapped) {
+                let origPanTo = m.panTo.bind(m)
+                m.panTo = (latLng, opts) => {
+                    if (isarr(latLng) &amp;&amp; size(latLng) >= 2) {
+                        origPanTo([latLng[1], latLng[0]], opts) // [lat,lng] → [lng,lat]
+                    }
+                    else {
+                        origPanTo(latLng, opts)
+                    }
+                }
+                m._wlfWrapped = true
+            }
+            return m
+        },
+
+        /**
+         * 平移至指定座標（相容原 Leaflet 版本的 opt 參數）
+         * @param {Array} latLng - [lat, lng]
+         * @param {Object} [opt] - { ratioHorizontal, ratioVertical, funLatLng }
+         */
+        panTo(latLng, opt = {}) {
+            let vo = this
+            if (!isearr(latLng) || !vo.map) return
+
+            // ratioHorizontal：左側起算之水平縮小比率
+            let ratioHorizontal = get(opt, 'ratioHorizontal')
+            if (isnum(ratioHorizontal)) {
+                ratioHorizontal = cdbl(ratioHorizontal)
+            }
+
+            // ratioVertical：上方起算之垂直縮小比率
+            let ratioVertical = get(opt, 'ratioVertical')
+            if (isnum(ratioVertical)) {
+                ratioVertical = cdbl(ratioVertical)
+            }
+
+            // funLatLng：自訂座標轉換函式
+            let funLatLng = get(opt, 'funLatLng')
+
+            // 取得目前地圖邊界
+            let bds = vo.map.getBounds()
+            let ne = bds.getNorthEast()
+            let sw = bds.getSouthWest()
+            let lngRange = ne.lng - sw.lng
+            let latRange = ne.lat - sw.lat
+
+            // 反算以外部 latLng 為中心之角點座標
+            let lngMin = latLng[1] - lngRange / 2
+            let lngMax = latLng[1] + lngRange / 2
+            let latMin = latLng[0] - latRange / 2
+            let latMax = latLng[0] + latRange / 2
+
+            // 計算偏移後的新中心
+            let lngNew = null
+            if (isNumber(ratioHorizontal)) {
+                let lngMaxNew = lngMax - lngRange * ratioHorizontal
+                lngNew = (lngMin + lngMaxNew) / 2
+            }
+            let latNew = null
+            if (isNumber(ratioVertical)) {
+                let latMinNew = latMin + latRange * ratioVertical
+                latNew = (latMinNew + latMax) / 2
+            }
+
+            // 組合新座標
+            let latLngNew = cloneDeep(latLng)
+            if (isNumber(ratioVertical)) {
+                latLngNew[0] = latNew
+            }
+            if (isNumber(ratioHorizontal)) {
+                latLngNew[1] = lngNew
+            }
+
+            // 執行自訂轉換函式
+            if (isfun(funLatLng)) {
+                latLngNew = funLatLng(latLng, {
+                    bds,
+                    lngRange,
+                    latRange,
+                    lngMin,
+                    lngMax,
+                    latMin,
+                    latMax,
+                    ratioHorizontal,
+                    ratioVertical,
+                    latLngNew,
+                })
+            }
+
+            // 執行平移 [lat,lng] → [lng,lat]
+            vo.map.panTo([latLngNew[1], latLngNew[0]])
+        },
+        centerTo(ll) {
+            this.panTo(ll)
+        },
+
+        closePopup() {
+            let vo = this
+            each(vo.trackedMarkers, (m) => {
+                let p = m.getPopup(); if (p &amp;&amp; p.isOpen())p.remove()
+            })
+            // 也關閉 feature popup
+            if (vo.featurePopup) {
+                vo.featurePopup.remove(); vo.featurePopup = null
+            }
+        },
+
+        /**
+         * 開啟指定點的 Popup
+         * @param {{ point: Object }} obj - 含 point 的物件，point 需含 id 與 latLng
+         * @returns {Array|null} [lat, lng] 或 null
+         */
+        popupPoint(obj) {
+            let vo = this
+            let point = get(obj, 'point', null); if (!isobj(point)) return null
+            let ll = get(point, 'latLng', null); if (!isarr(ll)) return null
+            // 找到對應的 marker 並切換 popup
+            let targetId = get(point, 'id', '')
+            each(vo.trackedMarkers, (mk) => {
+                if (mk._pointId === targetId) {
+                    if (!mk.getPopup()) {
+                        mk.setPopup(new maplibregl.Popup({ offset: [0, -10] }).setHTML(`&lt;div style="padding:8px">&lt;b>${point.title || ''}&lt;/b>&lt;br/>${point.msg || ''}&lt;/div>`))
+                    }
+                    mk.togglePopup()
+                    return false
+                }
+            })
+            return ll
+        },
+
+        /**
+         * 依 ID 開啟 feature（折線/多邊形）的 Popup
+         * @param {String} id - 例如 'polylineSet-0' 或 'polygonSet-0'
+         * @returns {Array|null} [lat, lng] 或 null
+         */
+        popupFeatureById(id) {
+            let vo = this; if (!isestr(id) || !vo.map) return null
+            // 解析 id 找到對應的數據集
+            let center = null
+            let featureData = null
+            if (id.startsWith('polylineSet-')) {
+                let idx = parseInt(id.replace('polylineSet-', ''), 10)
+                let pls = get(vo, 'polylineSets.' + idx, null); if (!pls) return null
+                featureData = { title: pls.title, msg: pls.msg }
+                // 取折線中點
+                let lls = get(pls, 'latLngs', [])
+                if (isearr(lls)) {
+                    let seg = isarr(lls[0]) &amp;&amp; isNumber(lls[0][0]) ? lls : lls[0]
+                    if (isearr(seg)) {
+                        let mid = seg[Math.floor(seg.length / 2)]; center = [mid[0], mid[1]]
+                    }
+                }
+            }
+            else if (id.startsWith('polygonSet-')) {
+                let idx = parseInt(id.replace('polygonSet-', ''), 10)
+                let pg = get(vo, 'polygonSets.' + idx, null); if (!pg) return null
+                featureData = { title: pg.title, msg: pg.msg }
+                // 取多邊形第一環重心
+                let lls = get(pg, 'latLngs', [])
+                if (isearr(lls)) {
+                    let ring = isarr(lls[0]) &amp;&amp; isNumber(lls[0][0]) ? lls : lls[0]
+                    if (isearr(ring)) {
+                        let sumLat = 0; let sumLng = 0
+                        each(ring, (ll) => {
+                            sumLat += ll[0]; sumLng += ll[1]
+                        })
+                        center = [sumLat / ring.length, sumLng / ring.length]
+                    }
+                }
+            }
+            if (!center || !featureData) return null
+            // 關閉舊的 feature popup
+            if (vo.featurePopup) vo.featurePopup.remove()
+            vo.featurePopup = new maplibregl.Popup({ offset: [0, 0] })
+                .setLngLat([center[1], center[0]])
+                .setHTML(`&lt;div style="padding:8px">&lt;b>${featureData.title || ''}&lt;/b>&lt;br/>${featureData.msg || ''}&lt;/div>`)
+                .addTo(vo.map)
+            return center
+        },
+
+        modifyItemsVisible(fun) {
+            let vo = this; if (!isfun(fun)) return
+            each(vo.items, (v, k) => {
+                let b = fun(v, k); v.visible = b; set(vo, v.updatePath, b); set(vo.opt, v.updatePath, b)
+            })
+            if (vo.map &amp;&amp; vo.map.isStyleLoaded())vo.applyAllDataLayers()
+        },
+    },
+}
+&lt;/script>
+
+&lt;style scoped>
+/* 四角容器：flex column 自動堆疊，不重疊 */
+.clsCorner { position:absolute; z-index:10; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
+.clsCorner > * { pointer-events:auto; }
+.clsCorner-topleft { top:10px; left:10px; align-items:flex-start; }
+.clsCorner-topright { top:10px; right:10px; align-items:flex-end; }
+.clsCorner-bottomleft { bottom:10px; left:10px; align-items:flex-start; }
+.clsCorner-bottomright { bottom:10px; right:10px; align-items:flex-end; }
+
+.clsPanel { display:flex; flex-direction:column; padding:3px 8px; box-shadow:0 0 15px rgba(0,0,0,0.2); border-radius:5px; font-size:0.8rem; font-family:'Microsoft JhengHei','Avenir','Helvetica'; }
+
+/* 自訂縮放按鈕 */
+.clsZoomBtn { width:30px; height:30px; border:none; background:rgba(255,255,255,0.95); cursor:pointer; font-size:1.2rem; font-weight:bold; display:flex; align-items:center; justify-content:center; }
+.clsZoomBtn:hover { background:rgba(230,230,230,1); }
+
+/* 比例尺 */
+.clsScale { padding:2px 6px; font-size:0.7rem; border-radius:3px; }
+
+::v-deep .maplibregl-popup-content { padding:0; border-radius:5px; }
+/* 隱藏 maplibre 預設 control 容器 */
+::v-deep .maplibregl-ctrl-top-left,
+::v-deep .maplibregl-ctrl-top-right,
+::v-deep .maplibregl-ctrl-bottom-left,
+::v-deep .maplibregl-ctrl-bottom-right { display:none; }
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.5</a> on Mon Mar 02 2026 09:14:13 GMT+0800 (台北標準時間) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
