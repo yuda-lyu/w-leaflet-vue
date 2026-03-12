@@ -12,8 +12,8 @@
             <div>
                 <button style="margin:0px 3px 3px 0px;" @click="panTo()">panTo()</button>
                 <button style="margin:0px 3px 3px 0px;" @click="panToSX()">panTo(shift x)</button>
-                <button style="margin:0px 3px 3px 0px;" @click="panToSXY()">panTo(shift x,y)</button>
-                <button style="margin:0px 3px 3px 0px;" @click="panToSXYFun()">panTo(shift x,y,funLatLng)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="panToSXY()">panTo(shift x,shift y)</button>
+                <button style="margin:0px 3px 3px 0px;" @click="panToSXYFun()">panTo(shift x,shift y,funLatLng)</button>
             </div>
 
             <div style="display:flex; padding-bottom:40px; overflow-x:auto;">

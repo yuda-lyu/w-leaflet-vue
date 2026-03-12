@@ -14,8 +14,8 @@
             <div style="padding:0px 80px 0px 10px; border-bottom:1px solid #ddd;">
                 <template v-for="(m,km) in mainCmps">
 
-                    <div 
-                        :key="km" 
+                    <div
+                        :key="km"
                         style="display:inline-block; margin:10px 0px 0px 0px;"
                     >
                         <div
@@ -31,8 +31,8 @@
 
             <div style="padding:0px 80px 10px 0px; border-bottom:1px solid #ddd;">
                 <template v-for="(s,ks) in nowSubCmps">
-                    <div 
-                        :key="ks" 
+                    <div
+                        :key="ks"
                         style="display:inline-block; margin:10px 0px 0px 10px;"
                     >
                         <div
@@ -262,7 +262,7 @@
 
             <AppFunPanTo v-if="showSubCmp==='function-panTo'"></AppFunPanTo>
 
-            <AppFunPopupPoint v-if="showSubCmp==='function-popupPoint'"></AppFunPopupPoint>
+            <AppFunPopupPointPolylinePolygon v-if="showSubCmp==='function-popupPoint,popupPolyline,popupPolygon'"></AppFunPopupPointPolylinePolygon>
 
             <AppFunModifyItemsVisible v-if="showSubCmp==='function-modifyItemsVisible'"></AppFunModifyItemsVisible>
 
@@ -380,7 +380,7 @@ import AppLGDMaxHeight from './AppLGDMaxHeight.vue'
 import AppFunGetMapObject from './AppFunGetMapObject.vue'
 import AppFunCenterTo from './AppFunCenterTo.vue'
 import AppFunPanTo from './AppFunPanTo.vue'
-import AppFunPopupPoint from './AppFunPopupPoint.vue'
+import AppFunPopupPointPolylinePolygon from './AppFunPopupPointPolylinePolygon.vue'
 import AppFunModifyItemsVisible from './AppFunModifyItemsVisible.vue'
 
 
@@ -492,7 +492,7 @@ export default {
         AppFunGetMapObject,
         AppFunCenterTo,
         AppFunPanTo,
-        AppFunPopupPoint,
+        AppFunPopupPointPolylinePolygon,
         AppFunModifyItemsVisible,
     },
     data: function() {
@@ -635,7 +635,7 @@ export default {
                     'function-getMapObject',
                     'function-centerTo',
                     'function-panTo',
-                    'function-popupPoint',
+                    'function-popupPoint,popupPolyline,popupPolygon',
                     'function-modifyItemsVisible',
                 ],
             },

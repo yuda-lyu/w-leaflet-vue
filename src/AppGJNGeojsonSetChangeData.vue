@@ -153,7 +153,7 @@ export default {
             geojson6,
             'opt': {
                 center: [25, 121.58],
-                zoom: 10,
+                zoom: 9,
                 geojsonSets: [
                     {
                         title: 'geojsonSet A',

@@ -52,7 +52,7 @@ export default {
         return {
             'opt': {
                 center: [25.05, 121.5],
-                zoom: 9,
+                zoom: 8,
             },
             'action': [
             ],

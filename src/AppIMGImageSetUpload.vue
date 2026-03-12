@@ -51,7 +51,7 @@ export default {
         return {
             'opt': {
                 center: [25.04, 121.51],
-                zoom: 11,
+                zoom: 10,
                 imageSets: [
                     {
                         title: 'imageSet A',

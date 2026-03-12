@@ -59,7 +59,7 @@ export default {
         return {
             'opt': {
                 center: [24.084, 121.068],
-                zoom: 8,
+                zoom: 7,
                 contourSets: [
                     {
                         title: 'contourSet A',

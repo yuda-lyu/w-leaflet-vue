@@ -51,7 +51,7 @@ export default {
         return {
             'opt': {
                 center: [25, 121.58],
-                zoom: 10,
+                zoom: 9,
                 geojsonSets: [
                     {
                         title: 'geojsonSet A',

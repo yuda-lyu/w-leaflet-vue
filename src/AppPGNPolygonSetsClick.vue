@@ -47,7 +47,7 @@ export default {
         return {
             'opt': {
                 center: [25, 121.58],
-                zoom: 10,
+                zoom: 9,
                 polygonSetsClick: function(v) {
                     console.log('polygonSetsClick', v)
                 },

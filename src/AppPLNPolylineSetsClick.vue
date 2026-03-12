@@ -47,7 +47,7 @@ export default {
         return {
             'opt': {
                 center: [25, 121.58],
-                zoom: 10,
+                zoom: 9,
                 polylineSetsClick: function(v) {
                     console.log('polylineSetsClick', v)
                 },

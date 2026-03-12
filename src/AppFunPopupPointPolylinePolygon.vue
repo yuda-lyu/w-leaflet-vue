@@ -2,9 +2,9 @@
     <div>
 
         <div class="bkh">
-            <div style="font-size:1.5rem;">function-popupPoint</div>
-            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppFunPopupPoint.html" target="_blank" class="item-link">example</a>
-            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppFunPopupPoint.html" target="_blank" class="item-link">code</a>
+            <div style="font-size:1.5rem;">function-popupPoint,popupPolyline,popupPolygon</div>
+            <a href="//yuda-lyu.github.io/w-leaflet-vue/examples/ex-AppFunPopupPointPolylinePolygon.html" target="_blank" class="item-link">example</a>
+            <a href="//github.com/yuda-lyu/w-leaflet-vue/blob/master/docs/examples/ex-AppFunPopupPointPolylinePolygonPolylinePolygon.html" target="_blank" class="item-link">code</a>
         </div>
 
         <div class="bkp">
@@ -108,6 +108,7 @@ export default {
                                 iconSize: [38, 95],
                                 iconAnchor: [22, 94],
                                 popupAnchor: [0, -40], //葉子上緣
+                                tooltipAnchor: [0, -30], //葉子中心
                             },
                             {
                                 title: 'Jiaming Lake(嘉明湖)',
@@ -123,6 +124,7 @@ export default {
                         iconSize: [38, 95],
                         iconAnchor: [22, 94],
                         popupAnchor: [0, -40], //葉子上緣
+                        tooltipAnchor: [0, -30], //葉子中心
                     },
                 ],
                 polylineSets: [

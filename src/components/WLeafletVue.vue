@@ -1051,8 +1051,8 @@ export default {
                 r.iconSrc = defIconSrc
                 r.iconSize = [24, 40]
                 r.iconAnchor = [r.iconSize[0] / 2, r.iconSize[1]] //圖左上角相對座標
-                r.popupAnchor = [0, -r.iconSize[1] / 1.5] //google預設icon
-                r.tooltipAnchor = [0, -r.iconSize[1] / 1.5] //google預設icon
+                r.popupAnchor = [0, -r.iconSize[1] / 2.5] //google預設icon
+                r.tooltipAnchor = [0, -r.iconSize[1] / 3.5] //google預設icon
                 // console.log('icon(default)', r)
             }
 

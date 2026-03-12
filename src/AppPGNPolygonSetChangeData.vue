@@ -111,7 +111,7 @@ export default {
             latLngs6,
             'opt': {
                 center: [25, 121.58],
-                zoom: 10,
+                zoom: 9,
                 polygonSets: [
                     {
                         title: 'polygonSet A',
