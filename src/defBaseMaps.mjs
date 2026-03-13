@@ -80,28 +80,28 @@ let defBaseMaps = [
 
     // //google要申請tokne才能用
     // {
-    //     name: 'googleStreets',
+    //     name: 'GoogleStreets',
     //     url: 'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
     //     colorShade: 'light',
     //     opacity: 1,
     //     visible: false,
     // },
     // {
-    //     name: 'googleHybrid',
+    //     name: 'GoogleHybrid',
     //     url: 'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
     //     colorShade: 'dark',
     //     opacity: 1,
     //     visible: false,
     // },
     // {
-    //     name: 'googleSat',
+    //     name: 'GoogleSat',
     //     url: 'http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
     //     colorShade: 'dark',
     //     opacity: 1,
     //     visible: false,
     // },
     // {
-    //     name: 'googleTerrain',
+    //     name: 'GoogleTerrain',
     //     url: 'http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
     //     colorShade: 'dark',
     //     opacity: 1,
