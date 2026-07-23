@@ -43,10 +43,10 @@ function writeHtml(v) {
         <script src="../dist/w-leaflet-vue.umd.js"></script>
     
         <!-- lodash -->
-        <script src="https://cdn.jsdelivr.net/npm/lodash@latest/lodash.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash/lodash.min.js"></script>
 
         <!-- wsemi -->
-        <script src="https://cdn.jsdelivr.net/npm/wsemi@latest/dist/wsemi.umd.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/wsemi/dist/wsemi.umd.min.js"></script>
     
         <!-- w-gis -->
         <script _src="https://cdn.jsdelivr.net/npm/w-gis@latest/dist/w-gis.umd.js"></script>
