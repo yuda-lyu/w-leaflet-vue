@@ -10,17 +10,10 @@ rollupFiles({
     fdSrc,
     fdTar,
     format: 'umd',
-    //nameDistType: 'kebabCase',
-    hookNameDist: () => {
-        return 'w-leaflet-vue'
-    },
+    nameDistType: 'kebabCase',
     globals: {
-        // 'leaflet': 'leaflet',
-        // 'vue2-leaflet': 'vue2-leaflet',
     },
     external: [
-        // 'leaflet',
-        // 'vue2-leaflet',
     ],
 })
 
