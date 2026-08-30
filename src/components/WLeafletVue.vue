@@ -571,7 +571,7 @@ import PopupRegion from './PopupRegion.vue'
 import TooltipPoint from './TooltipPoint.vue'
 import TooltipRegion from './TooltipRegion.vue'
 import uiRes from '../uiRes.mjs'
-import defBaseMaps from '../defBaseMaps.mjs'
+import defBaseMaps from '../js/defBaseMaps.mjs'
 
 
 /**
