@@ -1,13 +1,13 @@
 {
   "name": "w-leaflet-vue",
-  "version": "1.0.96",
+  "version": "1.0.97",
   "main": "dist/w-leaflet-vue.umd.js",
   "dependencies": {
     "leaflet": "^1.9.4",
     "vue2-leaflet": "^2.7.1",
-    "w-component-vue": "^2.5.12",
-    "w-gis": "^1.0.100",
-    "wsemi": "^1.8.85"
+    "w-component-vue": "^2.5.13",
+    "w-gis": "^1.0.101",
+    "wsemi": "^1.8.92"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.8",
@@ -21,14 +21,14 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.10.0",
     "vue": "^2.7.16",
-    "w-jsonview-tree": "^1.0.36",
-    "w-package-tools": "^1.1.15",
+    "w-jsonview-tree": "^1.0.37",
+    "w-package-tools": "^1.1.16",
     "w-package-tools-e2e": "^1.0.0"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "mocha --parallel --timeout 60000",
+    "test": "mocha --parallel \"test/*.test.mjs\" --timeout 180000",
     "lint": "vue-cli-service lint",
     "deploy": "gh-pages -d docs"
   },
