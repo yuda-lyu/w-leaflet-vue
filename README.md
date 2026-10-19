@@ -33,5 +33,5 @@ Add script for vue.
 
 Add script for w-leaflet-vue.
 ```alias
-<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.1.6/dist/w-leaflet-vue.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/w-leaflet-vue@1.1.7/dist/w-leaflet-vue.umd.js"></script>
 ```
