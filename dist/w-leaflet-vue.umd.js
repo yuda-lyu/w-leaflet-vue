@@ -1,5 +1,5 @@
 /*!
- * w-leaflet-vue v1.1.7
+ * w-leaflet-vue v1.1.8
  * (c) 2018-2021 yuda-lyu(semisphere)
  * Released under the MIT License.
  */

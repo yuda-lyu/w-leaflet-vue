@@ -1,13 +1,13 @@
 {
   "name": "w-leaflet-vue",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "main": "dist/w-leaflet-vue.umd.js",
   "dependencies": {
     "leaflet": "^1.9.4",
     "vue2-leaflet": "^2.7.1",
-    "w-component-vue": "^2.5.31",
-    "w-gis": "^1.1.8",
-    "wsemi": "^1.9.21"
+    "w-component-vue": "^2.5.32",
+    "w-gis": "^1.1.9",
+    "wsemi": "^1.9.25"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.8",
@@ -23,7 +23,7 @@
     "vue": "^2.7.16",
     "w-jsonview-tree": "^1.0.38",
     "w-package-tools": "^1.1.21",
-    "w-package-tools-e2e": "^1.0.8"
+    "w-package-tools-e2e": "^1.0.10"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
