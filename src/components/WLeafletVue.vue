@@ -10,6 +10,8 @@
         <l-map
             ref="lmap"
             :zoom="zoom"
+            :min-zoom="zoomRange.min"
+            :max-zoom="zoomRange.max"
             :center="center"
             :options="{
                 preferCanvas: true, //若開啟會導致geojson無法偵測mouseout事件, 但因geojson的滑鼠進入出偵測不夠平滑, 會過多觸發導致閃爍, 故geojson預設滑鼠進入與離開樣式皆相同
@@ -552,7 +554,6 @@ import isarr from 'wsemi/src/isarr.mjs'
 import isobj from 'wsemi/src/isobj.mjs'
 import iseobj from 'wsemi/src/iseobj.mjs'
 import isbol from 'wsemi/src/isbol.mjs'
-import ispint from 'wsemi/src/ispint.mjs'
 import isearr from 'wsemi/src/isearr.mjs'
 import isnum from 'wsemi/src/isnum.mjs'
 import cdbl from 'wsemi/src/cdbl.mjs'
@@ -572,12 +573,13 @@ import TooltipPoint from './TooltipPoint.vue'
 import TooltipRegion from './TooltipRegion.vue'
 import uiRes from '../uiRes.mjs'
 import defBaseMaps from '../js/defBaseMaps.mjs'
+import normalizeZoom, { zoomRange } from '../js/normalizeZoom.mjs'
 
 
 /**
  * @vue-prop {Object} opt 輸入資料設定物件
  * @vue-prop {Array} [opt.center=[23.5, 121.1]] 輸入地圖顯示中點陣列，陣列為WGS84[緯度,經度]，預設[23.5, 121.1]
- * @vue-prop {Number} [opt.zoom=7] 輸入地圖顯示層級整數，預設7
+ * @vue-prop {Number} [opt.zoom=7] 輸入地圖顯示層級整數，可用範圍為1~18，超出範圍則取邊界值，非正整數則取預設，預設7
  * @vue-prop {Object} [opt.panelBackgroundColor='rgba(255,255,255,0.95)'] 輸入各顯示資訊區背景顏色字串，預設'rgba(255,255,255,0.95)'
  * @vue-prop {Boolean} [opt.panelBaseMaps.show=true] 輸入是否顯示底圖選擇區布林值，預設true
  * @vue-prop {Array} [opt.panelBaseMaps.baseMaps=詳見程式碼] 輸入底圖選擇清單陣列，各元素為底圖設定物件，需提供欄位為name(底圖名稱字串)、url(底圖連結字串)、visible(是否顯示布林值)，預設值詳見程式碼的defBaseMaps預設值
@@ -754,6 +756,7 @@ export default {
 
             center: [],
             zoom: null,
+            zoomRange: zoomRange, //層級可用範圍, 同時給予地圖(l-map之min-zoom與max-zoom)與changeOpt之正規化, 範圍只有一個出處
             panelBackgroundColor: '',
             panelCompassRose: {},
             panelCompassRoseTemp: {},
@@ -1093,11 +1096,7 @@ export default {
             vo.panelBackgroundColor = panelBackgroundColor
 
             //zoom
-            let zoom = get(vo, 'opt.zoom', null)
-            if (!ispint(zoom)) {
-                zoom = 7
-            }
-            zoom = Math.min(Math.max(zoom, 1), 18) //介於1~18
+            let zoom = normalizeZoom(get(vo, 'opt.zoom', null)) //非正整數取預設值, 並夾於可用範圍
 
             //check
             if (!isEqual(vo.zoom, zoom)) {
