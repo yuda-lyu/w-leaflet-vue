@@ -1,6 +1,6 @@
 {
   "name": "w-leaflet-vue",
-  "version": "1.1.38",
+  "version": "1.1.39",
   "main": "dist/w-leaflet-vue.umd.js",
   "dependencies": {
     "leaflet": "^1.9.4",
@@ -23,7 +23,7 @@
     "vue": "^2.7.16",
     "w-jsonview-tree": "^1.0.45",
     "w-package-tools": "^1.1.29",
-    "w-package-tools-e2e": "^1.0.47"
+    "w-package-tools-e2e": "^1.0.48"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
